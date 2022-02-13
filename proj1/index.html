@@ -24,21 +24,26 @@
     <h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2022</h1>
     <h1 align="middle">Project 1: Rasterizer</h1>
     <h2 align="middle">Clare Lin, Faywer Liu - CS 184 Spring 2022</h2>
-    <img src="images/3_1.jpg" width="800px" class="center">
-    
+	<div align="middle">
+    <img src="images/3_1.jpg" width="800px">
+	</div>
     <div>
     
     <h2 align="middle">Overview</h2>
-    <p>Project desc.</p>
+    <p>In this assignment we implemented a simple rasterizer, including features like drawing triangles, supersampling, hierarchical transforms, and texture mapping with antialiasing. We have a functional vector graphics renderer that can take in a simplified version of SVG (Scalable Vector Graphics) files, which are widely used on the internet.</p>
     
     <h3 align="middle">Task 1: Drawing Single-Color Triangles</h3>
     
     <p>Part 1 Text</p>
+	<div align="middle">
     <img src="formulas/_.png" width="400px">
     <img src="formulas/_.png" width="400px">
+	</div>
     <p>Text.</p>
-    <img src="images/4_p1.png" align="middle" width="400px">
+	<div align="middle">
+    <img src="images/task1.png" align="middle" width="400px">
     <figcaption align="middle">Text</figcaption>
+	</div>
     
     <h3 align="middle">Task 2: Antialiasing by Supersampling</h3>
     
@@ -47,23 +52,23 @@
       <br><table style="width=100%">
         <tbody><tr>
           <td>
-            <img src="images/_.png" align="middle" width="400px">
-            <figcaption align="middle">Text</figcaption>
+            <img src="images/task1.png" align="middle" width="400px">
+            <figcaption align="middle">1 Sample Per Pixel</figcaption>
           </td>
           <td>
-            <img src="images/_.png" align="middle" width="400px">
-            <figcaption align="middle">Text</figcaption>
+            <img src="images/task2-4.png" align="middle" width="400px">
+            <figcaption align="middle">4 Samples Per Pixel</figcaption>
           </td>
         </tr>
         
         <tr>
           <td>
-            <img src="images/_" align="middle" width="400px">
-            <figcaption align="middle">Text</figcaption>
+            <img src="images/task2-9.png" align="middle" width="400px">
+            <figcaption align="middle">9 Samples Per Pixel</figcaption>
           </td>
           <td>
-            <img src="images/_png" align="middle" width="400px">
-            <figcaption align="middle">Text</figcaption>
+            <img src="images/task2-16.png" align="middle" width="400px">
+            <figcaption align="middle">16 Samples Per Pixel</figcaption>
           </td>
         </tr>
       </tbody></table>
@@ -72,17 +77,26 @@
     
     <h3 align="middle">Task 3: Transforms</h3>
     <p>Text. </p>
+	<div align="middle">
     <img src="formulas/_.png" align="middle" width="400px">
     <figcaption align="middle">Text.</figcaption>
+	</div>
     <p>Text.</p>
-    <img src="images/_.png" align="middle" width="600px">
-    
+	<div align="middle">
+    <img src="images/task3.png" align="middle" width="600px">
+	<figcaption align="middle">Hello.</figcaption>
+	</div>
     
     <h3 align="middle">Task 4: Barycentric coordinates</h3>
     <p>Text.</p>
+	<div align="middle">
     <img src="formulas/_" align="middle" width="600px">
+	</div>
     <p>Text.</p>
-    <img src="images/_" align="middle" width="400px">
+	<div align="middle">
+    <img src="images/task2-4.png" align="middle" width="400px">
+	<figcaption align="middle">Gradient Circle.</figcaption>
+	</div>
     
     <h3 align="middle">Task 5: "Pixel sampling" for texture mapping</h3>
     <p>Text.</p>
@@ -91,28 +105,27 @@
       <br><table style="width=100%">
         <tbody><tr>
           <td>
-            <img src="images/_.png" align="middle" width="400px">
-            <figcaption align="middle">text</figcaption>
+            <img src="images/task5-near-1.png" align="middle" width="400px">
+            <figcaption align="middle">Nearest Sampling and 1 Sample Per Pixel</figcaption>
           </td>
           <td>
-            <img src="images/_.png" align="middle" width="400px">
-            <figcaption align="middle">text</figcaption>
+            <img src="images/task5-near-16.png" align="middle" width="400px">
+            <figcaption align="middle">Nearest Sampling and 16 Samples Per Pixel</figcaption>
           </td>
         </tr>
         
         <tr>
           <td>
-            <img src="images/_png" align="middle" width="400px">
-            <figcaption align="middle">text</figcaption>
+            <img src="images/task5-bilinear-1.png" align="middle" width="400px">
+            <figcaption align="middle">Bilinear Sampling and 1 Sample Per Pixel</figcaption>
           </td>
           <td>
-            <img src="images/_.png" align="middle" width="400px">
-            <figcaption align="middle">text</figcaption>
+            <img src="images/task5-bilinear-16.png" align="middle" width="400px">
+            <figcaption align="middle">Bilinear Sampling and 16 Samples Per Pixel</figcaption>
           </td>
         </tr>
       </tbody></table>
     </div>
-    <p>Text.</p>
 
     <h3 align="middle">Task 6: "Level sampling" with mipmaps for texture mapping</h3>
     <p>Text.</p>
