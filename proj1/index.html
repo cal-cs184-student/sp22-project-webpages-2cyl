@@ -93,7 +93,7 @@
       pixel sampling and level sampling with mipmaps for texture mapping.
     </p>
 
-    <br><br>
+    <br>
     <h3 align="middle">Task 1: Drawing Single-Color Triangles</h3>
 
     <p> In the first part of the project. We implemented basic triangle rasterization, which means we want to fill
@@ -110,19 +110,65 @@
 
       <br><br>Our algorithm is no less worse than one that checks each sample within the bounding box of the triangle
       because it does exactly that. We find the minimum and maximum of each \((x, y)\) value and iterate over that.
-      An attempt was made to use OpenMP <code> #pragma omp for </code> commands before for loops to speed up our
-      calculations, but the timing results showed no noticeable improvement.
+      
+    <div align="middle">
+      <br><br><img src="images/task1.png" align="middle" width="400px">
+      <figcaption align="middle">Rasterized Triangles.</figcaption>
+    </div>
 
-      <br><br>We also brainstormed an idea of speeding up rasterization using a sliding tile method. In this method, we
-      would loop from the right until a find a point within the triangle then loop from the left until a find a point
-      within
-      the triangle. Then we know that every point between these two is inside the triangle and we can skip the
-      arithmetic. This would save us computation roughly equal to sampling every point within the triangle.
+      <br>An attempt was made to use OpenMP <code> #pragma omp for </code> commands before for loops to speed up our
+      calculations, but the timing results showed no noticeable improvement. We also brainstormed an idea of speeding up rasterization using a sliding tile method.
+       In this method, we would loop from the right until a find a point within the triangle then loop 
+       from the left until a find a point within the triangle. Then we know that every point between 
+       these two is inside the triangle and we can skip the arithmetic. This would save us computation roughly 
+       equal to sampling every point within the triangle. However, when we went to implement this, we found it performed slower.
+        In theory it saves computations; however, we believe that the simpler case is easier to optimize for the compiler.
     </p>
-    <br><br><img src="images/task1.png" align="middle" width="800px">
-    <figcaption align="middle">Text</figcaption>
 
+<style>
+  table.GeneratedTable {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border-width: 2px;
+    border-color: #000000;
+    border-style: solid;
+    color: #000000;
+  }
+  
+  table.GeneratedTable td, table.GeneratedTable th {
+    border-width: 2px;
+    border-color: #000000;
+    border-style: solid;
+    padding: 3px;
+  }
+  
+  table.GeneratedTable thead {
+    background-color: #ffc12e;
+  }
+  </style>
+  
+  <!-- HTML Code: Place this code in the document's body (between the 'body' tags) where the table should appear -->
+  <table class="GeneratedTable">
+    <thead>
+      <tr>
+        <th>Naive</th>
+        <th>"Optimized"</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0.15247733</td>
+        <td>1.48965133</td>
+      </tr>
+      <tr>
+        <td>0.23240967</td>
+        <td>2.397225</td>
+      </tr>
+    </tbody>
+  </table>
   </div>
+  <figcaption align="middle">Average values of render times found in svg/hardcore with 5 trials. </figcaption>
 
   <div align>
     <br><br>
@@ -138,11 +184,12 @@
       loops to take more samples at each pixel location. Again, to obtain the center of each subpixel, we had to add an
       increment to each point.
     </p>
-    <br><br><img src="images/supersample.png" align="middle" width="800px">
+    <div align="middle">
+    <br><br><img src="images/supersample.png" align="middle" width="600px">
     <figcaption align="middle">Brainstorming process for oversampling implementation</figcaption>
-
+  </div>
     <p>
-      <br><br>
+      <br>
       In order to downsample our sample buffer, <code>RasterizerImp::resolve_to_framebuffer()</code> was modified to
       average out every <code>sample_rate</code> number of points into one color, before inserting into the final RGB
       frame buffer array. Our results successfully showed that supersampling decreased the amount of jaggies as the
@@ -203,8 +250,8 @@
       \end{pmatrix}$$
     </p>
     <div align="middle">
-      <br><br> <img src="images/task3.png" align="middle" width="600px">
-      <figcaption align="middle">Hello.</figcaption>
+      <br><br> <img src="images/task3.png" align="middle" width="400px">
+      <figcaption align="middle">nae nae</figcaption>
     </div>
 
     <br><br>
@@ -214,29 +261,52 @@
       associated color. The following image shows a smooth blended color triangle. The vertices of the triangle are pure
       RGB colors, and as we move away from the vertices, the colors become a blend of the 3 colors with each color
       intensity proportional to the distance away from the vertices.
-      <br><br>We build upon our previous rasterization algorithm by adding the ability to rasterize interpolated color
+    </p>
+            
+    <p>
+      We build upon our previous rasterization algorithm by adding the ability to rasterize interpolated color
       triangles. Based on the location in the triangle, we solve for the color ratios: \(\alpha\), \(\beta\), and
       \(\gamma\), before multiplying them with their respective colors to obtain the final color values in the triangle.
 
       $$V = \alpha V_A + \beta V_B + \gamma V_C$$
-
     </p>
-    <p> Below is a visualization of a color triangle rendered with barycentric interpolation.</p>
     <div align="middle">
-      <br><br><img src="images/task4-tri.png" align="middle" width="600px">
-      <figcaption align="middle">Gradient triangle</figcaption>
+      
     </div>
+
+    <div align="middle">
+      <br><br>
+    </div>
+
+    <div align="middle">
+      <table style="width=100%">
+        <tbody>
+          <tr>
+            <td>
+              <img src="images/task4-tri.png" align="middle" width="400px">
+              <figcaption align="middle">Gradient triangle.</figcaption>
+            </td>
+            <td>
+              <img src="images/task4-circle.png" align="middle" width="400px">
+             <figcaption align="middle">Gradient triangle.</figcaption>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p> 
+    
+
 
     <br><br>
     <h3 align="middle">Task 5: "Pixel sampling" for texture mapping</h3>
-    <p>Pixel sampling is mapping pixels to your screen. We implemented pixel sampling to perform texture mapping by
-      taking the color at the uv coordinates in our texture map, to correspond to xy coordinates in our screen space and
-      output those colors based on different methods. In our implementation, pixel sampling takes in (x, y) and returns
-      a color. The two sampling methods we implemented are nearest sampling and bilinear sampling. Nearest sampling
-      simply rounds x and y and returns the color found in the texture map at that point. Bilinear sampling the 4
-      nearest sample locations and returns the weighted average color weighted by location. This is done using linear
-      interpolation as discussed in lecture and shown ___.
-    </p>
+    <p>Pixel sampling is mapping pixels from one image to another (can be differing sizes).</p>
+    <p>We implemented pixel sampling for texture mapping by taking the color at the (u, v)
+       coordinate in our texture map and mapping it to the (x, y) coordinate in our screen space.
+        The two sampling methods we implemented are nearest sampling and bilinear sampling.</p>
+    <p>Nearest sampling simply outputs the color of the nearest pixel. This is done by rounding the (u, v) coordinate.</p>
+    <p>Bilinear sampling takes the 4 nearest sample locations and returns a weighted average color based on location. This is
+       done through linear interpolation vertically, horizontally, and finally between the previous results.</p>
 
     <div align="middle">
       <br><br>
@@ -255,38 +325,40 @@
 
           <tr>
             <td>
-              <img src="images/task5-bilinear-1.png" align="middle" width="400px">
+              <img src="images/task5-linear-1.png" align="middle" width="400px">
               <figcaption align="middle">Bilinear Sampling, 1 Sample Per Pixel</figcaption>
             </td>
             <td>
-              <img src="images/task5-bilinear-16.png" align="middle" width="400px">
+              <img src="images/task5-linear-16.png" align="middle" width="400px">
               <figcaption align="middle">Bilinear Sampling, 16 Samples Per Pixel</figcaption>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+    <p> 
+      NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
+  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
+  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
+  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
+    </p>
 
-    <br><br>
+    <br>
     <h3 align="middle">Task 6: "Level sampling" with mipmaps for texture mapping</h3>
     <p>A mipmap is a data structure containing images in which each is a lower resolution (usually ½ the height and
       width) of the previous image. In this application, we store a texture in our mipmap. Level sampling is simply
-      sampling from a “level” of a mipmap. As discussed in lecture and shown ___, we have a formula to find a good
-      mipmap level?? Our implementation allows us to sample from level 0, the nearest level found by the formula, and a
-      weighted average of adjacent levels found by the formula.
+      sampling from a “level” of a mipmap. As discussed in lecture we can choose a good
+      mipmap level with the following formula.
 
       $$L = max(\sqrt{(\frac {du}{dx})^2 + \frac{dv}{dx})^2}, \sqrt{(\frac {du}{dy})^2 + \frac{dv}{dy})^2})$$
       $$D = \log_2(L)$$
 
-      <br><br>Using supersampling, pixel sampling, and level sampling all are slower and use more memory than basic
-      rasterization.
-    </p>
-    <img src="formulas/_.png" align="middle" width="600px">
-    <p>Text.</p>
+      <p>
+        Our implementation allows us to sample from level 0, the nearest level found by the formula, and a
+      weighted average of adjacent levels found by the formula.
+      </p>
 
     <div align="middle">
-      <h3>My own SVG</h3>
-      <br>
       <table style="width=100%">
         <tbody>
           <tr>
@@ -313,47 +385,18 @@
 
         </tbody>
       </table>
-      <h3>SVG from the Original</h3>
-      <br>
-      <table style="width=100%">
-        <tbody>
-          <tr>
-            <td>
-              <img src="images/z_.png" align="middle" width="400px">
-              <figcaption align="middle">dsf</figcaption>
-            </td>
-            <td>
-              <img src="images/-.png" align="middle" width="400px">
-              <figcaption align="middle">sdf</figcaption>
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              <img src="images/_" align="middle" width="400px">
-              <figcaption align="middle">sad</figcaption>
-            </td>
-            <td>
-              <img src="images/-.png" align="middle" width="400px">
-              <figcaption align="middle">Nasd9</figcaption>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img src="images/ds.png" align="middle" width="400px">
-              <figcaption align="middle">asd</figcaption>
-            </td>
-            <td>
-              <img src="images/_.png" align="middle" width="400px">
-              <figcaption align="middle">asd</figcaption>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
 
   </div>
 </body>
+<p>
+  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
+  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
+  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
+  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
+  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
+  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
+  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
+  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
+</p>
 
 </html>
