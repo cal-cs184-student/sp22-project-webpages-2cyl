@@ -109,67 +109,69 @@
       0.5 each to get the center of the corresponding pixel for an accurate line test.
 
       <br><br>Our algorithm is no less worse than one that checks each sample within the bounding box of the triangle
-      because it does exactly that. We find the minimum and maximum of each \((x, y)\) value and iterate over that.
-      
+      because it does exactly that. We find the minimum and maximum of each (x, y) value and iterate over that.
+
     <div align="middle">
       <br><br><img src="images/task1.png" align="middle" width="400px">
       <figcaption align="middle">Rasterized Triangles.</figcaption>
     </div>
 
-      <br>An attempt was made to use OpenMP <code> #pragma omp for </code> commands before for loops to speed up our
-      calculations, but the timing results showed no noticeable improvement. 
-      <p>
+    <br>An attempt was made to use OpenMP <code> #pragma omp for </code> commands before for loops to speed up our
+    calculations, but the timing results showed no noticeable improvement.
+    <p>
       We also brainstormed an idea of speeding up rasterization using a sliding tile method.
-       In this method, we would loop from the left until a find a point within the triangle then loop 
-       from the right until a find a point within the triangle. Then we know that every point between 
-       these two is inside the triangle and we can skip the arithmetic. This would save us computation roughly 
-       equal to sampling every point within the triangle.
+      In this method, we would loop from the left until a find a point within the triangle then loop
+      from the right until a find a point within the triangle. Then we know that every point between
+      these two is inside the triangle and we can skip the arithmetic. This would save us computation roughly
+      equal to sampling every point within the triangle.
     </p>
 
-<style>
-  table.GeneratedTable {
-    width: 100%;
-    background-color: #ffffff;
-    border-collapse: collapse;
-    border-width: 2px;
-    border-color: #000000;
-    border-style: solid;
-    color: #000000;
-  }
-  
-  table.GeneratedTable td, table.GeneratedTable th {
-    border-width: 2px;
-    border-color: #000000;
-    border-style: solid;
-    padding: 3px;
-  }
-  
-  table.GeneratedTable thead {
-    background-color: #ffc12e;
-  }
-  </style>
-  
-  <!-- HTML Code: Place this code in the document's body (between the 'body' tags) where the table should appear -->
-  <table class="GeneratedTable">
-    <thead>
-      <tr>
-        <th>Naive</th>
-        <th>"Optimized"</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>0.268050667</td>
-        <td>0.245115</td>
-      </tr>
-      <tr>
-        <td>2.651900667</td>
-        <td>2.548970333</td>
-      </tr>
-    </tbody>
-  </table>
+    <style>
+      table.GeneratedTable {
+        width: 100%;
+        background-color: #ffffff;
+        border-collapse: collapse;
+        border-width: 2px;
+        border-color: #000000;
+        border-style: solid;
+        color: #000000;
+      }
+
+      table.GeneratedTable td,
+      table.GeneratedTable th {
+        border-width: 2px;
+        border-color: #000000;
+        border-style: solid;
+        padding: 3px;
+      }
+
+      table.GeneratedTable thead {
+        background-color: #ffc12e;
+      }
+    </style>
+
+    <!-- HTML Code: Place this code in the document's body (between the 'body' tags) where the table should appear -->
+    <table class="GeneratedTable">
+      <thead>
+        <tr>
+          <th>Naive</th>
+          <th>"Optimized"</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0.268050667</td>
+          <td>0.245115</td>
+        </tr>
+        <tr>
+          <td>2.651900667</td>
+          <td>2.548970333</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <figcaption align="middle">Average values of render times (seconds) of 01_degenerate_square1.svg and 02_degenerate_square2.svg with 5 trials. </figcaption>
+  <figcaption align="middle">Average values of render times (seconds) of 01_degenerate_square1.svg and
+    02_degenerate_square2.svg with 5 trials. </figcaption>
 
   <div align>
     <br><br>
@@ -186,9 +188,9 @@
       increment to each point.
     </p>
     <div align="middle">
-    <br><br><img src="images/supersample.png" align="middle" width="600px">
-    <figcaption align="middle">Brainstorming process for oversampling implementation</figcaption>
-  </div>
+      <br><br><img src="images/supersample.png" align="middle" width="600px">
+      <figcaption align="middle">Brainstorming process for oversampling implementation</figcaption>
+    </div>
     <p>
       <br>
       In order to downsample our sample buffer, <code>RasterizerImp::resolve_to_framebuffer()</code> was modified to
@@ -259,11 +261,12 @@
     <h3 align="middle">Task 4: Barycentric coordinates</h3>
     <p>Barycentric coordinates are special homogeneous coordinates that can help us get smooth transition values for the
       colors in our triangles when rasterizing. We can linearly interpolate (aka lerp) between each pair of vertices’
-      associated color. The following image shows a smooth blended color triangle. The vertices of the triangle are pure
+      associated color. The image below shows a smooth blended color triangle. The vertices of the triangle are pure
       RGB colors, and as we move away from the vertices, the colors become a blend of the 3 colors with each color
-      intensity proportional to the distance away from the vertices.
+      intensity proportional to the distance away from the vertices. The circle below is also an interpolation across
+      color hues and darkness values.
     </p>
-            
+
     <p>
       We build upon our previous rasterization algorithm by adding the ability to rasterize interpolated color
       triangles. Based on the location in the triangle, we solve for the color ratios: \(\alpha\), \(\beta\), and
@@ -272,7 +275,7 @@
       $$V = \alpha V_A + \beta V_B + \gamma V_C$$
     </p>
     <div align="middle">
-      
+
     </div>
 
     <div align="middle">
@@ -289,25 +292,27 @@
             </td>
             <td>
               <img src="images/task4-circle.png" align="middle" width="400px">
-             <figcaption align="middle">Gradient circle.</figcaption>
+              <figcaption align="middle">Gradient circle.</figcaption>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p> 
-    
+    <p>
 
 
-    <br><br>
+
+      <br><br>
     <h3 align="middle">Task 5: "Pixel sampling" for texture mapping</h3>
     <p>Pixel sampling is mapping pixels from one image to another (can be differing sizes).</p>
     <p>We implemented pixel sampling for texture mapping by taking the color at the (u, v)
-       coordinate in our texture map and mapping it to the (x, y) coordinate in our screen space.
-        The two sampling methods we implemented are nearest sampling and bilinear sampling.</p>
-    <p>Nearest sampling simply outputs the color of the nearest pixel. This is done by rounding the (u, v) coordinate.</p>
-    <p>Bilinear sampling takes the 4 nearest sample locations and returns a weighted average color based on location. This is
-       done through linear interpolation vertically, horizontally, and finally between the previous results.</p>
+      coordinate in our texture map and mapping it to the (x, y) coordinate in our screen space.
+      The two sampling methods we implemented are nearest sampling and bilinear sampling.</p>
+    <p>Nearest sampling simply outputs the color of the nearest pixel. This is done by rounding the (u, v) coordinate.
+    </p>
+    <p>Bilinear sampling takes the 4 nearest sample locations and returns a weighted average color based on location.
+      This is
+      done through linear interpolation vertically, horizontally, and finally between the previous results.</p>
 
     <div align="middle">
       <br><br>
@@ -337,14 +342,17 @@
         </tbody>
       </table>
     </div>
-    <p> 
-      NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
-  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
-  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
-  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
+    <p>
+      <br><br>
+      We observed some differences between the two sampling methods. Bilinear sampling tends to give a blurrier result
+      due to averaging out values, which we can see in the images above. Nearest sampling only clips to the closest
+      color for a pixel result, which results in sharper edges in the images, but also more jaggies. In terms of
+      computation, bilinear will be more costly. This is especially true when computing images of large dimension for
+      bilinear sampling, since we are sampling four times as many locations, and also performing three lerps to obtain a
+      weighted average final result.
     </p>
 
-    <br>
+    <br><br>
     <h3 align="middle">Task 6: "Level sampling" with mipmaps for texture mapping</h3>
     <p>A mipmap is a data structure containing images in which each is a lower resolution (usually ½ the height and
       width) of the previous image. In this application, we store a texture in our mipmap. Level sampling is simply
@@ -354,10 +362,10 @@
       $$L = max(\sqrt{(\frac {du}{dx})^2 + \frac{dv}{dx})^2}, \sqrt{(\frac {du}{dy})^2 + \frac{dv}{dy})^2})$$
       $$D = \log_2(L)$$
 
-      <p>
-        Our implementation allows us to sample from level 0, the nearest level found by the formula, and a
+    <p>
+      Our implementation allows us to sample from level 0, the nearest level found by the formula, and a
       weighted average of adjacent levels found by the formula.
-      </p>
+    </p>
 
     <div align="middle">
       <table style="width=100%">
@@ -387,17 +395,29 @@
         </tbody>
       </table>
 
-  </div>
+    </div>
 </body>
 <p>
-  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
-  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
-  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
-  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
-  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
-  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
-  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
-  NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE. NEED TO COMPARE.
+  From our image comparison, we think that L_ZERO and P_LINEAR gave the best results between not being too blurry and
+  not having too many jaggies. This is also optimal since pixel sampling is less costly than level sampling.
+
+  <br><br> To further compare the different sampling techniques, we will rank the methods by speed, memory usage, and
+  antialiasing power. In terms of speed, sampling by number of samples per pixel is the slowest since it has to do the
+  most computation. Especially when the sampling rate is high, it takes a very long time to render an image as seen from
+  both practice and theory. Next slowest is pixel sampling since we are doing more computations than level sampling due
+  to bilinear pixel sampling calculations. The fastest is level sampling because the mipmaps already exist for us.
+
+  <br><br> In terms of memory usage, number of samples per pixel will also increasingly use the most memory as we
+  increase the sample rate. Level sampling also uses are large amount of memory due to story all the mipmap levels.
+  Pixel sampling uses the least amoount of memory out of the three techniques.
+
+  <br><br> Supersampling method has good antialiasing results, but we found that at high sample rates, the images feel
+  too smooth and blurred out sometimes. Level sampling has more subtle antialiasing results. We thought
+  pixel sampling gave the best tradeoffs between too blurry and jaggy without looking bad, and was also good at
+  antialiasing.
+
+  <br><br> Overall, this was a fun project and we enjoyed learning about rasterization and were surprised by how complex
+  it is just to display many triangles on our screens.
 </p>
 
 </html>
