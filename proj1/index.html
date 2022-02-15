@@ -117,12 +117,13 @@
     </div>
 
       <br>An attempt was made to use OpenMP <code> #pragma omp for </code> commands before for loops to speed up our
-      calculations, but the timing results showed no noticeable improvement. We also brainstormed an idea of speeding up rasterization using a sliding tile method.
-       In this method, we would loop from the right until a find a point within the triangle then loop 
-       from the left until a find a point within the triangle. Then we know that every point between 
+      calculations, but the timing results showed no noticeable improvement. 
+      <p>
+      We also brainstormed an idea of speeding up rasterization using a sliding tile method.
+       In this method, we would loop from the left until a find a point within the triangle then loop 
+       from the right until a find a point within the triangle. Then we know that every point between 
        these two is inside the triangle and we can skip the arithmetic. This would save us computation roughly 
-       equal to sampling every point within the triangle. However, when we went to implement this, we found it performed slower.
-        In theory it saves computations; however, we believe that the simpler case is easier to optimize for the compiler.
+       equal to sampling every point within the triangle.
     </p>
 
 <style>
@@ -158,12 +159,12 @@
     </thead>
     <tbody>
       <tr>
-        <td>0.15247733</td>
-        <td>0.23240967</td>
+        <td>0.268050667</td>
+        <td>0.245115</td>
       </tr>
       <tr>
-        <td>1.48965133</td>
-        <td>2.397225</td>
+        <td>2.651900667</td>
+        <td>2.548970333</td>
       </tr>
     </tbody>
   </table>
@@ -175,7 +176,7 @@
     <h3 align="middle">Task 2: Antialiasing by Supersampling</h3>
 
     <p>In the next part of our project, we implemented supersampling on top of our basic triangle rasterization.
-      Supersampling is useful for antialiasing in images. Oftentimes we get jaggies and unwanted sharp edges on our
+      Supersampling is useful for antialiasing in images. Often times we get jaggies and unwanted sharp edges on our
       image. This can be solved by sampling more than we need, then downsampling by averaging to ‘smooth out’ the
       jaggedness. The more samples we take, the less jaggies the end result has.
       <br><br>We made several changes to our rendering pipeline to accommodate supersampling. First, all functions that
