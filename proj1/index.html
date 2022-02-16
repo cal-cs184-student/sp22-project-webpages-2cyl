@@ -41,6 +41,10 @@
       background: #171a20;
     }
 
+    a {
+      color: #dfd7d7;
+    }
+
     /* width */
     ::-webkit-scrollbar {
       width: 8px;
@@ -129,7 +133,7 @@
       these two is inside the triangle and we can skip the arithmetic. This would save us computation roughly
       equal to sampling every point within the triangle.
     </p>
-
+    <br><br>
     <style>
       table.GeneratedTable {
         width: 100%;
@@ -356,8 +360,10 @@
       weighted average final result.
     </p>
     <p>
-      On images with lower resolution, there will be large differences since nearest ignores surrounding pixels with an already low sample size. 
-      On images with larger resolutions, these differences are less noticeable since averages become less useful with larger sample sizes.
+      On images with lower resolution, there will be large differences since nearest ignores surrounding pixels with an
+      already low sample size.
+      On images with larger resolutions, these differences are less noticeable since averages become less useful with
+      larger sample sizes.
     </p>
 
     <br>
@@ -375,6 +381,7 @@
       weighted average of adjacent levels found by the formula.
     </p>
 
+    <br><br>
     <div align="middle">
       <table style="width=100%">
         <tbody>
@@ -405,15 +412,34 @@
 
     </div>
 </body>
+<br>
 <p>
-  From our image comparison, we think L_NEAREST and P_LINEAR gives the best results. This is expected as it is almost trilinear filtering. 
+  From our image comparison, we think L_NEAREST and P_LINEAR gives the best results. This is expected as it is almost
+  trilinear filtering.
 </p>
-<p>Supersampling had powerful antialiasing results, but we found that at high sample rates, the images feel too smooth and blurred out sometimes. Supersampling uses the most memory and also is the slowest.</p>
+<p>Supersampling had powerful antialiasing results, but we found that at high sample rates, the images feel too smooth
+  and blurred out sometimes. Supersampling uses the most memory and also is the slowest.</p>
 
-<p>Level sampling with a mip map has more subtle antialiasing results. It requires 4/3 times the amount of memory and was slower than pixel sampling.</p>
+<p>Level sampling with a mip map has more subtle antialiasing results. It requires 4/3 times the amount of memory and
+  was slower than pixel sampling.</p>
 
-<p>Pixel sampling had great antialiasing results. It requires the least amount of memory and also performed the quickest.</p>
+<p>Pixel sampling had great antialiasing results. It requires the least amount of memory and also performed the
+  quickest.</p>
 
 <p>We thought that pixel sampling gave the best tradeoffs between antialiasing and memory/speed.</p>
+
+<br><br>
+<h3 align="middle">Task 7: Draw something interesting!</h3>
+<p>To create this image, we fed a png into <a href=https://www.samcodes.co.uk/project/geometrize-haxe-web/
+    target="_blank">Geometrize</a> which converts our png into a svg composed of triangles.
+  However,
+  the svgparser included in this project only supports colors given in hex while Geometrize outputs colors in the format
+  "rgb(r,g,b)" so we had to edit it in <code>svgparser.cpp</code> to allow support for this format.
+</p>
+
+<div align="middle">
+  <br><br><img src="images/competition.png" align="middle" width="800px">
+  <figcaption align="middle">Buff Kirby</figcaption>
+</div>
 
 </html>
