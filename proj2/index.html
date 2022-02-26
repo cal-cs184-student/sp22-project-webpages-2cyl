@@ -38,7 +38,7 @@
     code {
       font-size: medium;
       display: inline-block;
-      background: #171a20;
+      background: #2b2e28;
     }
 
     a {
@@ -57,12 +57,12 @@
 
     /* Handle */
     ::-webkit-scrollbar-thumb {
-      background: #2b303a;
+      background: #41443d;
     }
 
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
-      background: #2b303a;
+      background: #41443d;
     }
   </style>
   <title>CS 184 MeshEdit: Clare Lin, Faywer Liu</title>
@@ -108,202 +108,69 @@
 
     <div align="middle">
       <br><br><img src="images/task1-1.gif" align="middle" width="400px">
-      <figcaption align="middle">Progression</figcaption>
+      <figcaption align="middle">Progression of recursive control point calculations</figcaption>
     </div>
 
     <div align="middle">
       <br><br><img src="images/task1-2.gif" align="middle" width="400px">
-      <figcaption align="middle">Scrolling</figcaption>
+      <figcaption align="middle">Evaluated point moving along Bezier curve</figcaption>
     </div>
-
-    <br>An attempt was made to use OpenMP <code> #pragma omp for </code> commands before for loops to speed up our
-    calculations, but the timing results showed no noticeable improvement.
-    <p>
-      We also brainstormed an idea of speeding up rasterization using a sliding tile method.
-      In this method, we would loop from the left until a find a point within the triangle then loop
-      from the right until a find a point within the triangle. Then we know that every point between
-      these two is inside the triangle and we can skip the arithmetic. This would save us computation roughly
-      equal to sampling every point within the triangle.
-    </p>
-    <br><br>
-    <style>
-      table.GeneratedTable {
-        width: 100%;
-        background-color: #ffffff;
-        border-collapse: collapse;
-        border-width: 2px;
-        border-color: #000000;
-        border-style: solid;
-        color: #000000;
-      }
-
-      table.GeneratedTable td,
-      table.GeneratedTable th {
-        border-width: 2px;
-        border-color: #000000;
-        border-style: solid;
-        padding: 3px;
-      }
-
-      table.GeneratedTable thead {
-        background-color: #ffc12e;
-      }
-    </style>
-
-    <!-- HTML Code: Place this code in the document's body (between the 'body' tags) where the table should appear -->
-    <table class="GeneratedTable">
-      <thead>
-        <tr>
-          <th>Naive</th>
-          <th>"Optimized"</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>0.268050667</td>
-          <td>0.245115</td>
-        </tr>
-        <tr>
-          <td>2.651900667</td>
-          <td>2.548970333</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
-  <figcaption align="middle">Average values of render times (seconds) of 01_degenerate_square1.svg and
-    02_degenerate_square2.svg with 5 trials. </figcaption>
 
   <div align>
     <br><br>
     <h3 align="middle">Task 2: Bezier Surfaces with Separable 1D de Casteljau</h3>
 
-    <p>In the next part of our project, we implemented supersampling on top of our basic triangle rasterization.
-      Supersampling is useful for antialiasing in images. Often times we get jaggies and unwanted sharp edges on our
-      image. This can be solved by sampling more than we need, then downsampling by averaging to ‘smooth out’ the
-      jaggedness. The more samples we take, the less jaggies the end result has.
-      <br><br>We made several changes to our rendering pipeline to accommodate supersampling. First, all functions that
-      resize the temporary sample buffer had to get a multiplication factor by our sample rate to fit all of our
-      samples. In our rasterization function, <code>RasterizerImp::rasterize_triangle()</code>, we nested two more for
-      loops to take more samples at each pixel location. Again, to obtain the center of each subpixel, we had to add an
-      increment to each point.
+    <p>We now extend the de Castelijau algorithm from evaluating Bezier curves to evaluating Bezier surfaces. The
+      algorithm was changed from performing lerps with control points in the 2D space to the 3D space. The logic of the
+      algorithm mostly remains the same.
     </p>
     <div align="middle">
-      <br><br><img src="images/supersample.png" align="middle" width="600px">
-      <figcaption align="middle">Brainstorming process for oversampling implementation</figcaption>
-    </div>
-    <p>
-      <br>
-      In order to downsample our sample buffer, <code>RasterizerImp::resolve_to_framebuffer()</code> was modified to
-      average out every <code>sample_rate</code> number of points into one color, before inserting into the final RGB
-      frame buffer array. Our results successfully showed that supersampling decreased the amount of jaggies as the
-      sampling rate was increased.
-    </p>
-
-    <div align="middle">
-      <br><br>
-      <table style="width=100%">
-        <tbody>
-          <tr>
-            <td>
-              <img src="images/task1.png" align="middle" width="400px">
-              <figcaption align="middle">1 Sample Per Pixel</figcaption>
-            </td>
-            <td>
-              <img src="images/task2-4.png" align="middle" width="400px">
-              <figcaption align="middle">4 Samples Per Pixel</figcaption>
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              <img src="images/task2-9.png" align="middle" width="400px">
-              <figcaption align="middle">9 Samples Per Pixel</figcaption>
-            </td>
-            <td>
-              <img src="images/task2-16.png" align="middle" width="400px">
-              <figcaption align="middle">16 Samples Per Pixel</figcaption>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <br><br><img src="images/teapot.png" align="middle" width="600px">
+      <figcaption align="middle">The teapot with Bezier surfaces</figcaption>
     </div>
 
     <br><br>
     <h2 align="middle">Section II: Triangle Meshes and Half-Edge Data Structure</h2>
     <h3 align="middle">Task 3: Area-Weighted Vertex Normals</h3>
-    <p>In this section we implemented transforms using the matrices. We are able to translate \(\textbf{T}(t_x,t_y)\),
-      rotate \(\textbf{R}(\alpha)\), and scale \(\textbf{S}(s_x,s_y)\) polygons. An application of these transformations
-      is manipulating “cubeman” in which we made him dance the naenae. The transformation matrices are listed below.
-
-      $$\textbf{T}(t_x,t_y)=\begin{pmatrix}
-      1& 0& t_x\\
-      0& 1& t_y\\
-      0& 0& 1\\
-      \end{pmatrix}$$
-
-      $$\textbf{R}(\alpha)=\begin{pmatrix}
-      \cos(\alpha)& -\sin(\alpha)& 0\\
-      \sin(\alpha)& \cos(\alpha)& 0\\
-      0& 0& 1\\
-      \end{pmatrix}$$
-
-      $$\textbf{S}(s_x,s_y)=\begin{pmatrix}
-      s_x& 0& 0\\
-      0& s_y& 0\\
-      0& 0& 1\\
-      \end{pmatrix}$$
+    <p>
+      We implemented area-weighted vertex normals for Phong shading, improving on smoothness of surfaces from the flat
+      shading method. To achieve this, we first used the halfedge data structure to traverse the neighbor vertices of a
+      center vertex. Two edges were found through the difference between the center vertex and two neighbor vertices.
+      Then we
+      used the cross product of the two edges to calculate each normal, and summed up all the normals. Lastly we
+      returned the approximate unit normal at that vertex to obtain Phong shading.
     </p>
     <div align="middle">
-      <br><br> <img src="images/task3.png" align="middle" width="400px">
-      <figcaption align="middle">nae nae</figcaption>
+      <br><br> <img src="images/notsmooth.png" align="middle" width="600px">
+      <figcaption align="middle">Flat shaded teapot</figcaption>
+    </div>
+    <div align="middle">
+      <br><br> <img src="images/smooth.png" align="middle" width="600px">
+      <figcaption align="middle">Phong shaded teapot</figcaption>
     </div>
 
     <br><br>
     <h3 align="middle">Task 4: Edge Flip</h3>
-    <p>Barycentric coordinates are special homogeneous coordinates that can help us get smooth transition values for the
-      colors in our triangles when rasterizing. We can linearly interpolate (aka lerp) between each pair of vertices’
-      associated color. The image below shows a smooth blended color triangle. The vertices of the triangle are pure
-      RGB colors, and as we move away from the vertices, the colors become a blend of the 3 colors with each color
-      intensity proportional to the distance away from the vertices. The circle below is also an interpolation across
-      color hues and darkness values.
+    <p> We have a thorough edge flip implementation that can use used to flip any edge in the mesh. We first assign
+      variable names to all the halfedges, edges, vertices, and faces in the given configuration. Then we reassign all
+      properties to the halfedges using the <code>Halfedge::setNeighbors(...)</code> function. After that we keep
+      reassigning all the other edges, vertices, and faces to have the correct correspopnding halfedge.
     </p>
 
-    <p>
-      We build upon our previous rasterization algorithm by adding the ability to rasterize interpolated color
-      triangles. Based on the location in the triangle, we solve for the color ratios: \(\alpha\), \(\beta\), and
-      \(\gamma\), before multiplying them with their respective colors to obtain the final color values in the triangle.
-
-      $$V = \alpha V_A + \beta V_B + \gamma V_C$$
-    </p>
-    <div align="middle">
-
-    </div>
+    <p> An interesting but frustrating problem we had was that the UI window was freezing up due to coding error when an
+      edge flip was attempted, so it was hard to debug through the UI. However, finally when the UI stopped freezing all
+      was working well. Seeing the frozen window led us to being safe and setting every variable, even if it might not
+      have been all needed, to make sure no holes were found. Another mistake was wrongly assuming that some halfedges
+      belonged in the two faces shown in the diagram, as well as wrongly assuming the next halfedge properties for some
+      halfedges. This was realized thanks to browsing a comment on Piazza.</p>
 
     <div align="middle">
-      <br><br>
+      <br><br> <img src="images/edge_flip_diagram.png" align="middle" width="800px">
+      <figcaption align="middle">Helpful edge flip diagram</figcaption>
     </div>
 
-    <div align="middle">
-      <table style="width=100%">
-        <tbody>
-          <tr>
-            <td>
-              <img src="images/task4-tri.png" align="middle" width="400px">
-              <figcaption align="middle">Gradient triangle.</figcaption>
-            </td>
-            <td>
-              <img src="images/task4-circle.png" align="middle" width="400px">
-              <figcaption align="middle">Gradient circle.</figcaption>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p>
-
-
-
-      <br><br>
+    <br><br>
     <h3 align="middle">Task 5: Edge Split</h3>
     <p>Pixel sampling is mapping pixels from one image to another (can be differing sizes).</p>
     <p>We implemented pixel sampling for texture mapping by taking the color at the (u, v)
