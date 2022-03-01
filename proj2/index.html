@@ -158,11 +158,17 @@
 
     <br><br>
     <h3 align="middle">Task 4: Edge Flip</h3>
-    <p> We have a thorough edge flip implementation that can use used to flip any edge in the mesh. We first assign
-      variable names to all the halfedges, edges, vertices, and faces in the given configuration. Then we reassign all
+    <p> We have a thorough edge flip implementation that can use used to flip any edge in the mesh as long as it is not a boundary edge. 
+      We first assign variable names to all the halfedges, edges, vertices, and faces in the given configuration. Then we reassign all
       properties to the halfedges using the <code>Halfedge::setNeighbors(...)</code> function. After that we keep
-      reassigning all the other edges, vertices, and faces to have the correct correspopnding halfedge.
+      reassigning all the other edges, vertices, and faces to have the correct correspopnding halfedge. Our assignments are based on
+      the figure below.
     </p>
+
+    <div align="middle">
+      <br><br> <img src="images/edge_flip_diagram.png" align="middle" width="800px">
+      <figcaption align="middle">Helpful edge flip diagram</figcaption>
+    </div>
 
     <p> An interesting but frustrating problem we had was that the UI window was freezing up due to coding error when an
       edge flip was attempted, so it was hard to debug through the UI. However, finally when the UI stopped freezing all
@@ -171,81 +177,39 @@
       belonged in the two faces shown in the diagram, as well as wrongly assuming the next halfedge properties for some
       halfedges. This was realized thanks to browsing a comment on Piazza.</p>
 
+    
+
+    <br><br>
+
+    <h3 align="middle">Task 5: Edge Split</h3>
+    <p> We have a thorough edge split implementation that can use used to split any edge in the mesh as long as it is not a boundary edge. 
+      It's implementation is quite similar to edge flipping. We first assign variable names to all the halfedges, edges, vertices, and faces 
+      in the given configuration; however, we have to create three new edges, sixteen halfedges, two faces, and an extra vertex. Then we reassign all
+      properties to the halfedges using the <code>Halfedge::setNeighbors(...)</code> function. After that we keep
+      reassigning all the other edges, vertices, and faces to have the correct correspopnding halfedge.Our assignments are based on
+      the figure below.
+    </p>
+
     <div align="middle">
       <br><br> <img src="images/edge_flip_diagram.png" align="middle" width="800px">
       <figcaption align="middle">Helpful edge flip diagram</figcaption>
     </div>
 
+    <p> Again, we had issues with the UI freezing after incorrectly assigning pointer values. This was fixed by careful review of the diagram.
+        Another issue we had is that we used 2 different "starting" diagrams while our initial pointer assignments stayed this same. This caused
+        some holes in our tea pot.
+    </p>
+
     <br><br>
-    <h3 align="middle">Task 5: Edge Split</h3>
-    <p>Pixel sampling is mapping pixels from one image to another (can be differing sizes).</p>
-    <p>We implemented pixel sampling for texture mapping by taking the color at the (u, v)
-      coordinate in our texture map and mapping it to the (x, y) coordinate in our screen space.
-      The two sampling methods we implemented are nearest sampling and bilinear sampling.</p>
-    <p>Nearest sampling simply outputs the color of the nearest pixel. This is done by rounding the (u, v) coordinate.
-    </p>
-    <p>Bilinear sampling takes the 4 nearest sample locations and returns a weighted average color based on location.
-      This is
-      done through linear interpolation vertically, horizontally, and finally between the previous results.</p>
-
-    <div align="middle">
-      <br><br>
-      <table style="width=100%">
-        <tbody>
-          <tr>
-            <td>
-              <img src="images/task5-near-1.png" align="middle" width="400px">
-              <figcaption align="middle">Nearest Sampling, 1 Sample Per Pixel</figcaption>
-            </td>
-            <td>
-              <img src="images/task5-near-16.png" align="middle" width="400px">
-              <figcaption align="middle">Nearest Sampling, 16 Samples Per Pixel</figcaption>
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              <img src="images/task5-linear-1.png" align="middle" width="400px">
-              <figcaption align="middle">Bilinear Sampling, 1 Sample Per Pixel</figcaption>
-            </td>
-            <td>
-              <img src="images/task5-linear-16.png" align="middle" width="400px">
-              <figcaption align="middle">Bilinear Sampling, 16 Samples Per Pixel</figcaption>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p>
-      <br>
-      We observed some differences between the two sampling methods. Bilinear sampling tends to give a blurrier result
-      due to averaging out values, which we can see in the images above. Nearest sampling only clips to the closest
-      color for a pixel result, which results in sharper edges in the images, but also more jaggies. In terms of
-      computation, bilinear will be more costly. This is especially true when computing images of large dimension for
-      bilinear sampling, since we are sampling four times as many locations, and also performing three lerps to obtain a
-      weighted average final result.
-    </p>
-    <p>
-      On images with lower resolution, there will be large differences since nearest ignores surrounding pixels with an
-      already low sample size.
-      On images with larger resolutions, these differences are less noticeable since averages become less useful with
-      larger sample sizes.
-    </p>
-
-    <br>
     <h3 align="middle">Task 6: Loop Subdivision for Mesh Upsampling</h3>
-    <p>A mipmap is a data structure containing images in which each is a lower resolution (usually ½ the height and
-      width) of the previous image. In this application, we store a texture in our mipmap. Level sampling is simply
-      sampling from a “level” of a mipmap. As discussed in lecture we can choose a good
-      mipmap level with the following formula.
-
-      $$L = max(\sqrt{(\frac {du}{dx})^2 + \frac{dv}{dx})^2}, \sqrt{(\frac {du}{dy})^2 + \frac{dv}{dy})^2})$$
-      $$D = \log_2(L)$$
-
     <p>
-      Our implementation allows us to sample from level 0, the nearest level found by the formula, and a
-      weighted average of adjacent levels found by the formula.
+      Our implementation of loop subdivision heavily follows the hints given. In the first step, we update vertex positions using a weighted average of neighboring vertices.
+      For old vertices, we iterate through each vertex and calculate the new position. We also make sure to mark each vertex as old. For new vertices, we calculate
+      the position of where a vertex will be formed by iterating through all the edges and computing a weighted average. Next, we split each non-boundary edge. However,
+      to avoid an infinite loop, we have to first copy each edge into a queue and iterate through that. We mark these vertices as new and also assign them their new position found earlier.
+      Next we flip any new edge that connects an old vertex and a new vertex. Finally, we iterate through each vertex and set their position to their new position.
     </p>
+  
 
     <br><br>
     <div align="middle">
@@ -279,33 +243,6 @@
     </div>
 </body>
 <br>
-<p>
-  From our image comparison, we think L_NEAREST and P_LINEAR gives the best results. This is expected as it is almost
-  trilinear filtering.
-</p>
-<p>Supersampling had powerful antialiasing results, but we found that at high sample rates, the images feel too smooth
-  and blurred out sometimes. Supersampling uses the most memory and also is the slowest.</p>
 
-<p>Level sampling with a mip map has more subtle antialiasing results. It requires 4/3 times the amount of memory and
-  was slower than pixel sampling.</p>
-
-<p>Pixel sampling had great antialiasing results. It requires the least amount of memory and also performed the
-  quickest.</p>
-
-<p>We thought that pixel sampling gave the best tradeoffs between antialiasing and memory/speed.</p>
-
-<br><br>
-<h3 align="middle">Task 7: Design and Edit Your Own Mesh!</h3>
-<p>To create this image, we fed a png into <a href=https://www.samcodes.co.uk/project/geometrize-haxe-web/
-    target="_blank">Geometrize</a> which converts our png into a svg composed of triangles.
-  However,
-  the svgparser included in this project only supports colors given in hex while Geometrize outputs colors in the format
-  "rgb(r,g,b)" so we had to edit it in <code>svgparser.cpp</code> to allow support for this format.
-</p>
-
-<div align="middle">
-  <br><br><img src="images/competition.png" align="middle" width="800px">
-  <figcaption align="middle">Buff Kirby</figcaption>
-</div>
 
 </html>
