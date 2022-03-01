@@ -191,8 +191,8 @@
     </p>
 
     <div align="middle">
-      <br><br> <img src="images/edge_flip_diagram.png" align="middle" width="800px">
-      <figcaption align="middle">Helpful edge flip diagram</figcaption>
+      <br><br> <img src="images/split_diagram.png" align="middle" width="800px">
+      <figcaption align="middle">Helpful edge split diagram</figcaption>
     </div>
 
     <p> Again, we had issues with the UI freezing after incorrectly assigning pointer values. This was fixed by careful review of the diagram.
@@ -206,28 +206,34 @@
         <tbody>
           <tr>
             <td>
-              <img src="images/.png" align="middle" width="400px">
+              <img src="images/pre_split.png" align="middle" width="400px">
               <figcaption align="middle">Teapot before splitting</figcaption>
             </td>
             <td>
-              <img src="images/.png" align="middle" width="400px">
+              <img src="images/post_split.png" align="middle" width="400px">
               <figcaption align="middle">Teapot after splitting</figcaption>
             </td>
           </tr>
-
-          <tr>
-            <td>
-              <img src="images/.png" align="middle" width="400px">
-              <figcaption align="middle">Teapot before a combo of flip/split</figcaption>
-            </td>
-            <td>
-              <img src="images/.png" align="middle" width="400px">
-              <figcaption align="middle">Teapot after a combo of flip/split</figcaption>
-            </td>
-          </tr>
-
         </tbody>
       </table>
+         
+      <br><br>
+      <div align="middle">
+        <table style="width=100%">
+          <tbody>
+      <tr>
+        <td>
+          <img src="images/pre_combo.png" align="middle" width="400px">
+          <figcaption align="middle">Teapot before a combo of flip/split</figcaption>
+        </td>
+        <td>
+          <img src="images/post_combo.png" align="middle" width="400px">
+          <figcaption align="middle">Teapot after a combo of flip/split</figcaption>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
 
     </div>
 </body>
@@ -235,6 +241,7 @@
 
     <br><br>
     <h3 align="middle">Task 6: Loop Subdivision for Mesh Upsampling</h3>
+    
     <p>
       Our implementation of loop subdivision heavily follows the hints given. In the first step, we update vertex positions using a weighted average of neighboring vertices.
       For old vertices, we iterate through each vertex and calculate the new position. We also make sure to mark each vertex as old. For new vertices, we calculate
@@ -250,23 +257,23 @@
         <tbody>
           <tr>
             <td>
-              <img src="images/l0pn.png" align="middle" width="400px">
-              <figcaption align="middle">L_ZERO and P_NEAREST</figcaption>
+              <img src="images/cube0.png" align="middle" width="400px">
+              <figcaption align="middle">Cube Level 0 Subdivision</figcaption>
             </td>
             <td>
-              <img src="images/l0pl.png" align="middle" width="400px">
-              <figcaption align="middle">L_ZERO and P_LINEAR</figcaption>
+              <img src="images/cube1.png" align="middle" width="400px">
+              <figcaption align="middle">Cube Level 1 Subdivision</figcaption>
             </td>
           </tr>
 
           <tr>
             <td>
-              <img src="images/lnpn.png" align="middle" width="400px">
-              <figcaption align="middle">L_NEAREST and P_NEAREST</figcaption>
+              <img src="images/cube2.png" align="middle" width="400px">
+              <figcaption align="middle">Cube Level 2 Subdivision</figcaption>
             </td>
             <td>
-              <img src="images/lnpl.png" align="middle" width="400px">
-              <figcaption align="middle">L_NEAREST and P_LINEAR</figcaption>
+              <img src="images/cube3.png" align="middle" width="400px">
+              <figcaption align="middle">Cube Level 3 Subdivision</figcaption>
             </td>
           </tr>
 
@@ -275,28 +282,30 @@
 
     </div>
 
+    <br><br>
+
     <div align="middle">
       <table style="width=100%">
         <tbody>
           <tr>
             <td>
-              <img src="images/l0pn.png" align="middle" width="400px">
-              <figcaption align="middle">L_ZERO and P_NEAREST</figcaption>
+              <img src="images/presplitcube0.png" align="middle" width="400px">
+              <figcaption align="middle">Pre-Split Cube Level 0 Subdivision</figcaption>
             </td>
             <td>
-              <img src="images/l0pl.png" align="middle" width="400px">
-              <figcaption align="middle">L_ZERO and P_LINEAR</figcaption>
+              <img src="images/presplitcube1.png" align="middle" width="400px">
+              <figcaption align="middle">Pre-Split Cube Level 1 Subdivision</figcaption>
             </td>
           </tr>
 
           <tr>
             <td>
-              <img src="images/lnpn.png" align="middle" width="400px">
-              <figcaption align="middle">L_NEAREST and P_NEAREST</figcaption>
+              <img src="images/preslitcube2.png" align="middle" width="400px">
+              <figcaption align="middle">Pre-Split Cube Level 2 Subdivision</figcaption>
             </td>
             <td>
-              <img src="images/lnpl.png" align="middle" width="400px">
-              <figcaption align="middle">L_NEAREST and P_LINEAR</figcaption>
+              <img src="images/presplitcube3.png" align="middle" width="400px">
+              <figcaption align="middle">Pre-Split Cube Level 3 Subdivision</figcaption>
             </td>
           </tr>
 
