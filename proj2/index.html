@@ -80,7 +80,7 @@
   <h1 align="middle">CS 184: Computer Graphics and Imaging [SP22]</h1>
   <h1 align="middle">Project 2: MeshEdit</h1>
   <h2 align="middle">Clare Lin, Faywer Liu</h2>
-  <br><br><img src="images/147nmya.png" width="800px" class="center">
+  <br><br><img src="images/bean.png" width="800px" class="center">
 
   <div>
 
@@ -115,12 +115,12 @@
       <br><br><img src="images/task1-2.gif" align="middle" width="400px">
       <figcaption align="middle">Evaluated point moving along Bezier curve</figcaption>
     </div>
-    
+
     <div align="middle">
       <br><br><img src="images/dragging.gif" align="middle" width="400px">
       <figcaption align="middle">Dragging control point</figcaption>
     </div>
-    
+
   </div>
 
   <div align>
@@ -158,10 +158,13 @@
 
     <br><br>
     <h3 align="middle">Task 4: Edge Flip</h3>
-    <p> We have a thorough edge flip implementation that can use used to flip any edge in the mesh as long as it is not a boundary edge. 
-      We first assign variable names to all the halfedges, edges, vertices, and faces in the given configuration. Then we reassign all
+    <p> We have a thorough edge flip implementation that can use used to flip any edge in the mesh as long as it is not
+      a boundary edge.
+      We first assign variable names to all the halfedges, edges, vertices, and faces in the given configuration. Then
+      we reassign all
       properties to the halfedges using the <code>Halfedge::setNeighbors(...)</code> function. After that we keep
-      reassigning all the other edges, vertices, and faces to have the correct correspopnding halfedge. Our assignments are based on
+      reassigning all the other edges, vertices, and faces to have the correct correspopnding halfedge. Our assignments
+      are based on
       the figure below.
     </p>
 
@@ -177,16 +180,20 @@
       belonged in the two faces shown in the diagram, as well as wrongly assuming the next halfedge properties for some
       halfedges. This was realized thanks to browsing a comment on Piazza.</p>
 
-    
+
 
     <br><br>
 
     <h3 align="middle">Task 5: Edge Split</h3>
-    <p> We have a thorough edge split implementation that can use used to split any edge in the mesh as long as it is not a boundary edge. 
-      It's implementation is quite similar to edge flipping. We first assign variable names to all the halfedges, edges, vertices, and faces 
-      in the given configuration; however, we have to create three new edges, sixteen halfedges, two faces, and an extra vertex. Then we reassign all
+    <p> We have a thorough edge split implementation that can use used to split any edge in the mesh as long as it is
+      not a boundary edge.
+      It's implementation is quite similar to edge flipping. We first assign variable names to all the halfedges, edges,
+      vertices, and faces
+      in the given configuration; however, we have to create three new edges, sixteen halfedges, two faces, and an extra
+      vertex. Then we reassign all
       properties to the halfedges using the <code>Halfedge::setNeighbors(...)</code> function. After that we keep
-      reassigning all the other edges, vertices, and faces to have the correct correspopnding halfedge.Our assignments are based on
+      reassigning all the other edges, vertices, and faces to have the correct correspopnding halfedge.Our assignments
+      are based on
       the figure below.
     </p>
 
@@ -195,9 +202,11 @@
       <figcaption align="middle">Helpful edge split diagram</figcaption>
     </div>
 
-    <p> Again, we had issues with the UI freezing after incorrectly assigning pointer values. This was fixed by careful review of the diagram.
-        Another issue we had is that we used 2 different "starting" diagrams while our initial pointer assignments stayed this same. This caused
-        some holes in our tea pot.
+    <p> Again, we had issues with the UI freezing after incorrectly assigning pointer values. This was fixed by careful
+      review of the diagram.
+      Another issue we had is that we used 2 different "starting" diagrams while our initial pointer assignments stayed
+      this same. This caused
+      some holes in our tea pot.
     </p>
 
     <br><br>
@@ -216,40 +225,48 @@
           </tr>
         </tbody>
       </table>
-         
+
       <br><br>
       <div align="middle">
         <table style="width=100%">
           <tbody>
-      <tr>
-        <td>
-          <img src="images/pre_combo.png" align="middle" width="400px">
-          <figcaption align="middle">Teapot before a combo of flip/split</figcaption>
-        </td>
-        <td>
-          <img src="images/post_combo.png" align="middle" width="400px">
-          <figcaption align="middle">Teapot after a combo of flip/split</figcaption>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
+            <tr>
+              <td>
+                <img src="images/pre_combo.png" align="middle" width="400px">
+                <figcaption align="middle">Teapot before a combo of flip/split</figcaption>
+              </td>
+              <td>
+                <img src="images/post_combo.png" align="middle" width="400px">
+                <figcaption align="middle">Teapot after a combo of flip/split</figcaption>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-</body>
-<br>
+
+    <br>
 
     <br><br>
     <h3 align="middle">Task 6: Loop Subdivision for Mesh Upsampling</h3>
-    
+
     <p>
-      Our implementation of loop subdivision heavily follows the hints given. In the first step, we update vertex positions using a weighted average of neighboring vertices.
-      For old vertices, we iterate through each vertex and calculate the new position. We also make sure to mark each vertex as old. For new vertices, we calculate
-      the position of where a vertex will be formed by iterating through all the edges and computing a weighted average. Next, we split each non-boundary edge. However,
-      to avoid an infinite loop, we have to first copy each edge into a queue and iterate through that. We mark these vertices as new and also assign them their new position found earlier.
-      Next we flip any new edge that connects an old vertex and a new vertex. Finally, we iterate through each vertex and set their position to their new position.
+      Our implementation of loop subdivision heavily follows the hints given. In the first step, we update vertex
+      positions
+      using a weighted average of neighboring vertices.
+      For old vertices, we iterate through each vertex and calculate the new position. We also make sure to mark each
+      vertex
+      as old. For new vertices, we calculate
+      the position of where a vertex will be formed by iterating through all the edges and computing a weighted
+      average.
+      Next, we split each non-boundary edge. However,
+      to avoid an infinite loop, we have to first copy each edge into a queue and iterate through that. We mark these
+      vertices as new and also assign them their new position found earlier.
+      Next we flip any new edge that connects an old vertex and a new vertex. Finally, we iterate through each vertex
+      and
+      set their position to their new position.
     </p>
-  
+
 
     <br><br>
     <div align="middle">
@@ -313,8 +330,27 @@
       </table>
 
     </div>
-</body>
-<br>
 
+    <br><br>
+    <h3 align="middle">Task 7: Design and Edit Your Own Mesh!</h3>
+
+    <p>
+      We tried smoothing out a 3D polygon mesh of a solar bear. The solar bear is composed of a low poly bear shape with
+      a sun emoji ring that was extruded to 3D added on top. This was then exported to a
+      <code>.dae</code> file in Blender before loading in our mesh edit program. The solar bear was then subdivided and
+      smoothed out using our loop subdivision implementation.
+    </p>
+
+    <div align="middle">
+      <br><br> <img src="images/solarbear.gif" align="middle" width="600px">
+      <figcaption align="middle">Smoothening process of solar bear</figcaption>
+    </div>
+    <div align="middle">
+      <br><br> <img src="images/smoothbear.png" align="middle" width="600px">
+      <figcaption align="middle">Another view of smoothed out bear</figcaption>
+    </div>
+
+
+</body>
 
 </html>
