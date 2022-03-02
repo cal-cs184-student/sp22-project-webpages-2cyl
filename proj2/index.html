@@ -3,18 +3,37 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    :root {
+      --bgcolor: #41443d;
+      --fgcolor: #d9dfd7;
+      --highlight: #b395c5;
+      font-family: 'Roboto Mono';
+      font-weight: 300;
+    }
+
     body {
       padding: 60px;
       width: 800px;
       margin: auto;
       text-align: left;
-      font-weight: 300;
       font-size: small;
-      font-family: 'Roboto Mono';
-      color: #d9dfd7;
-      background-color: #41443d;
+      /* font-family: 'Roboto Mono'; */
+      color: var(--fgcolor);
+      background-color: var(--bgcolor);
       text-align: justify;
       text-justify: inter-word;
+
+    }
+
+    button {
+      background-color: var(--fgcolor);
+      border: none;
+      font-weight: bold;
+      text-decoration: none;
+      color: var(--bgcolor);
+      padding: 5px 10px;
+      margin: 2px 2px;
+      cursor: pointer;
     }
 
     h1 {
@@ -23,30 +42,27 @@
 
     h2 {
       font-size: large;
-      color: #b395c5;
+      color: var(--highlight);
     }
 
     h3 {
       font-size: medium;
-      color: #b395c5;
+      color: var(--highlight);
     }
 
-    h4 {
+    h4,
+    figcaption {
       font-size: small;
     }
 
     code {
       font-size: medium;
       display: inline-block;
-      background: #2b2e28;
-    }
-
-    figcaption {
-      font-size: small;
+      background: var(--bgcolor);
     }
 
     a {
-      color: #d9dfd7;
+      color: var(--fgcolor);
     }
 
     /* width */
@@ -56,19 +72,27 @@
 
     /* Track */
     ::-webkit-scrollbar-track {
-      background: #d9dfd7;
+      background: var(--fgcolor);
     }
 
     /* Handle */
     ::-webkit-scrollbar-thumb {
-      background: #41443d;
+      background: var(--bgcolor);
     }
 
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
-      background: #41443d;
+      background: var(--bgcolor);
     }
   </style>
+  <div align="middle">
+    <a href="../proj1/index.html"><button>P1</button></a>
+    <a href="../proj2/index.html"><button>P2</button></a>
+    <a href="../proj3-1/index.html"><button>P3-1</button></a>
+    <a href="../proj3-2/index.html"><button>P3-2</button></a>
+    <a href="../proj4/index.html"><button>P4</button></a>
+  </div>
+  <br>
   <title>CS 184 MeshEdit: Clare Lin, Faywer Liu</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -91,8 +115,8 @@
     <br><br>
     <h2 align="middle">Overview</h2>
     <p> In this assignment, we implemented the de Casteljau Algorithm to build 2D Bezier curves. We then extended
-        this into 3D to build 3D Bezier Surfaces. We then implemented Edge Flip and Edge Split using the Halfedge 
-        data structure. Then using a combination of flips and splits, we implemented mesh upscaling.
+      this into 3D to build 3D Bezier Surfaces. We then implemented Edge Flip and Edge Split using the Halfedge
+      data structure. Then using a combination of flips and splits, we implemented mesh upscaling.
 
       <br><br>
       Overall, this was a fun project and we enjoyed learning about mesh editing and were surprised by how complex
@@ -218,7 +242,7 @@
 
     <br><br>
     <div align="middle">
-      <table style="width=100%">
+      <table style="width:100%">
         <tbody>
           <tr>
             <td>
@@ -235,7 +259,7 @@
 
       <br><br>
       <div align="middle">
-        <table style="width=100%">
+        <table style="width:100%">
           <tbody>
             <tr>
               <td>
@@ -259,7 +283,7 @@
 
     <br><br>
     <div align="middle">
-      <table style="width=100%">
+      <table style="width:100%">
         <tbody>
           <tr>
             <td>
@@ -279,9 +303,8 @@
     <h3 align="middle">Task 6: Loop Subdivision for Mesh Upsampling</h3>
 
     <p>
-      Our implementation of loop subdivision heavily follows the hints given. In the first step, we update vertex
-      positions
-      using a weighted average of neighboring vertices.
+      Loop subdivision for mesh upsampling allows us to obtain a smoother 3D object the more times we upsample. In the
+      first step, we update vertex positions using a weighted average of neighboring vertices.
       For old vertices, we iterate through each vertex and calculate the new position. We also make sure to mark each
       vertex
       as old. For new vertices, we calculate
@@ -298,7 +321,7 @@
 
     <br><br>
     <div align="middle">
-      <table style="width=100%">
+      <table style="width:100%">
         <tbody>
           <tr>
             <td>
@@ -330,7 +353,7 @@
     <br><br>
 
     <div align="middle">
-      <table style="width=100%">
+      <table style="width:100%">
         <tbody>
           <tr>
             <td>
