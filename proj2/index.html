@@ -58,7 +58,7 @@
     code {
       font-size: medium;
       display: inline-block;
-      background: var(--bgcolor);
+      background: #2b2e28;
     }
 
     a {
@@ -115,8 +115,8 @@
     <br><br>
     <h2 align="middle">Overview</h2>
     <p> In this assignment, we implemented the de Casteljau Algorithm to build 2D Bezier curves. We then extended
-      this into 3D to build 3D Bezier Surfaces. We then implemented Edge Flip and Edge Split using the Halfedge
-      data structure. Then using a combination of flips and splits, we implemented mesh upscaling.
+        this into 3D to build 3D Bezier Surfaces. We then implemented Edge Flip and Edge Split using the Halfedge 
+        data structure. Then using a combination of flips and splits, we implemented mesh upscaling.
 
       <br><br>
       Overall, this was a fun project and we enjoyed learning about mesh editing and were surprised by how complex
@@ -135,6 +135,8 @@
       lerp between.
 
       $$lerp(t, a, b) = a + t * (b - a)$$
+
+      Then this point lies on the Bezier Curve at parameter t.
 
     <div align="middle">
       <br><br><img src="images/task1-1.gif" align="middle" width="400px">
@@ -159,7 +161,9 @@
 
     <p>We now extend the de Castelijau algorithm from evaluating Bezier curves to evaluating Bezier surfaces. The
       algorithm was changed from performing lerps with control points in the 2D space to the 3D space. The logic of the
-      algorithm mostly remains the same.
+      algorithm mostly remains the same but we perform our recursive step to get a row of points parametrized by u then
+      repeat the recursive step on the row of points to get a point at the parameter v. Then this point lies on the Bezier
+      surface at the parameter u and v.
     </p>
     <div align="middle">
       <br><br><img src="images/teapot.png" align="middle" width="600px">
@@ -232,7 +236,6 @@
       <figcaption align="middle">Helpful edge split diagram</figcaption>
     </div>
 
-    <br><br>
     <p> Again, we had issues with the UI freezing after incorrectly assigning pointer values. This was fixed by careful
       review of the diagram.
       Another issue we had is that we used 2 different "starting" diagrams while our initial pointer assignments stayed
@@ -242,7 +245,7 @@
 
     <br><br>
     <div align="middle">
-      <table style="width:100%">
+      <table style="width=100%">
         <tbody>
           <tr>
             <td>
@@ -259,7 +262,7 @@
 
       <br><br>
       <div align="middle">
-        <table style="width:100%">
+        <table style="width=100%">
           <tbody>
             <tr>
               <td>
@@ -276,35 +279,15 @@
       </div>
     </div>
 
-    <br><br>
-    <p> We also implemented boundary edge splitting as an edge case. When we split an edge at the boundary, we perform
-      assignments only on one side. The logic is similar to the normal edge split but we don't assign anything past the
-      virtual boundary edge side.</p>
-
-    <br><br>
-    <div align="middle">
-      <table style="width:100%">
-        <tbody>
-          <tr>
-            <td>
-              <img src="images/bound1.png" align="middle" width="400px">
-              <figcaption align="middle">Unsplit boundary edges on the beatle</figcaption>
-            </td>
-            <td>
-              <img src="images/bound2.png" align="middle" width="400px">
-              <figcaption align="middle">Split boundary edges on the beatle</figcaption>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <br>
 
     <br><br>
     <h3 align="middle">Task 6: Loop Subdivision for Mesh Upsampling</h3>
 
     <p>
-      Loop subdivision for mesh upsampling allows us to obtain a smoother 3D object the more times we upsample. In the
-      first step, we update vertex positions using a weighted average of neighboring vertices.
+      Our implementation of loop subdivision heavily follows the hints given. In the first step, we update vertex
+      positions
+      using a weighted average of neighboring vertices.
       For old vertices, we iterate through each vertex and calculate the new position. We also make sure to mark each
       vertex
       as old. For new vertices, we calculate
@@ -321,7 +304,7 @@
 
     <br><br>
     <div align="middle">
-      <table style="width:100%">
+      <table style="width=100%">
         <tbody>
           <tr>
             <td>
@@ -351,9 +334,16 @@
     </div>
 
     <br><br>
+    <p> 
+      We can see that sharp corners and edges get duller and become more smoother. Since loop subdivision uses a weighted average 
+      of a vertices new and old neighbors, sharp corner and edges get "pulled in" and there is a dramatic loss in volume. The faces
+      of the upscaled mesh are no longer flat. We can also see that after going down one level of loop subdivision,
+      the cube becomes asymmetric. However note that each face of the level 0 cube is already asymmetric as it is only symmetric along the diagonal. 
+    </p>
+    <br><br>
 
     <div align="middle">
-      <table style="width:100%">
+      <table style="width=100%">
         <tbody>
           <tr>
             <td>
@@ -383,23 +373,29 @@
     </div>
 
     <br><br>
+    <p>
+      By presplitting edges on each face of the cube, the cube keeps more of it's shape. Again since vertex position is 
+      calculated based on its neighboring old and new vertices, by presplitting and adding more vertices there is less
+      of the "pulling in" effect. Presplitting also makes each face of the cube symmetric. Thus after upscaling, it remains
+      symmetric.
+    </p>
+    <br><br>
+
     <h3 align="middle">Task 7: Design and Edit Your Own Mesh!</h3>
 
     <p>
-      We tried smoothing out a 3D polygon mesh of a solar bear. The solar bear is composed of a low poly bear shape
-      with
+      We tried smoothing out a 3D polygon mesh of a solar bear. The solar bear is composed of a low poly bear shape with
       a sun emoji ring that was extruded to 3D added on top. This was then exported to a
-      <code>.dae</code> file in Blender before loading in our mesh edit program. The solar bear was then subdivided
-      and
+      <code>.dae</code> file in Blender before loading in our mesh edit program. The solar bear was then subdivided and
       smoothed out using our loop subdivision implementation.
     </p>
 
     <div align="middle">
-      <br><br> <img src="images/solarbear.gif" align="middle" width="800px">
+      <br><br> <img src="images/solarbear.gif" align="middle" width="600px">
       <figcaption align="middle">Smoothening process of solar bear</figcaption>
     </div>
     <div align="middle">
-      <br><br> <img src="images/smoothbear.png" align="middle" width="800px">
+      <br><br> <img src="images/smoothbear.png" align="middle" width="600px">
       <figcaption align="middle">Another view of smoothed out bear</figcaption>
     </div>
 
