@@ -41,6 +41,10 @@
       background: #2b2e28;
     }
 
+    figcaption {
+      font-size: small;
+    }
+
     a {
       color: #d9dfd7;
     }
@@ -202,6 +206,7 @@
       <figcaption align="middle">Helpful edge split diagram</figcaption>
     </div>
 
+    <br><br>
     <p> Again, we had issues with the UI freezing after incorrectly assigning pointer values. This was fixed by careful
       review of the diagram.
       Another issue we had is that we used 2 different "starting" diagrams while our initial pointer assignments stayed
@@ -245,7 +250,28 @@
       </div>
     </div>
 
-    <br>
+    <br><br>
+    <p> We also implemented boundary edge splitting as an edge case. When we split an edge at the boundary, we perform
+      assignments only on one side. The logic is similar to the normal edge split but we don't assign anything past the
+      virtual boundary edge side.</p>
+
+    <br><br>
+    <div align="middle">
+      <table style="width=100%">
+        <tbody>
+          <tr>
+            <td>
+              <img src="images/bound1.png" align="middle" width="400px">
+              <figcaption align="middle">Unsplit boundary edges on the beatle</figcaption>
+            </td>
+            <td>
+              <img src="images/bound2.png" align="middle" width="400px">
+              <figcaption align="middle">Split boundary edges on the beatle</figcaption>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <br><br>
     <h3 align="middle">Task 6: Loop Subdivision for Mesh Upsampling</h3>
@@ -335,18 +361,20 @@
     <h3 align="middle">Task 7: Design and Edit Your Own Mesh!</h3>
 
     <p>
-      We tried smoothing out a 3D polygon mesh of a solar bear. The solar bear is composed of a low poly bear shape with
+      We tried smoothing out a 3D polygon mesh of a solar bear. The solar bear is composed of a low poly bear shape
+      with
       a sun emoji ring that was extruded to 3D added on top. This was then exported to a
-      <code>.dae</code> file in Blender before loading in our mesh edit program. The solar bear was then subdivided and
+      <code>.dae</code> file in Blender before loading in our mesh edit program. The solar bear was then subdivided
+      and
       smoothed out using our loop subdivision implementation.
     </p>
 
     <div align="middle">
-      <br><br> <img src="images/solarbear.gif" align="middle" width="600px">
+      <br><br> <img src="images/solarbear.gif" align="middle" width="800px">
       <figcaption align="middle">Smoothening process of solar bear</figcaption>
     </div>
     <div align="middle">
-      <br><br> <img src="images/smoothbear.png" align="middle" width="600px">
+      <br><br> <img src="images/smoothbear.png" align="middle" width="800px">
       <figcaption align="middle">Another view of smoothed out bear</figcaption>
     </div>
 
