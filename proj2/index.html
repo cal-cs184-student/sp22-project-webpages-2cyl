@@ -203,6 +203,7 @@
       <figcaption align="middle">Helpful edge flip diagram</figcaption>
     </div>
 
+    <br><br>
     <p> An interesting but frustrating problem we had was that the UI window was freezing up due to coding error when an
       edge flip was attempted, so it was hard to debug through the UI. However, finally when the UI stopped freezing all
       was working well. Seeing the frozen window led us to being safe and setting every variable, even if it might not
@@ -228,10 +229,10 @@
       not a boundary edge.
       It's implementation is quite similar to edge flipping. We first assign variable names to all the halfedges, edges,
       vertices, and faces
-      in the given configuration; however, we have to create three new edges, sixteen halfedges, two faces, and an extra
+      in the given configuration; however, we have to create three new edges, six halfedges, two faces, and an extra
       vertex. Then we reassign all
       properties to the halfedges using the <code>Halfedge::setNeighbors(...)</code> function. After that we keep
-      reassigning all the other edges, vertices, and faces to have the correct correspopnding halfedge.Our assignments
+      reassigning all the other edges, vertices, and faces to have the correct correspopnding halfedge. Our assignments
       are based on
       the figure below.
     </p>
@@ -360,6 +361,16 @@
     </div>
 
     <br><br>
+    <p>
+      We can see that sharp corners and edges get duller and become smoother. Since loop subdivision uses a
+      weighted average
+      of a vertices of new and old neighbors, sharp corner and edges get "pulled in" and there is a dramatic loss in
+      volume. The faces
+      of the upscaled mesh are no longer flat. We can also see that after going down one level of loop subdivision,
+      the cube becomes asymmetric. However note that each face of the level 0 cube is already asymmetric as it is only
+      symmetric along the diagonal.
+    </p>
+    <br><br>
 
     <div align="middle">
       <table style="width:100%">
@@ -390,6 +401,14 @@
       </table>
 
     </div>
+
+    <br><br>
+    <p>
+      By presplitting edges on each face of the cube, the cube keeps more of it's shape. Again since vertex position is
+      calculated based on its neighboring old and new vertices, by presplitting and adding more vertices there is less
+      of the "pulling in" effect. Presplitting also makes each face of the cube symmetric. Thus after upscaling, it
+      remains symmetric.
+    </p>
 
     <br><br>
     <h3 align="middle">Task 7: Design and Edit Your Own Mesh!</h3>
