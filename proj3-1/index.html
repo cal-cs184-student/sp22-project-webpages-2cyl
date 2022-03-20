@@ -108,7 +108,7 @@
   <h1 align="middle">CS 184: Computer Graphics and Imaging [SP22]</h1>
   <h1 align="middle">Project 3-1: Path Tracer</h1>
   <h2 align="middle">Clare Lin, Faywer Liu</h2>
-  <br><br><img src="images/bean.png" width="800px" class="center">
+  <br><br><img src="images/task5bunny.png" width="800px" class="center">
 
   <div>
 
@@ -142,105 +142,140 @@
     <br><br>
     <h3 align="middle">Task 3: Direct Illumination</h3>
     <p>
-      We implemented area-weighted vertex normals for Phong shading, improving on smoothness of surfaces from the flat
-      shading method. To achieve this, we first used the halfedge data structure to traverse the neighbor vertices of a
-      center vertex. Two edges were found through the difference between the center vertex and two neighbor vertices.
-      Then we
-      used the cross product of the two edges to calculate each normal, and summed up all the normals. Lastly we
-      returned the approximate unit normal at that vertex to obtain Phong shading.
+      We implemented poooped
     </p>
     <div align="middle">
-      <br><br> <img src="images/notsmooth.png" align="middle" width="600px">
-      <figcaption align="middle">Flat shaded teapot</figcaption>
-    </div>
-    <div align="middle">
-      <br><br> <img src="images/smooth.png" align="middle" width="600px">
-      <figcaption align="middle">Phong shaded teapot</figcaption>
-    </div>
 
 	<div align="middle">
 		<table style="width:100%">
 		  <tbody>
 			<tr>
 			  <td>
-				<img src="images/presplitcube0.png" align="middle" width="400px">
-				<figcaption align="middle">Pre-Split Cube Level 0 Subdivision</figcaption>
+				<img src="images/task3-bunny-h.png" align="middle" width="400px">
+				<figcaption align="middle">Bunny rendered using hemisphere sampling</figcaption>
 			  </td>
 			  <td>
-				<img src="images/presplitcube1.png" align="middle" width="400px">
-				<figcaption align="middle">Pre-Split Cube Level 1 Subdivision</figcaption>
+				<img src="images/task3-bunny-l.png" align="middle" width="400px">
+				<figcaption align="middle">Bunny rendered using light sampling</figcaption>
 			  </td>
 			</tr>
   
 			<tr>
 			  <td>
-				<img src="images/preslitcube2.png" align="middle" width="400px">
-				<figcaption align="middle">Pre-Split Cube Level 2 Subdivision</figcaption>
-			  </td>
-			  <td>
-				<img src="images/presplitcube3.png" align="middle" width="400px">
-				<figcaption align="middle">Pre-Split Cube Level 3 Subdivision</figcaption>
+          <img src="images/task3-gem-h.png" align="middle" width="400px">
+          <figcaption align="middle">Gems rendered using hemisphere sampling</figcaption>
+          </td>
+          <td>
+          <img src="images/task3-gem-l.png" align="middle" width="400px">
+          <figcaption align="middle">Gems rendered using light sampling</figcaption>
 			  </td>
 			</tr>
   
 		  </tbody>
 		</table>
+
+    <br><br>
+    <br><br>
+
+    <div align="middle">
+      <table style="width:100%">
+        <tbody>
+        <tr>
+          <td>
+          <img src="images/task3-bunny1.png" align="middle" width="400px">
+          <figcaption align="middle">1 sample per pixel and 1 light ray</figcaption>
+          </td>
+          <td>
+            <img src="images/task3-bunny4.png" align="middle" width="400px">
+            <figcaption align="middle">1 sample per pixel and 4 light ray</figcaption>
+          </td>
+        </tr>
+    
+        <tr>
+          <td>
+            <img src="images/task3-bunny16.png" align="middle" width="400px">
+            <figcaption align="middle">1 sample per pixel and 16 light ray</figcaption>
+            </td>
+            <td>
+              <img src="images/task3-bunny64.png" align="middle" width="400px">
+              <figcaption align="middle">1 sample per pixel and 64 light ray</figcaption>
+          </td>
+        </tr>
+    
+        </tbody>
+      </table>
   
 	  </div>
 
     <br><br>
     <h3 align="middle">Task 4: Global Illumination</h3>
-    <p> We have a thorough edge flip implementation that can use used to flip any edge in the mesh as long as it is not
-      a boundary edge.
-      We first assign variable names to all the halfedges, edges, vertices, and faces in the given configuration. Then
-      we reassign all
-      properties to the halfedges using the <code>Halfedge::setNeighbors(...)</code> function. After that we keep
-      reassigning all the other edges, vertices, and faces to have the correct correspopnding halfedge. Our assignments
-      are based on
-      the figure below.
+    <p> We pooed
     </p>
 
-	<div align="middle">
-		<br><br> <img src="images/preflip.png" align="middle" width="600px">
-		<figcaption align="middle">Before flipping edges</figcaption>
-	  </div>
-	  <div align="middle">
-		<br><br> <img src="images/flipped.png" align="middle" width="600px">
-		<figcaption align="middle">After flipping edges</figcaption>
-	  </div>
+    <div align="middle">
+      <table style="width:100%">
+        <tbody>
+        <tr>
+          <td>
+            <img src="images/task4-bunny.png" align="middle" width="400px">
+            <figcaption align="middle">Bunny rendered with global illumination</figcaption>
+            </td>
+            <td>
+            <img src="images/task4-dragon.png" align="middle" width="400px">
+            <figcaption align="middle">Dragon rendered with global illumination</figcaption>
+            </td>
+        </tr>    
+        </tbody>
+      </table>
+      <br><br>
+      <div align="middle">
+        <table style="width:100%">
+          <tbody>
+          <tr>
+            <td>
+              <img src="images/task4-bunny-direct.png" align="middle" width="400px">
+              <figcaption align="middle">Bunny rendered with only direct illumination</figcaption>
+              </td>
+              <td>
+              <img src="images/task4-bunny-indirect.png" align="middle" width="400px">
+              <figcaption align="middle">Dragon rendered with only indirect illumination</figcaption>
+              </td>
+          </tr>    
+          </tbody>
+        </table>
 
-    <br><br>
+        <br><br>
+        <br><br>
 
-	
 	<div align="middle">
 		<table style="width:100%">
 		  <tbody>
 			<tr>
 			  <td>
-				<img src="images/presplitcube0.png" align="middle" width="400px">
-				<figcaption align="middle">Pre-Split Cube Level 0 Subdivision</figcaption>
+				<img src="images/task4-bunny-m0.png" align="middle" width="400px">
+				<figcaption align="middle">Bunny rendered with max_ray_depth = 0</figcaption>
 			  </td>
 			  <td>
-				<img src="images/presplitcube1.png" align="middle" width="400px">
-				<figcaption align="middle">Pre-Split Cube Level 1 Subdivision</figcaption>
+          <img src="images/task4-bunny-m1.png" align="middle" width="400px">
+          <figcaption align="middle">Bunny rendered with max_ray_depth = 1</figcaption>
 			  </td>
 			</tr>
-  
-			<tr>
+      <tr>
 			  <td>
-				<img src="images/preslitcube2.png" align="middle" width="400px">
-				<figcaption align="middle">Pre-Split Cube Level 2 Subdivision</figcaption>
+          <img src="images/task4-bunny-m2.png" align="middle" width="400px">
+          <figcaption align="middle">Bunny rendered with max_ray_depth = 2</figcaption>
 			  </td>
+        
 			  <td>
-				<img src="images/presplitcube3.png" align="middle" width="400px">
-				<figcaption align="middle">Pre-Split Cube Level 3 Subdivision</figcaption>
+          <img src="images/task4-bunny-m3.png" align="middle" width="400px">
+          <figcaption align="middle">Bunny rendered with max_ray_depth = 3</figcaption>
 			  </td>
 			</tr>
 
 			<tr>
 				<td>
-				  <img src="images/preslitcube2.png" align="middle" width="400px">
-				  <figcaption align="middle">Pre-Split Cube Level 2 Subdivision</figcaption>
+          <img src="images/task4-bunny-m100.png" align="middle" width="400px">
+          <figcaption align="middle">Bunny rendered with max_ray_depth = 100</figcaption>
 				</td>
 			  </tr>
   
@@ -250,50 +285,47 @@
 	  </div>
 
 	  <br><br>
+    <br><br>
 
 	  <div align="middle">
 		<table style="width:100%">
 		  <tbody>
 			<tr>
 			  <td>
-				<img src="images/presplitcube0.png" align="middle" width="400px">
-				<figcaption align="middle">Pre-Split Cube Level 0 Subdivision</figcaption>
+				<img src="images/task4-bunny1.png" align="middle" width="400px">
+				<figcaption align="middle">Sample-per-pixel rate = 1 and 4 light rays</figcaption>
 			  </td>
 			  <td>
-				<img src="images/presplitcube1.png" align="middle" width="400px">
-				<figcaption align="middle">Pre-Split Cube Level 1 Subdivision</figcaption>
+          <img src="images/task4-bunny2.png" align="middle" width="400px">
+          <figcaption align="middle">Sample-per-pixel rate = 2 and 4 light rays</figcaption>
 			  </td>
 			</tr>
   
 			<tr>
 			  <td>
-				<img src="images/preslitcube2.png" align="middle" width="400px">
-				<figcaption align="middle">Pre-Split Cube Level 2 Subdivision</figcaption>
+          <img src="images/task4-bunny4.png" align="middle" width="400px">
+          <figcaption align="middle">Sample-per-pixel rate = 4 and 4 light rays</figcaption>
 			  </td>
 			  <td>
-				<img src="images/presplitcube3.png" align="middle" width="400px">
-				<figcaption align="middle">Pre-Split Cube Level 3 Subdivision</figcaption>
+          <img src="images/task4-bunny8.png" align="middle" width="400px">
+          <figcaption align="middle">Sample-per-pixel rate = 8 and 4 light rays</figcaption>
 			  </td>
 			</tr>
 			<tr>
 				<td>
-				  <img src="images/presplitcube0.png" align="middle" width="400px">
-				  <figcaption align="middle">Pre-Split Cube Level 0 Subdivision</figcaption>
+          <img src="images/task4-bunny16.png" align="middle" width="400px">
+          <figcaption align="middle">Sample-per-pixel rate = 16 and 4 light rays</figcaption>
 				</td>
 				<td>
-				  <img src="images/presplitcube1.png" align="middle" width="400px">
-				  <figcaption align="middle">Pre-Split Cube Level 1 Subdivision</figcaption>
+          <img src="images/task4-bunny64.png" align="middle" width="400px">
+          <figcaption align="middle">Sample-per-pixel rate = 64 and 4 light rays</figcaption>
 				</td>
 			  </tr>
 	
 			  <tr>
 				<td>
-				  <img src="images/preslitcube2.png" align="middle" width="400px">
-				  <figcaption align="middle">Pre-Split Cube Level 2 Subdivision</figcaption>
-				</td>
-				<td>
-				  <img src="images/presplitcube3.png" align="middle" width="400px">
-				  <figcaption align="middle">Pre-Split Cube Level 3 Subdivision</figcaption>
+          <img src="images/task4-bunny1024.png" align="middle" width="400px">
+          <figcaption align="middle">Sample-per-pixel rate = 1024 and 4 light rays</figcaption>
 				</td>
 			  </tr>
   
@@ -309,14 +341,20 @@
     </p>
 
     <div align="middle">
-      <br><br> <img src="images/split_diagram.png" align="middle" width="800px">
-      <figcaption align="middle">Noise Free Image</figcaption>
-    </div>
-
-	<div align="middle">
-		<br><br> <img src="images/split_diagram.png" align="middle" width="800px">
-		<figcaption align="middle">Sample Rate Image</figcaption>
-	  </div>
+      <table style="width:100%">
+        <tbody>
+        <tr>
+          <td>
+          <img src="images/task5bunny.png" align="middle" width="400px">
+          <figcaption align="middle">Noise Free Bunny</figcaption>
+          </td>
+          <td>
+          <img src="images/task5bunny_rate.png" align="middle" width="400px">
+          <figcaption align="middle">Sample Rate of Bunny</figcaption>
+          </td>
+        </tr>    
+        </tbody>
+      </table>
 
 
 
