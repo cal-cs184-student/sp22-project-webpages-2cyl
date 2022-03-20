@@ -1,7 +1,327 @@
-<html>
-	<head>
-	</head>
-	<body>
-		Project 3-1 here
-	</body>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bgcolor: #41443d;
+      --fgcolor: #d9dfd7;
+      --highlight: #b395c5;
+      font-family: 'Roboto Mono';
+      font-weight: 300;
+    }
+
+    body {
+      padding: 60px;
+      width: 800px;
+      margin: auto;
+      text-align: left;
+      font-size: small;
+      /* font-family: 'Roboto Mono'; */
+      color: var(--fgcolor);
+      background-color: var(--bgcolor);
+      text-align: justify;
+      text-justify: inter-word;
+
+    }
+
+    button {
+      background-color: var(--fgcolor);
+      border: none;
+      font-weight: bold;
+      text-decoration: none;
+      color: var(--bgcolor);
+      padding: 5px 10px;
+      margin: 2px 2px;
+      cursor: pointer;
+    }
+
+    h1 {
+      font-size: x-large;
+    }
+
+    h2 {
+      font-size: large;
+      color: var(--highlight);
+    }
+
+    h3 {
+      font-size: medium;
+      color: var(--highlight);
+    }
+
+    h4,
+    figcaption {
+      font-size: small;
+    }
+
+    code {
+      font-size: medium;
+      display: inline-block;
+      background: #2b2e28;
+    }
+
+    a {
+      color: var(--fgcolor);
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: var(--fgcolor);
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: var(--bgcolor);
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--bgcolor);
+    }
+  </style>
+  <div align="middle">
+    <a href="../proj1/index.html"><button>P1</button></a>
+    <a href="../proj2/index.html"><button>P2</button></a>
+    <a href="../proj3-1/index.html"><button>P3-1</button></a>
+    <a href="../proj3-2/index.html"><button>P3-2</button></a>
+    <a href="../proj4/index.html"><button>P4</button></a>
+  </div>
+  <br>
+  <title>CS 184 Path Tracer Part 1: Clare Lin, Faywer Liu</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+
+  <!-- mathjax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+
+<body>
+
+  <h1 align="middle">CS 184: Computer Graphics and Imaging [SP22]</h1>
+  <h1 align="middle">Project 3-1: Path Tracer</h1>
+  <h2 align="middle">Clare Lin, Faywer Liu</h2>
+  <br><br><img src="images/bean.png" width="800px" class="center">
+
+  <div>
+
+    <br><br>
+    <h2 align="middle">Overview</h2>
+    <p> In this assignment, we pooed.
+
+      <br><br>
+      Overall, this was a fun project and we enjoyed learning about pooing
+    </p>
+
+    <br>
+    <h3 align="middle">Task 1: Ray Generation and Scene Intersection</h3>
+
+    <p> We implemented pooed
+
+
+  </div>
+
+  <div align>
+    <br><br>
+    <h3 align="middle">Task 2: Bounding Volume Hierarchy</h3>
+
+    <p>We now poo
+    </p>
+    <div align="middle">
+      <br><br><img src="images/.png" align="middle" width="600px">
+      <figcaption align="middle">The teapot with Bezier surfaces</figcaption>
+    </div>
+
+    <br><br>
+    <h3 align="middle">Task 3: Direct Illumination</h3>
+    <p>
+      We implemented area-weighted vertex normals for Phong shading, improving on smoothness of surfaces from the flat
+      shading method. To achieve this, we first used the halfedge data structure to traverse the neighbor vertices of a
+      center vertex. Two edges were found through the difference between the center vertex and two neighbor vertices.
+      Then we
+      used the cross product of the two edges to calculate each normal, and summed up all the normals. Lastly we
+      returned the approximate unit normal at that vertex to obtain Phong shading.
+    </p>
+    <div align="middle">
+      <br><br> <img src="images/notsmooth.png" align="middle" width="600px">
+      <figcaption align="middle">Flat shaded teapot</figcaption>
+    </div>
+    <div align="middle">
+      <br><br> <img src="images/smooth.png" align="middle" width="600px">
+      <figcaption align="middle">Phong shaded teapot</figcaption>
+    </div>
+
+	<div align="middle">
+		<table style="width:100%">
+		  <tbody>
+			<tr>
+			  <td>
+				<img src="images/presplitcube0.png" align="middle" width="400px">
+				<figcaption align="middle">Pre-Split Cube Level 0 Subdivision</figcaption>
+			  </td>
+			  <td>
+				<img src="images/presplitcube1.png" align="middle" width="400px">
+				<figcaption align="middle">Pre-Split Cube Level 1 Subdivision</figcaption>
+			  </td>
+			</tr>
+  
+			<tr>
+			  <td>
+				<img src="images/preslitcube2.png" align="middle" width="400px">
+				<figcaption align="middle">Pre-Split Cube Level 2 Subdivision</figcaption>
+			  </td>
+			  <td>
+				<img src="images/presplitcube3.png" align="middle" width="400px">
+				<figcaption align="middle">Pre-Split Cube Level 3 Subdivision</figcaption>
+			  </td>
+			</tr>
+  
+		  </tbody>
+		</table>
+  
+	  </div>
+
+    <br><br>
+    <h3 align="middle">Task 4: Global Illumination</h3>
+    <p> We have a thorough edge flip implementation that can use used to flip any edge in the mesh as long as it is not
+      a boundary edge.
+      We first assign variable names to all the halfedges, edges, vertices, and faces in the given configuration. Then
+      we reassign all
+      properties to the halfedges using the <code>Halfedge::setNeighbors(...)</code> function. After that we keep
+      reassigning all the other edges, vertices, and faces to have the correct correspopnding halfedge. Our assignments
+      are based on
+      the figure below.
+    </p>
+
+	<div align="middle">
+		<br><br> <img src="images/preflip.png" align="middle" width="600px">
+		<figcaption align="middle">Before flipping edges</figcaption>
+	  </div>
+	  <div align="middle">
+		<br><br> <img src="images/flipped.png" align="middle" width="600px">
+		<figcaption align="middle">After flipping edges</figcaption>
+	  </div>
+
+    <br><br>
+
+	
+	<div align="middle">
+		<table style="width:100%">
+		  <tbody>
+			<tr>
+			  <td>
+				<img src="images/presplitcube0.png" align="middle" width="400px">
+				<figcaption align="middle">Pre-Split Cube Level 0 Subdivision</figcaption>
+			  </td>
+			  <td>
+				<img src="images/presplitcube1.png" align="middle" width="400px">
+				<figcaption align="middle">Pre-Split Cube Level 1 Subdivision</figcaption>
+			  </td>
+			</tr>
+  
+			<tr>
+			  <td>
+				<img src="images/preslitcube2.png" align="middle" width="400px">
+				<figcaption align="middle">Pre-Split Cube Level 2 Subdivision</figcaption>
+			  </td>
+			  <td>
+				<img src="images/presplitcube3.png" align="middle" width="400px">
+				<figcaption align="middle">Pre-Split Cube Level 3 Subdivision</figcaption>
+			  </td>
+			</tr>
+
+			<tr>
+				<td>
+				  <img src="images/preslitcube2.png" align="middle" width="400px">
+				  <figcaption align="middle">Pre-Split Cube Level 2 Subdivision</figcaption>
+				</td>
+			  </tr>
+  
+		  </tbody>
+		</table>
+  
+	  </div>
+
+	  <br><br>
+
+	  <div align="middle">
+		<table style="width:100%">
+		  <tbody>
+			<tr>
+			  <td>
+				<img src="images/presplitcube0.png" align="middle" width="400px">
+				<figcaption align="middle">Pre-Split Cube Level 0 Subdivision</figcaption>
+			  </td>
+			  <td>
+				<img src="images/presplitcube1.png" align="middle" width="400px">
+				<figcaption align="middle">Pre-Split Cube Level 1 Subdivision</figcaption>
+			  </td>
+			</tr>
+  
+			<tr>
+			  <td>
+				<img src="images/preslitcube2.png" align="middle" width="400px">
+				<figcaption align="middle">Pre-Split Cube Level 2 Subdivision</figcaption>
+			  </td>
+			  <td>
+				<img src="images/presplitcube3.png" align="middle" width="400px">
+				<figcaption align="middle">Pre-Split Cube Level 3 Subdivision</figcaption>
+			  </td>
+			</tr>
+			<tr>
+				<td>
+				  <img src="images/presplitcube0.png" align="middle" width="400px">
+				  <figcaption align="middle">Pre-Split Cube Level 0 Subdivision</figcaption>
+				</td>
+				<td>
+				  <img src="images/presplitcube1.png" align="middle" width="400px">
+				  <figcaption align="middle">Pre-Split Cube Level 1 Subdivision</figcaption>
+				</td>
+			  </tr>
+	
+			  <tr>
+				<td>
+				  <img src="images/preslitcube2.png" align="middle" width="400px">
+				  <figcaption align="middle">Pre-Split Cube Level 2 Subdivision</figcaption>
+				</td>
+				<td>
+				  <img src="images/presplitcube3.png" align="middle" width="400px">
+				  <figcaption align="middle">Pre-Split Cube Level 3 Subdivision</figcaption>
+				</td>
+			  </tr>
+  
+		  </tbody>
+		</table>
+  
+	  </div>
+	  
+    <br><br>
+
+    <h3 align="middle">Task 5: Adaptive Sampling</h3>
+    <p> To reduce noise, we implemented Adapative Sampling.
+    </p>
+
+    <div align="middle">
+      <br><br> <img src="images/split_diagram.png" align="middle" width="800px">
+      <figcaption align="middle">Noise Free Image</figcaption>
+    </div>
+
+	<div align="middle">
+		<br><br> <img src="images/split_diagram.png" align="middle" width="800px">
+		<figcaption align="middle">Sample Rate Image</figcaption>
+	  </div>
+
+
+
+   
+
+</body>
+
 </html>
