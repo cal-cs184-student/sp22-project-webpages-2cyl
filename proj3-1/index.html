@@ -4,9 +4,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     :root {
-      --bgcolor: #41443d;
-      --fgcolor: #d9dfd7;
-      --highlight: #b395c5;
+      --bgcolor: #131222;
+      --fgcolor: #d7d8df;
+      --highlight: #faa0ac;
       font-family: 'Roboto Mono';
       font-weight: 300;
     }
@@ -120,16 +120,77 @@
     </p>
 
     <p> Unfortunately our schedules conflicted so we split up tasks. This strategy is definately not ideal
-        since each part builds upon one another. While this apporach may work in other cases where you
-        can abstract away the details, it is much more difficult here. It would probably have been quicker to work together on
-        each part and we hope to do so in the future.
+      since each part builds upon one another. While this apporach may work in other cases where you
+      can abstract away the details, it is much more difficult here. It would probably have been quicker to work
+      together on
+      each part and we hope to do so in the future.
     </p>
 
     <br>
     <h3 align="middle">Task 1: Ray Generation and Scene Intersection</h3>
 
-    <p> We implemented pooed
-      </p>
+    <p>
+      <!-- Walk through the ray generation and primitive intersection parts of the rendering pipeline.
+      Explain the triangle intersection algorithm you implemented in your own words.
+      Show images with normal shading for a few small .dae files. -->
+      Before we can begin path tracing, we must first generate camera rays. To do this, we transformed
+      normalized image coordinates to normalized camera coordinates based on field of view angles along the x and y
+      axis (\(hFov\) and \(vFov\)), and a camera-to-world transformation matrix. We make sure to constrain the near and
+      far clipping planes as the minimum and maximum render distances for the newly constructed ray.
+    </p>
+    <p style="color: var(--highlight);">
+      $$x_{c} = 2*tan(hFov/2) * (x_{i} - 0.5)$$
+      $$y_{c} = 2*tan(vFov/2) * (y_{i} - 0.5)$$
+    </p>
+    </p>
+    <p>
+      After ray generation, we need to ray trace the pixel by generating a specified number of random rays within a unit
+      grid of the pixel, and obtaining a Monte Carlo estimate of the scene radiance for each pixel.
+    </p>
+    <p>
+      In the next part of the rendering pipeline, ray-triangle intersection and ray-sphere intersection were also
+      implemented to determine if our rays have hit any objects in the scene, and to compute the nearest intersection
+      point. For ray-triangle intersection, we based our method on the Möller-Trumbore intersection algorithm. In this
+      method, we do not need to precompute the plane that contains our triangle, increasing efficiency. First, by taking
+      the scalar triple product of the two edges, \(E1\) and \(E2\), and the ray direction, \(D\), we find out if the
+      ray is parallel to the triangle, and return false when the result is zero. This means that the ray did not hit the
+      triangle normal. Next, we compute the \(u\) and \(v\) barycentric coordinates using principles from Cramer's Rule
+      and make sure the values are not negative, and their sum is within 1 for a potential valid intersection. Finally,
+      we compute the intersection point, \(t\), and make sure it's positive and within our clipping plane bounds. We
+      then are also able to compute the intersection normal vector by doing a normalized barycentric interpolation with
+      the vertex normals.
+    </p>
+
+    <p style="color: var(--highlight);">$$\begin{bmatrix} t\\u\\v\\ \end{bmatrix}
+      = \frac{1}{ (D \times E2)\cdot E1}
+      \begin{bmatrix}
+      (S \times E1)\cdot E2\\
+      (D \times E2)\cdot S\\
+      (S \times E1)\cdot D\\
+      \end{bmatrix}$$
+
+      $$where\:
+      E1 = p2 - p1, E2 = p3 - p1,\:and\: S = o - p1$$</p>
+    <p> Ray-sphere intersection was performed with a similar idea that our intersection point should be between our
+      clipping plane bounds, but implemented by solving the quadratic formula for two distances, and taking the closer
+      as our return intersection point. </p>
+
+    <br>
+
+    <table style="width:100%">
+      <tbody>
+        <tr>
+          <td>
+            <img src="images/task1-spheres.png" align="middle" width="400px">
+            <figcaption align="middle">Lambertian spheres with normal shading</figcaption>
+          </td>
+          <td>
+            <img src="images/task1-gems.png" align="middle" width="400px">
+            <figcaption align="middle">Gems with normal shading</figcaption>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
 
   </div>
@@ -138,13 +199,120 @@
     <br><br>
     <h3 align="middle">Task 2: Bounding Volume Hierarchy</h3>
 
-    <p>We now poo
+    <!--Walk through your BVH construction algorithm. 
+      Explain the heuristic you chose for picking the splitting point.
+      Show images with normal shading for a few large 
+      .dae files that you can only render with BVH acceleration.
+      Compare rendering times on a few scenes with moderately complex geometries
+      with and without BVH acceleration. Present your results in a one-paragraph analysis. -->
+    <p>
+      We now implement a bounding volume hierarchy (BVH) to accelerate our rendering times. Here is how we did it.
+      Below are results comparing rendering times with and without BVH acceleration.
     </p>
-    <div align="middle">
-      <br><br><img src="images/.png" align="middle" width="600px">
-      <figcaption align="middle">The teapot with Bezier surfaces</figcaption>
-    </div>
 
+    <br>
+
+    <table style="width:100%">
+      <tbody>
+        <tr>
+          <td>
+            <img src="images/task2-cow.png" align="middle" width="400px">
+            <figcaption align="middle">Cow with normal shading</figcaption>
+          </td>
+          <td>
+            <img src="images/task2-lucy.png" align="middle" width="400px">
+            <figcaption align="middle">Lucy with normal shading</figcaption>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
+
+    <style>
+      table.GeneratedTable {
+        width: 100%;
+        background-color: var(--fgcolor);
+        border-collapse: collapse;
+        border-width: 2px;
+        border-color: var(--bgcolor);
+        border-style: solid;
+        font-size: small;
+        text-align: center;
+        color: var(--bgcolor);
+      }
+
+      table.GeneratedTable td,
+      table.GeneratedTable th {
+        border-width: 2px;
+        border-color: var(--bgcolor);
+        border-style: solid;
+        padding: 3px;
+      }
+
+      table.GeneratedTable thead {
+        background-color: var(--highlight);
+      }
+    </style>
+
+    <table class="GeneratedTable">
+      <thead>
+        <tr>
+          <th>Input File</th>
+          <th>BVH Accelerated</th>
+          <th>Render Time (s)</th>
+          <th>Rays per second (million)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="2">cow.dae</td>
+          <td>X</td>
+          <td>16.8076</td>
+          <td>0.0103</td>
+        </tr>
+        <tr>
+          <td>✓</td>
+          <td>0.0309</td>
+          <td>3.9815</td>
+        </tr>
+        <tr>
+          <td rowspan="2">CBlucy.dae<br></td>
+          <td>X</td>
+          <td>664.1852</td>
+          <td>0.0003</td>
+        </tr>
+        <tr>
+          <td>✓</td>
+          <td>0.0562</td>
+          <td>2.5367</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- cow slow: [PathTracer] Rendering... 100%! (16.8076s)
+    [PathTracer] BVH traced 172455 rays.
+    [PathTracer] Average speed 0.0103 million rays per second.
+    [PathTracer] Averaged 394.020585 intersection tests per ray
+
+    cow fast: [PathTracer] Rendering... 100%! (0.0309s)
+    [PathTracer] BVH traced 122936 rays.
+    [PathTracer] Average speed 3.9815 million rays per second.
+    [PathTracer] Averaged 2.068109 intersection tests per ray.
+
+    lucy slow: [PathTracer] Rendering... 100%! (664.1852s)
+    [PathTracer] BVH traced 171697 rays.
+    [PathTracer] Average speed 0.0003 million rays per second.
+    [PathTracer] Averaged 10687.810835 intersection tests per ray.
+
+    lucy fast: [PathTracer] Rendering... 100%! (0.0562s)
+    [PathTracer] BVH traced 142610 rays.
+    [PathTracer] Average speed 2.5367 million rays per second.
+    [PathTracer] Averaged 4.077253 intersection tests per ray. -->
+
+  </div>
+
+  <div align>
     <br><br>
     <h3 align="middle">Task 3: Direct Illumination</h3>
     <p>
@@ -160,255 +328,262 @@
 
     <p>
       We take num_samples samples of directions in a uniform hemisphere. We then construct
-      a ray from hit_p in the sampled direction and test if it intersects a light source. If so, to get the outgoing light
-      we use the reflection equation: we multiply the evaluated BSDF with the radiance. We also take into account Lambert's cosine 
-      law and divide by the pdf. We take an average of these outgoing lights by accumulating and dividing by the number of samples.
+      a ray from hit_p in the sampled direction and test if it intersects a light source. If so, to get the outgoing
+      light
+      we use the reflection equation: we multiply the evaluated BSDF with the radiance. We also take into account
+      Lambert's cosine
+      law and divide by the pdf. We take an average of these outgoing lights by accumulating and dividing by the number
+      of samples.
     </p>
 
     <br>
 
     <p>
       To implement importance sampling, we can use the same Monte Carlo Estimator. Instead of sampling uniform
-      directions in a hemisphere, we will sample all lights directly. For each light (unless it's the light source), we construct
+      directions in a hemisphere, we will sample all lights directly. For each light (unless it's the light source), we
+      construct
       sample num_samples direction. For each direction, we construct a ray and if there are no intersections, we proceed
-      using the reflection equation as we did in hemisphere sampling. Again we take an average. 
-    </p>
-
-	<div align="middle">
-		<table style="width:100%">
-		  <tbody>
-			<tr>
-			  <td>
-				<img src="images/task3-bunny-h.png" align="middle" width="400px">
-				<figcaption align="middle">Bunny rendered using hemisphere sampling</figcaption>
-			  </td>
-			  <td>
-				<img src="images/task3-bunny-l.png" align="middle" width="400px">
-				<figcaption align="middle">Bunny rendered using light sampling</figcaption>
-			  </td>
-			</tr>
-  
-			<tr>
-			  <td>
-          <img src="images/task3-gem-h.png" align="middle" width="400px">
-          <figcaption align="middle">Gems rendered using hemisphere sampling</figcaption>
-          </td>
-          <td>
-          <img src="images/task3-gem-l.png" align="middle" width="400px">
-          <figcaption align="middle">Gems rendered using light sampling</figcaption>
-			  </td>
-			</tr>
-  
-		  </tbody>
-		</table>
-
-    <br><br>
-
-    <p>
-      For the most part, light sampling seems to provide the superior result. Rendering using
-      hemisphere sampling results in a generally more noisy image as opposed to light sampling. 
-      This is most notable as seen in the background walls. The bunny itself is also noisier. 
-      However the light seems more realistic using hemisphere sampling. The blurring on the side
-      is more realistic than the almost perfect shape rendered by light sampling. Though the light may
-      look better using hemisphere sampling, due to the overall noise we prefer light sampling.
-    </p>
-
-    <br><br>
-
-    <div align="middle">
-      <table style="width:100%">
-        <tbody>
-        <tr>
-          <td>
-          <img src="images/task3-bunny1.png" align="middle" width="400px">
-          <figcaption align="middle">1 sample per pixel and 1 light ray</figcaption>
-          </td>
-          <td>
-            <img src="images/task3-bunny4.png" align="middle" width="400px">
-            <figcaption align="middle">1 sample per pixel and 4 light ray</figcaption>
-          </td>
-        </tr>
-    
-        <tr>
-          <td>
-            <img src="images/task3-bunny16.png" align="middle" width="400px">
-            <figcaption align="middle">1 sample per pixel and 16 light ray</figcaption>
-            </td>
-            <td>
-              <img src="images/task3-bunny64.png" align="middle" width="400px">
-              <figcaption align="middle">1 sample per pixel and 64 light ray</figcaption>
-          </td>
-        </tr>
-    
-        </tbody>
-      </table>
-  
-	  </div>
-
-    <p>
-      When we keep the number of samples per pixels constant at 1, we can see that increasing 
-      the number of light rays decreases noise.
-    </p>
-
-    <br><br>
-    <h3 align="middle">Task 4: Global Illumination</h3>
-
-        <p> While we have implemented direct illumination where light rays directly hit objects, we haven't 
-            accounted for indirect illumination where light rays bounce off objects. To implement indirect illumination,
-            we use recursion. To prevent infinite recursion, we can employ Russian Roulette where there is a chance to terminate
-            the bouncing ray (we used .3 of terminating). We can also terminate if we bounce max_ray_depth times. Then if we don't
-            terminate, we get the one bounce radiance. 
+      using the reflection equation as we did in hemisphere sampling. Again we take an average.
     </p>
 
     <div align="middle">
       <table style="width:100%">
         <tbody>
-        <tr>
-          <td>
-            <img src="images/task4-bunny.png" align="middle" width="400px">
-            <figcaption align="middle">Bunny rendered with global illumination</figcaption>
+          <tr>
+            <td>
+              <img src="images/task3-bunny-h.png" align="middle" width="400px">
+              <figcaption align="middle">Bunny rendered using hemisphere sampling</figcaption>
             </td>
             <td>
-            <img src="images/task4-dragon.png" align="middle" width="400px">
-            <figcaption align="middle">Dragon rendered with global illumination</figcaption>
+              <img src="images/task3-bunny-l.png" align="middle" width="400px">
+              <figcaption align="middle">Bunny rendered using light sampling</figcaption>
             </td>
-        </tr>    
+          </tr>
+
+          <tr>
+            <td>
+              <img src="images/task3-gem-h.png" align="middle" width="400px">
+              <figcaption align="middle">Gems rendered using hemisphere sampling</figcaption>
+            </td>
+            <td>
+              <img src="images/task3-gem-l.png" align="middle" width="400px">
+              <figcaption align="middle">Gems rendered using light sampling</figcaption>
+            </td>
+          </tr>
+
         </tbody>
       </table>
+
       <br><br>
+
+      <p>
+        For the most part, light sampling seems to provide the superior result. Rendering using
+        hemisphere sampling results in a generally more noisy image as opposed to light sampling.
+        This is most notable as seen in the background walls. The bunny itself is also noisier.
+        However the light seems more realistic using hemisphere sampling. The blurring on the side
+        is more realistic than the almost perfect shape rendered by light sampling. Though the light may
+        look better using hemisphere sampling, due to the overall noise we prefer light sampling.
+      </p>
+
+      <br><br>
+
       <div align="middle">
         <table style="width:100%">
           <tbody>
-          <tr>
-            <td>
-              <img src="images/task4-bunny-direct.png" align="middle" width="400px">
-              <figcaption align="middle">Bunny rendered with only direct illumination</figcaption>
+            <tr>
+              <td>
+                <img src="images/task3-bunny1.png" align="middle" width="400px">
+                <figcaption align="middle">1 sample per pixel and 1 light ray</figcaption>
               </td>
               <td>
-              <img src="images/task4-bunny-indirect.png" align="middle" width="400px">
-              <figcaption align="middle">Dragon rendered with only indirect illumination</figcaption>
+                <img src="images/task3-bunny4.png" align="middle" width="400px">
+                <figcaption align="middle">1 sample per pixel and 4 light ray</figcaption>
               </td>
-          </tr>    
+            </tr>
+
+            <tr>
+              <td>
+                <img src="images/task3-bunny16.png" align="middle" width="400px">
+                <figcaption align="middle">1 sample per pixel and 16 light ray</figcaption>
+              </td>
+              <td>
+                <img src="images/task3-bunny64.png" align="middle" width="400px">
+                <figcaption align="middle">1 sample per pixel and 64 light ray</figcaption>
+              </td>
+            </tr>
+
           </tbody>
         </table>
 
-        <br><br>
-        <br><br>
+      </div>
 
+      <p>
+        When we keep the number of samples per pixels constant at 1, we can see that increasing
+        the number of light rays decreases noise.
+      </p>
+
+      <br><br>
+      <h3 align="middle">Task 4: Global Illumination</h3>
+
+      <p> While we have implemented direct illumination where light rays directly hit objects, we haven't
+        accounted for indirect illumination where light rays bounce off objects. To implement indirect illumination,
+        we use recursion. To prevent infinite recursion, we can employ Russian Roulette where there is a chance to
+        terminate
+        the bouncing ray (we used .3 of terminating). We can also terminate if we bounce max_ray_depth times. Then if we
+        don't
+        terminate, we get the one bounce radiance.
+      </p>
+
+      <div align="middle">
+        <table style="width:100%">
+          <tbody>
+            <tr>
+              <td>
+                <img src="images/task4-bunny.png" align="middle" width="400px">
+                <figcaption align="middle">Bunny rendered with global illumination</figcaption>
+              </td>
+              <td>
+                <img src="images/task4-dragon.png" align="middle" width="400px">
+                <figcaption align="middle">Dragon rendered with global illumination</figcaption>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br><br>
         <div align="middle">
-          <br><br>          <img src="images/task4-bunny-m0.png" align="middle" width="400px">
-          <figcaption align="middle">Bunny rendered with max_ray_depth = 0</figcaption>
-        </div>
+          <table style="width:100%">
+            <tbody>
+              <tr>
+                <td>
+                  <img src="images/task4-bunny-direct.png" align="middle" width="400px">
+                  <figcaption align="middle">Bunny rendered with only direct illumination</figcaption>
+                </td>
+                <td>
+                  <img src="images/task4-bunny-indirect.png" align="middle" width="400px">
+                  <figcaption align="middle">Dragon rendered with only indirect illumination</figcaption>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-	<div align="middle">
-		<table style="width:100%">
-		  <tbody>
-			<tr>
-			  <td>
-          <img src="images/task4-bunny-m1.png" align="middle" width="400px">
-          <figcaption align="middle">Bunny rendered with max_ray_depth = 1</figcaption>
-			  </td>
+          <br><br>
+          <br><br>
 
-			  <td>
-          <img src="images/task4-bunny-m2.png" align="middle" width="400px">
-          <figcaption align="middle">Bunny rendered with max_ray_depth = 2</figcaption>
-			  </td>
-        <tr>
-			  <td>
-          <img src="images/task4-bunny-m3.png" align="middle" width="400px">
-          <figcaption align="middle">Bunny rendered with max_ray_depth = 3</figcaption>
-			  </td>
+          <div align="middle">
+            <br><br> <img src="images/task4-bunny-m0.png" align="middle" width="400px">
+            <figcaption align="middle">Bunny rendered with max_ray_depth = 0</figcaption>
+          </div>
 
-				<td>
-          <img src="images/task4-bunny-m100.png" align="middle" width="400px">
-          <figcaption align="middle">Bunny rendered with max_ray_depth = 100</figcaption>
-				</td>
-			  </tr>
-  
-		  </tbody>
-		</table>
-  
-	  </div>
+          <div align="middle">
+            <table style="width:100%">
+              <tbody>
+                <tr>
+                  <td>
+                    <img src="images/task4-bunny-m1.png" align="middle" width="400px">
+                    <figcaption align="middle">Bunny rendered with max_ray_depth = 1</figcaption>
+                  </td>
 
-	  <br><br>
-    <p>
-      When max_ray_depth = 0, we return a Vector3D(0, 0, 0). This can be seen as we only render
-      the zero bounce illumination. When max_ray_depth = 1, we basically have only direct illumination.
-      When max_ray_depth >= 2, we can see that the ceiling gets rendered. Everything else also gets
-      brighter. As max_ray_depth > 2 increases, we notice things get brighter but the differences become less noticable.
-    </p>
-    <br><br>
+                  <td>
+                    <img src="images/task4-bunny-m2.png" align="middle" width="400px">
+                    <figcaption align="middle">Bunny rendered with max_ray_depth = 2</figcaption>
+                  </td>
+                <tr>
+                  <td>
+                    <img src="images/task4-bunny-m3.png" align="middle" width="400px">
+                    <figcaption align="middle">Bunny rendered with max_ray_depth = 3</figcaption>
+                  </td>
 
-	  <div align="middle">
-		<table style="width:100%">
-		  <tbody>
-			<tr>
-			  <td>
-				<img src="images/task4-bunny1.png" align="middle" width="400px">
-				<figcaption align="middle">Sample-per-pixel rate = 1 and 4 light rays</figcaption>
-			  </td>
-			  <td>
-          <img src="images/task4-bunny2.png" align="middle" width="400px">
-          <figcaption align="middle">Sample-per-pixel rate = 2 and 4 light rays</figcaption>
-			  </td>
-			</tr>
-  
-			<tr>
-			  <td>
-          <img src="images/task4-bunny4.png" align="middle" width="400px">
-          <figcaption align="middle">Sample-per-pixel rate = 4 and 4 light rays</figcaption>
-			  </td>
-			  <td>
-          <img src="images/task4-bunny8.png" align="middle" width="400px">
-          <figcaption align="middle">Sample-per-pixel rate = 8 and 4 light rays</figcaption>
-			  </td>
-			</tr>
-			<tr>
-				<td>
-          <img src="images/task4-bunny16.png" align="middle" width="400px">
-          <figcaption align="middle">Sample-per-pixel rate = 16 and 4 light rays</figcaption>
-				</td>
-				<td>
-          <img src="images/task4-bunny64.png" align="middle" width="400px">
-          <figcaption align="middle">Sample-per-pixel rate = 64 and 4 light rays</figcaption>
-				</td>
-			  </tr>
-  
-		  </tbody>
-		</table>
-    
-    <div align="middle">
-      <img src="images/task4-bunny1024.png" align="middle" width="400px">
-      <figcaption align="middle">Sample-per-pixel rate = 1024 and 4 light rays</figcaption>
-    </div>
+                  <td>
+                    <img src="images/task4-bunny-m100.png" align="middle" width="400px">
+                    <figcaption align="middle">Bunny rendered with max_ray_depth = 100</figcaption>
+                  </td>
+                </tr>
 
-	  </div>
-	  
-    <br><br>
+              </tbody>
+            </table>
 
-    <h3 align="middle">Task 5: Adaptive Sampling</h3>
-    <p> To reduce noise, we implemented Adapative Sampling.
-    </p>
+          </div>
 
-    <div align="middle">
-      <table style="width:100%">
-        <tbody>
-        <tr>
-          <td>
-          <img src="images/task5bunny.png" align="middle" width="400px">
-          <figcaption align="middle">Noise Free Bunny</figcaption>
-          </td>
-          <td>
-          <img src="images/task5bunny_rate.png" align="middle" width="400px">
-          <figcaption align="middle">Sample Rate of Bunny</figcaption>
-          </td>
-        </tr>    
-        </tbody>
-      </table>
+          <br><br>
+          <p>
+            When max_ray_depth = 0, we return a Vector3D(0, 0, 0). This can be seen as we only render
+            the zero bounce illumination. When max_ray_depth = 1, we basically have only direct illumination.
+            When max_ray_depth >= 2, we can see that the ceiling gets rendered. Everything else also gets
+            brighter. As max_ray_depth > 2 increases, we notice things get brighter but the differences become less
+            noticable.
+          </p>
+          <br><br>
+
+          <div align="middle">
+            <table style="width:100%">
+              <tbody>
+                <tr>
+                  <td>
+                    <img src="images/task4-bunny1.png" align="middle" width="400px">
+                    <figcaption align="middle">Sample-per-pixel rate = 1 and 4 light rays</figcaption>
+                  </td>
+                  <td>
+                    <img src="images/task4-bunny2.png" align="middle" width="400px">
+                    <figcaption align="middle">Sample-per-pixel rate = 2 and 4 light rays</figcaption>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <img src="images/task4-bunny4.png" align="middle" width="400px">
+                    <figcaption align="middle">Sample-per-pixel rate = 4 and 4 light rays</figcaption>
+                  </td>
+                  <td>
+                    <img src="images/task4-bunny8.png" align="middle" width="400px">
+                    <figcaption align="middle">Sample-per-pixel rate = 8 and 4 light rays</figcaption>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="images/task4-bunny16.png" align="middle" width="400px">
+                    <figcaption align="middle">Sample-per-pixel rate = 16 and 4 light rays</figcaption>
+                  </td>
+                  <td>
+                    <img src="images/task4-bunny64.png" align="middle" width="400px">
+                    <figcaption align="middle">Sample-per-pixel rate = 64 and 4 light rays</figcaption>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+
+            <div align="middle">
+              <img src="images/task4-bunny1024.png" align="middle" width="400px">
+              <figcaption align="middle">Sample-per-pixel rate = 1024 and 4 light rays</figcaption>
+            </div>
+
+          </div>
+
+          <br><br>
+
+          <h3 align="middle">Task 5: Adaptive Sampling</h3>
+          <p> To reduce noise, we implemented Adapative Sampling.
+          </p>
+
+          <div align="middle">
+            <table style="width:100%">
+              <tbody>
+                <tr>
+                  <td>
+                    <img src="images/task5bunny.png" align="middle" width="400px">
+                    <figcaption align="middle">Noise Free Bunny</figcaption>
+                  </td>
+                  <td>
+                    <img src="images/task5bunny_rate.png" align="middle" width="400px">
+                    <figcaption align="middle">Sample Rate of Bunny</figcaption>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
 
 
-   
+
 
 </body>
 
