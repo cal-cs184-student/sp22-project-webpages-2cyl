@@ -161,7 +161,7 @@
     <p>
       We take num_samples samples of directions in a uniform hemisphere. We then construct
       a ray from hit_p in the sampled direction and test if it intersects a light source. If so, to get the outgoing light
-      we use the reflection equation: we multiply the evaluated BSDF with the radiance. We also take into account Lambert's cosine 
+      we use the reflection equation: we multiply the evaluated BSDF with the incoming radiance. We also take into account Lambert's cosine 
       law and divide by the pdf. We take an average of these outgoing lights by accumulating and dividing by the number of samples.
     </p>
 
@@ -255,9 +255,14 @@
 
         <p> While we have implemented direct illumination where light rays directly hit objects, we haven't 
             accounted for indirect illumination where light rays bounce off objects. To implement indirect illumination,
-            we use recursion. To prevent infinite recursion, we can employ Russian Roulette where there is a chance to terminate
-            the bouncing ray (we used .3 of terminating). We can also terminate if we bounce max_ray_depth times. Then if we don't
-            terminate, we get the one bounce radiance. 
+            wer need to know the bouncing incoming radiance and thus need recursion. To prevent infinite recursion, we can 
+            employ Russian Roulette where there is a chance to terminate the bouncing ray (we used .3 of terminating). 
+            We can also terminate if we bounce max_ray_depth times. Then if we don't terminate, we construct a ray using a sampled direction.
+            If we have an intersection, we use the reflection equation once again where the incoming radiance is a recursive call. 
+    </p>
+
+    <p>
+      Below are examples of global illumination.
     </p>
 
     <div align="middle">
@@ -276,6 +281,11 @@
         </tbody>
       </table>
       <br><br>
+
+      <p>
+        Below is direct and indirect illumination.
+      </p>
+
       <div align="middle">
         <table style="width:100%">
           <tbody>
@@ -293,10 +303,13 @@
         </table>
 
         <br><br>
-        <br><br>
+
+        <p>
+          Below we experiment with differing max_ray_depth values.
+        </p>
 
         <div align="middle">
-          <br><br>          <img src="images/task4-bunny-m0.png" align="middle" width="400px">
+         <img src="images/task4-bunny-m0.png" align="middle" width="400px">
           <figcaption align="middle">Bunny rendered with max_ray_depth = 0</figcaption>
         </div>
 
