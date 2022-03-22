@@ -172,7 +172,9 @@
       \end{bmatrix}$$
 
       $$where\:
-      E1 = p2 - p1, E2 = p3 - p1,\:and\: S = o - p1$$</p>
+      E1 = p_2 - p_1, E2 = p_3 - p_1,\:and\: S = o - p_1$$
+
+      $$o + tD = (1-u-v)p_0 + up_1 + vp_2$$</p>
     <p> Ray-sphere intersection was performed with a similar idea that our intersection point should be between our
       clipping plane bounds, but implemented by solving the quadratic formula for two distances, and taking the closer
       as our return intersection point. </p>
@@ -329,8 +331,6 @@
       law and divide by the pdf. We take an average of these outgoing lights by accumulating and dividing by the number
       of samples.
     </p>
-
-    <br>
 
     <p>
       To implement importance sampling, we can use the same Monte Carlo Estimator. Instead of sampling uniform
