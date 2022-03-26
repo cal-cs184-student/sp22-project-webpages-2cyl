@@ -313,20 +313,19 @@
     <h3 align="middle">Task 3: Direct Illumination</h3>
     <p>
       We implemented Direct Lighting with uniform hemisphere sampling by approximating the integral
-      over all the light arriving in a hemisphere around hit_p. We approximate this integral using the
+      over all the light arriving in a hemisphere around hit_p. The reflection equation integral can be approximated using the
       following Monte Carlo estimator.
     </p>
 
     <div align="middle">
       <img src="images/refmc.png" align="middle" width="200px">
-      <figcaption align="middle">Monte Carlo Estimator</figcaption>
+      <figcaption align="middle">Monte Carlo Estimator of the Reflection Equation</figcaption>
     </div>
 
     <p>
       We take num_samples samples of directions in a uniform hemisphere. We then construct
       a ray from hit_p in the sampled direction and test if it intersects a light source. If so, to get the outgoing
-      light
-      we use the reflection equation: we multiply the evaluated BSDF with the incoming radiance. We also take into
+      light we use the Monte Carlo Estimator: we multiply the evaluated BSDF with the incoming radiance. We also take into
       account Lambert's cosine
       law and divide by the pdf. We take an average of these outgoing lights by accumulating and dividing by the number
       of samples.
@@ -335,9 +334,8 @@
     <p>
       To implement importance sampling, we can use the same Monte Carlo Estimator. Instead of sampling uniform
       directions in a hemisphere, we will sample all lights directly. For each light (unless it's the light source), we
-      construct
-      sample num_samples direction. For each direction, we construct a ray and if there are no intersections, we proceed
-      using the reflection equation as we did in hemisphere sampling. Again we take an average.
+      construct sample num_samples directions. For each direction, we construct a ray and if there are no intersections, we proceed
+      using the estimator similar to hemisphere sampling above. Again we take an average.
     </p>
 
     <div align="middle">
@@ -424,7 +422,7 @@
 
   <p> While we have implemented direct illumination where light rays directly hit objects, we haven't
     accounted for indirect illumination where light rays bounce off objects. To implement indirect illumination,
-    wer need to know the bouncing incoming radiance and thus need recursion. To prevent infinite recursion, we can
+    we need to know the bouncing incoming radiance of an object. However, rays bounce also off other objects and thus need recursion. To prevent infinite recursion, we can
     employ Russian Roulette where there is a chance to terminate the bouncing ray (we used .3 of terminating).
     We can also terminate if we bounce max_ray_depth times. Then if we don't terminate, we construct a ray using a
     sampled direction.
