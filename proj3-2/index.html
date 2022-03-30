@@ -1,7 +1,297 @@
-<html>
-	<head>
-	</head>
-	<body>
-		Project 3-2 here
-	</body>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bgcolor: #2b2a41;
+      --fgcolor: #d7d8df;
+      --highlight: #faa0ac;
+      font-family: 'Roboto Mono';
+      font-weight: 300;
+      -webkit-print-color-adjust: exact;
+    }
+
+    body {
+      padding: 60px;
+      width: 800px;
+      margin: auto;
+      text-align: left;
+      font-size: small;
+      /* font-family: 'Roboto Mono'; */
+      color: var(--fgcolor);
+      background-color: var(--bgcolor);
+      text-align: justify;
+      text-justify: inter-word;
+
+    }
+
+    button {
+      background-color: var(--fgcolor);
+      border: none;
+      font-weight: bold;
+      text-decoration: none;
+      color: var(--bgcolor);
+      padding: 5px 10px;
+      margin: 2px 2px;
+      cursor: pointer;
+    }
+
+    h1 {
+      font-size: x-large;
+    }
+
+    h2 {
+      font-size: large;
+      color: var(--highlight);
+    }
+
+    h3 {
+      font-size: medium;
+      color: var(--highlight);
+    }
+
+    h4,
+    figcaption {
+      font-size: small;
+    }
+
+    code {
+      font-size: medium;
+      display: inline-block;
+      background: #151420;
+    }
+
+    a {
+      color: var(--fgcolor);
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: var(--fgcolor);
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: var(--bgcolor);
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--bgcolor);
+    }
+  </style>
+  <div align="middle">
+    <a href="../proj1/index.html"><button>P1</button></a>
+    <a href="../proj2/index.html"><button>P2</button></a>
+    <a href="../proj3-1/index.html"><button>P3-1</button></a>
+    <a href="../proj3-2/index.html"><button>P3-2</button></a>
+    <a href="../proj4/index.html"><button>P4</button></a>
+  </div>
+  <br>
+  <title>CS 184 Path Tracer Part 1: Clare Lin, Faywer Liu</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+
+  <!-- mathjax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+
+<body>
+
+  <h1 align="middle">CS 184: Computer Graphics and Imaging [SP22]</h1>
+  <h1 align="middle">Project 3-2: Path Tracer</h1>
+  <h2 align="middle">Clare Lin, Faywer Liu</h2>
+  <br><br><img src="images/task5bunny.png" width="800px" class="center">
+
+  <div>
+
+    <br><br>
+    <h2 align="middle">Overview</h2>
+    <p> Building a path tracer was fun and challenging. Our path tracer is able to generate rays and perform image to
+      camera transformations to display the correct views. We also implemented rendering acceleration algorithms and
+      various illumination techniques to quickly render low noise and high quality scenes. We enjoyed learning about the
+      various aspects involved in ray tracing.
+    </p>
+
+    <p> Unfortunately our schedules conflicted so we split up tasks. This strategy is definately not ideal
+      since each part builds upon one another. While this apporach may work in other cases where you
+      can abstract away the details, it is much more difficult here. It would probably have been quicker to work
+      together on
+      each part and we hope to do so in the future.
+    </p>
+
+    <br>
+    <h3 align="middle">Task 1: Mirror and Glass Materials</h3>
+
+    <p>
+		bob
+    </p>
+
+    <br>
+
+	<div align="middle">
+		<img src="images/task1m0.png" align="middle" width="400px">
+		<figcaption align="middle">Max Ray Depth = 0</figcaption>
+	  </div>
+
+    <table style="width:100%">
+      <tbody>
+        <tr>
+          <td>
+            <img src="images/task1m1.png" align="middle" width="400px">
+            <figcaption align="middle">Max Ray Depth = 1</figcaption>
+          </td>
+          <td>
+            <img src="images/task1m2.png" align="middle" width="400px">
+            <figcaption align="middle">Max Ray Depth = 2</figcaption>
+          </td>
+        </tr>
+		<tr>
+			<td>
+			  <img src="images/task1m3.png" align="middle" width="400px">
+			  <figcaption align="middle">Max Ray Depth = 3</figcaption>
+			</td>
+			<td>
+			  <img src="images/task1m4.png" align="middle" width="400px">
+			  <figcaption align="middle">Max Ray Depth = 4</figcaption>
+			</td>
+		  </tr>
+		  <tr>
+			<td>
+			  <img src="images/task1m5.png" align="middle" width="400px">
+			  <figcaption align="middle">Max Ray Depth = 5</figcaption>
+			</td>
+			<td>
+			  <img src="images/task1m100.png" align="middle" width="400px">
+			  <figcaption align="middle">Max Ray Depth = 100</figcaption>
+			</td>
+		  </tr>
+      </tbody>
+    </table>
+    <p>
+		bob
+    </p>
+
+  </div>
+
+  <div align>
+    <br><br>
+    <h3 align="middle">Task 2: Bounding Volume Hierarchy</h3>
+
+    <!--Walk through your BVH construction algorithm. 
+      Explain the heuristic you chose for picking the splitting point.
+      Show images with normal shading for a few large 
+      .dae files that you can only render with BVH acceleration.
+      Compare rendering times on a few scenes with moderately complex geometries
+      with and without BVH acceleration. Present your results in a one-paragraph analysis. -->
+    <p>
+      We now implement a bounding volume hierarchy (BVH) to accelerate our rendering times from \(O(n)\) to
+      \(O(log(n))\). Before <code>max_leaf_size</code> is reached, only leaf nodes are created and we simply return our
+      basic contructed node. Otherwise, we will create the BVH structure. We pick the most beneficial
+      axis to split the bounding box based on the longest extent. This yields higher likelihood that we won't split too
+      unevenly. We then pick out splitting point based on the average of the centroids along the axis we chose. The list
+      of primitives are then sorted from small to large based on the chosen axis, before we partition the list to only
+      contain primitives with centroids that are smaller than our splitting point. We then recursively construct the
+      left and right children of the current node. Along the way, we perform checks that we won't be spliting an empty
+      node or partition the list such that one side becomes empty.
+      Below are results comparing rendering times with and without BVH acceleration.
+    </p>
+
+    <br>
+
+    <table style="width:100%">
+      <tbody>
+        <tr>
+          <td>
+            <img src="images/task2-cow.png" align="middle" width="400px">
+            <figcaption align="middle">Cow with normal shading</figcaption>
+          </td>
+          <td>
+            <img src="images/task2-lucy.png" align="middle" width="400px">
+            <figcaption align="middle">Lucy with normal shading</figcaption>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br><br>
+
+    <style>
+      table.GeneratedTable {
+        width: 100%;
+        background-color: var(--fgcolor);
+        border-collapse: collapse;
+        border-width: 2px;
+        border-color: var(--bgcolor);
+        border-style: solid;
+        font-size: small;
+        text-align: center;
+        color: var(--bgcolor);
+      }
+
+      table.GeneratedTable td,
+      table.GeneratedTable th {
+        border-width: 2px;
+        border-color: var(--bgcolor);
+        border-style: solid;
+        padding: 3px;
+      }
+
+      table.GeneratedTable thead {
+        background-color: var(--highlight);
+      }
+    </style>
+
+    <table class="GeneratedTable">
+      <thead>
+        <tr>
+          <th>Input File</th>
+          <th>BVH Accelerated</th>
+          <th>Render Time (s)</th>
+          <th>Rays per second (million)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="2">cow.dae</td>
+          <td>X</td>
+          <td>16.8076</td>
+          <td>0.0103</td>
+        </tr>
+        <tr>
+          <td>✓</td>
+          <td>0.0309</td>
+          <td>3.9815</td>
+        </tr>
+        <tr>
+          <td rowspan="2">CBlucy.dae<br></td>
+          <td>X</td>
+          <td>664.1852</td>
+          <td>0.0003</td>
+        </tr>
+        <tr>
+          <td>✓</td>
+          <td>0.0562</td>
+          <td>2.5367</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Implementing BVH significantly sped up our renders, especially on larger scenes. Rendering the cow is 544x
+      faster than before, and rendering Lucy, a moderately complex scene, is 11818x faster! Unsurprisingly, the average
+      number of rays per second traced also skyrocketed. We were surprised by the amount of performance gain from the
+      BVH and really appreciate the tree structure now.</p>
+  </div>
+
+ 
+</body>
+
 </html>
