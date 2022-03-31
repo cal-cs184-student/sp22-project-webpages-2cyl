@@ -59,7 +59,7 @@
     code {
       font-size: medium;
       display: inline-block;
-      background: #151420;
+      background: #2d423f;
     }
 
     a {
@@ -143,7 +143,7 @@
       air. Then if we are entering the non-air
       medium, the ratio of the indexes of refraction is η = 1 / ior. If we are exiting, η = ior.
 
-      Then using Snell's Law in sphereical coordinates,
+      Then using Snell's Law in spherical coordinates,
 
       $$\cos \theta '= \sqrt{1 - \eta^{2}(1 - \cos ^{2}\theta)}$$
 
@@ -237,13 +237,6 @@
     <br><br>
     <h3 align="middle">Task 2: Depth of Field</h3>
 
-    <!-- In a few sentences, explain the differences between a pinhole 
-      camera model and a thin-lens camera model.
-      Show a "focus stack" where you focus at 4 visibly
-       different depths through a scene.
-      how a sequence of 4 pictures with visibly different aperture 
-      sizes, all focused at the same point in a scene. -->
-
     <p>
       In the traditional pinhole camera model, all the pixels are in focus, which means all parts of our rendered images
       are clear. However, the pinhole camera model doesn't account for real human eyes where we can only see objects
@@ -255,6 +248,14 @@
       final image.
     </p>
 
+    <p>In order to calculate the point in focus, we can utilize our <code>generate_ray()</code> function's
+      implementation, and scale it by the focal distance. We can then have our point on the thin lens project onto the
+      point in focus along the plane of focus to give us our final thin-lens ray.
+
+      $$pLens=(lensRadius* \sqrt{rndR} * cos(rndTheta),lensRadius* \sqrt{rndR} *sin(rndTheta),0)$$
+      $$where \: rndTheta = random [0,1), rndR = random [0, 2 \pi)$$
+    </p>
+
     <img src="images/CBdragonNormal.png" align="middle" width="800px">
     <figcaption align="middle">CBdragon with pinhole camera model</figcaption>
     <br>
@@ -262,6 +263,8 @@
     <p> The following photos show a focus stack through focusing at 4 visibly different depths through the same dragon
       scene. We can see that as the focal distance increases, we see more clearly the rear portions of the dragon with
       the thin-lens model.
+
+
     </p>
 
     <br>
