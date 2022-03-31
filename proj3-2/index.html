@@ -4,9 +4,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     :root {
-      --bgcolor: #2b2a41;
-      --fgcolor: #d7d8df;
-      --highlight: #faa0ac;
+      --bgcolor: #4b615b;
+      --fgcolor: #d7dfde;
+      --highlight: #ff8f5b;
       font-family: 'Roboto Mono';
       font-weight: 300;
       -webkit-print-color-adjust: exact;
@@ -109,7 +109,7 @@
   <h1 align="middle">CS 184: Computer Graphics and Imaging [SP22]</h1>
   <h1 align="middle">Project 3-2: Path Tracer</h1>
   <h2 align="middle">Clare Lin, Faywer Liu</h2>
-  <br><br><img src="images/task5bunny.png" width="800px" class="center">
+  <br><br><img src="images/CBdragonNormal.png" width="800px" class="center">
 
   <div>
 
@@ -132,15 +132,15 @@
     <h3 align="middle">Task 1: Mirror and Glass Materials</h3>
 
     <p>
-		bob
+      bob
     </p>
 
     <br>
 
-	<div align="middle">
-		<img src="images/task1m0.png" align="middle" width="400px">
-		<figcaption align="middle">Max Ray Depth = 0</figcaption>
-	  </div>
+    <div align="middle">
+      <img src="images/task1m0.png" align="middle" width="400px">
+      <figcaption align="middle">Max Ray Depth = 0</figcaption>
+    </div>
 
     <table style="width:100%">
       <tbody>
@@ -154,144 +154,99 @@
             <figcaption align="middle">Max Ray Depth = 2</figcaption>
           </td>
         </tr>
-		<tr>
-			<td>
-			  <img src="images/task1m3.png" align="middle" width="400px">
-			  <figcaption align="middle">Max Ray Depth = 3</figcaption>
-			</td>
-			<td>
-			  <img src="images/task1m4.png" align="middle" width="400px">
-			  <figcaption align="middle">Max Ray Depth = 4</figcaption>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-			  <img src="images/task1m5.png" align="middle" width="400px">
-			  <figcaption align="middle">Max Ray Depth = 5</figcaption>
-			</td>
-			<td>
-			  <img src="images/task1m100.png" align="middle" width="400px">
-			  <figcaption align="middle">Max Ray Depth = 100</figcaption>
-			</td>
-		  </tr>
+        <tr>
+          <td>
+            <img src="images/task1m3.png" align="middle" width="400px">
+            <figcaption align="middle">Max Ray Depth = 3</figcaption>
+          </td>
+          <td>
+            <img src="images/task1m4.png" align="middle" width="400px">
+            <figcaption align="middle">Max Ray Depth = 4</figcaption>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img src="images/task1m5.png" align="middle" width="400px">
+            <figcaption align="middle">Max Ray Depth = 5</figcaption>
+          </td>
+          <td>
+            <img src="images/task1m100.png" align="middle" width="400px">
+            <figcaption align="middle">Max Ray Depth = 100</figcaption>
+          </td>
+        </tr>
       </tbody>
     </table>
     <p>
-		bob
+      bob
     </p>
 
   </div>
 
   <div align>
     <br><br>
-    <h3 align="middle">Task 2: Bounding Volume Hierarchy</h3>
+    <h3 align="middle">Task 2: Depth of Field</h3>
 
-    <!--Walk through your BVH construction algorithm. 
-      Explain the heuristic you chose for picking the splitting point.
-      Show images with normal shading for a few large 
-      .dae files that you can only render with BVH acceleration.
-      Compare rendering times on a few scenes with moderately complex geometries
-      with and without BVH acceleration. Present your results in a one-paragraph analysis. -->
+    <!-- In a few sentences, explain the differences between a pinhole 
+      camera model and a thin-lens camera model.
+      Show a "focus stack" where you focus at 4 visibly
+       different depths through a scene.
+      how a sequence of 4 pictures with visibly different aperture 
+      sizes, all focused at the same point in a scene. -->
+
     <p>
-      We now implement a bounding volume hierarchy (BVH) to accelerate our rendering times from \(O(n)\) to
-      \(O(log(n))\). Before <code>max_leaf_size</code> is reached, only leaf nodes are created and we simply return our
-      basic contructed node. Otherwise, we will create the BVH structure. We pick the most beneficial
-      axis to split the bounding box based on the longest extent. This yields higher likelihood that we won't split too
-      unevenly. We then pick out splitting point based on the average of the centroids along the axis we chose. The list
-      of primitives are then sorted from small to large based on the chosen axis, before we partition the list to only
-      contain primitives with centroids that are smaller than our splitting point. We then recursively construct the
-      left and right children of the current node. Along the way, we perform checks that we won't be spliting an empty
-      node or partition the list such that one side becomes empty.
-      Below are results comparing rendering times with and without BVH acceleration.
+      In the traditional pinhole camera model, all the pixels are in focus, which means all parts of our rendered images
+      are clear. However, the pinhole camera model doesn't account for real human eyes where we can only see objects
+      clearly while the object is in focus. We can create our renders more accurately to human perception by using the
+      thin-lens camera model, where only pixels closer than a plane of a focal distance away are in focus. This effect
+      can also look very cool. In order to implement the thin-lens model, we extend from calculating a radiance from the
+      point at zero origin, and instead accept any points within a lens radius distance away from the origin. Based on
+      the lens radius and the focal distance, we can adjust the amount and placement of focus and blur we bring to the
+      final image.
+    </p>
+
+    <p> The following photos show a focus stack through focusing at 4 visibly different depths through the same dragon
+      scene. We can see that as the focal distance increases, we see more clearly the rear portions of the dragon.
     </p>
 
     <br>
 
-    <table style="width:100%">
-      <tbody>
-        <tr>
-          <td>
-            <img src="images/task2-cow.png" align="middle" width="400px">
-            <figcaption align="middle">Cow with normal shading</figcaption>
-          </td>
-          <td>
-            <img src="images/task2-lucy.png" align="middle" width="400px">
-            <figcaption align="middle">Lucy with normal shading</figcaption>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <img src="images/CBdragonD1.png" align="middle" width="800px">
+    <figcaption align="middle">CBdragon with focal distance 2.9 and lens radius 0.23</figcaption>
+    <br>
+    <img src="images/CBdragonD2.png" align="middle" width="800px">
+    <figcaption align="middle">CBdragon with focal distance 2.9 and lens radius 0.23</figcaption>
+    <br>
+    <img src="images/CBdragonD3.png" align="middle" width="800px">
+    <figcaption align="middle">CBdragon with focal distance 2.9 and lens radius 0.23</figcaption>
+    <br>
+    <img src="images/CBdragonD4.png" align="middle" width="800px">
+    <figcaption align="middle">CBdragon with focal distance 2.9 and lens radius 0.23</figcaption>
 
     <br><br>
 
-    <style>
-      table.GeneratedTable {
-        width: 100%;
-        background-color: var(--fgcolor);
-        border-collapse: collapse;
-        border-width: 2px;
-        border-color: var(--bgcolor);
-        border-style: solid;
-        font-size: small;
-        text-align: center;
-        color: var(--bgcolor);
-      }
 
-      table.GeneratedTable td,
-      table.GeneratedTable th {
-        border-width: 2px;
-        border-color: var(--bgcolor);
-        border-style: solid;
-        padding: 3px;
-      }
 
-      table.GeneratedTable thead {
-        background-color: var(--highlight);
-      }
-    </style>
+    <p> As we change the aperture sizes, or lens radius, of our camera, we can see that the amount of blur applied at a
+      fixed focal distance changes.
+    </p>
 
-    <table class="GeneratedTable">
-      <thead>
-        <tr>
-          <th>Input File</th>
-          <th>BVH Accelerated</th>
-          <th>Render Time (s)</th>
-          <th>Rays per second (million)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td rowspan="2">cow.dae</td>
-          <td>X</td>
-          <td>16.8076</td>
-          <td>0.0103</td>
-        </tr>
-        <tr>
-          <td>✓</td>
-          <td>0.0309</td>
-          <td>3.9815</td>
-        </tr>
-        <tr>
-          <td rowspan="2">CBlucy.dae<br></td>
-          <td>X</td>
-          <td>664.1852</td>
-          <td>0.0003</td>
-        </tr>
-        <tr>
-          <td>✓</td>
-          <td>0.0562</td>
-          <td>2.5367</td>
-        </tr>
-      </tbody>
-    </table>
+    <br>
 
-    <p>Implementing BVH significantly sped up our renders, especially on larger scenes. Rendering the cow is 544x
-      faster than before, and rendering Lucy, a moderately complex scene, is 11818x faster! Unsurprisingly, the average
-      number of rays per second traced also skyrocketed. We were surprised by the amount of performance gain from the
-      BVH and really appreciate the tree structure now.</p>
+    <img src="images/CBdragonB1.png" align="middle" width="800px">
+    <figcaption align="middle">CBdragon with focal distance 3.0 and lens radius 0.022</figcaption>
+    <br>
+    <img src="images/CBdragonB2.png" align="middle" width="800px">
+    <figcaption align="middle">CBdragon with focal distance 3.0 and lens radius 0.05</figcaption>
+    <br>
+    <img src="images/CBdragonB3.png" align="middle" width="800px">
+    <figcaption align="middle">CBdragon with focal distance 3.0 and lens radius 0.125</figcaption>
+    <br>
+    <img src="images/CBdragonB4.png" align="middle" width="800px">
+    <figcaption align="middle">CBdragon with focal distance 3.0 and lens radius 0.23</figcaption>
+
   </div>
 
- 
+
 </body>
 
 </html>
