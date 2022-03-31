@@ -109,33 +109,67 @@
   <h1 align="middle">CS 184: Computer Graphics and Imaging [SP22]</h1>
   <h1 align="middle">Project 3-2: Path Tracer</h1>
   <h2 align="middle">Clare Lin, Faywer Liu</h2>
-  <br><br><img src="images/task5bunny.png" width="800px" class="center">
-
+  <div align="middle">
+  <br><br><img src="images/title.png" width="600px" class="center">
+</div>
   <div>
 
     <br><br>
     <h2 align="middle">Overview</h2>
-    <p> Building a path tracer was fun and challenging. Our path tracer is able to generate rays and perform image to
-      camera transformations to display the correct views. We also implemented rendering acceleration algorithms and
-      various illumination techniques to quickly render low noise and high quality scenes. We enjoyed learning about the
-      various aspects involved in ray tracing.
+    <p> In this project, we extended our ray tracer by adding support for reflection and refraction. This allows us to render material such as glass.
+       We also implemented depth of field by simulating a thin lens.
     </p>
 
-    <p> Unfortunately our schedules conflicted so we split up tasks. This strategy is definately not ideal
-      since each part builds upon one another. While this apporach may work in other cases where you
-      can abstract away the details, it is much more difficult here. It would probably have been quicker to work
-      together on
-      each part and we hope to do so in the future.
+    <p> Since each task in this project was self contained, we split up our parts. Unlike last project, this was fine to do
+      since the parts did not build off each other. 
     </p>
 
     <br>
-    <h3 align="middle">Task 1: Mirror and Glass Materials</h3>
+    <h3 align="middle">Mirror and Glass Materials</h3>
 
     <p>
-		bob
+      In this part, we added support for reflection and refraction. This allows rendering of material such as glass that reflect and refract light.
     </p>
 
-    <br>
+    <p>
+      Reflection was implemented using the following equation: $$w_{i} = -w_{o} + 2(w_{o} \cdot \vec{n}) \vec{n}.$$
+    </p>
+
+    <p>
+      Refraction occurs when a light ray changes direction when we switch mediums. In this case, one of our mediums is air. Then if we are entering the non-air
+      medium, the ratio of the indexes of refraction is η = 1 / ior. If we are exiting, η = ior. 
+      
+      Then using Snell's Law in sphereical coordinates,
+
+      $$\cos \theta '= \sqrt{1 - \eta^{2}(1 - \cos ^{2}\theta)}$$
+
+      If the square of this term is less than 0 we have total internal reflection. If not we proceed with the following
+
+      $$w_{i}.x = -\eta w_{o}.x$$
+      $$w_{i}.y = -\eta w_{o}.z$$
+      $$w_{i}.z = \mp\sqrt{1 - \eta^{2}(1 - w_{i}.z ^{2})}$$
+
+      For materials that only reflect, we calculate the reflection of wo to wi as mentioned above and return the cosine weighted reflectance.
+      For materials that only refract, we calculate the refraction of wo to wi as mentioned above and return the cosine weighted transmittance.
+      However, for materials such as glass that reflect and refract we can use  Schlick's approximation to get the probility of reflecting
+      or refracting.
+
+      $$R = (\frac{1 - ior}{1 + ior})^{2} + (1 - (\frac{1 - ior}{1 + ior})^{2})(1 - \cos \theta)^{5}$$
+
+      Then we have 3 cases.
+    </p>
+      <p>1. If total interal reflection occurs, we calculate the reflection of wo to wi and return the cosine weighted reflectance.</p>
+      <p>2. If coin_flip(R), we calculate the reflection of wo to wi and return the cosine weighted reflectance multiplied by R.</p>
+      <p>3. If not, we calculate the refraction of wo to wi and return the cosine weighted transmittance multiplied by (1 - R) and divided by η^2.</p>
+      
+      <br>
+    <p>Below is our renderings of CBspheres while varying the max ray depth.</p>
+    <p>At max ray depth = 0, there is no illumination besides the light source because no rays bounce.</p>
+    <p>At max ray depth = 1, we have basically have only direct illumination without global illumination with just one bounce. We can also see a small patch of light on the spheres where there is one bounce reflecting off the spheres towards the camera. </p>
+    <p>At max ray depth = 2, we have global illumination in the room. However, in the reflective sphere in the back, the room is still directly illuminated since it takes an extra bounce for reflection. The sphere in the front which is reflective and refractive is dim since is only showing reflections at 2 bounces since the "escaping" ray is still inside the sphere. </p>
+    <p>At max ray depth = 3, we can see that the front sphere is now refracting since the since the rays can escape. The front sphere reflection inside the sphere in the back is still dim since it takes an extra bounce for reflection.</p>
+    <p>At max ray depth = 4, we can see that the front sphere reflection inside the back sphere is correct. We now have enough bounces for global illumination, reflection, and refraction.</p>
+    <p>At max ray depth > 4, the differences are very subtle compared to 4. Some areas are just slightly brighter such the top of the front sphere. This makes sense as even though the max ray depth may be high, Russian Roulette probably terminates the ray.</p>
 
 	<div align="middle">
 		<img src="images/task1m0.png" align="middle" width="400px">
@@ -176,15 +210,12 @@
 		  </tr>
       </tbody>
     </table>
-    <p>
-		bob
-    </p>
 
   </div>
 
   <div align>
     <br><br>
-    <h3 align="middle">Task 2: Bounding Volume Hierarchy</h3>
+    <h3 align="middle">Depth of Field</h3>
 
     <!--Walk through your BVH construction algorithm. 
       Explain the heuristic you chose for picking the splitting point.
