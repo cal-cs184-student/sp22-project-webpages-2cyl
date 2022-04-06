@@ -1,7 +1,204 @@
-<html>
-	<head>
-	</head>
-	<body>
-		Project 4 here
-	</body>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		:root {
+			--bgcolor: #233c4c;
+			--fgcolor: #7fdda9;
+			--highlight: #eb8edd;
+			font-family: 'Roboto Mono';
+			font-weight: 300;
+			-webkit-print-color-adjust: exact;
+		}
+
+		body {
+			padding: 60px;
+			width: 800px;
+			margin: auto;
+			text-align: left;
+			font-size: small;
+			/* font-family: 'Roboto Mono'; */
+			color: var(--fgcolor);
+			background-color: var(--bgcolor);
+			text-align: justify;
+			text-justify: inter-word;
+
+		}
+
+		button {
+			background-color: var(--fgcolor);
+			border: none;
+			font-weight: bold;
+			text-decoration: none;
+			color: var(--bgcolor);
+			padding: 5px 10px;
+			margin: 2px 2px;
+			cursor: pointer;
+		}
+
+		h1 {
+			font-size: x-large;
+		}
+
+		h2 {
+			font-size: large;
+			color: var(--highlight);
+		}
+
+		h3 {
+			font-size: medium;
+			color: var(--highlight);
+		}
+
+		h4,
+		figcaption {
+			font-size: small;
+		}
+
+		code {
+			font-size: medium;
+			display: inline-block;
+			background: #2e2a3a;
+		}
+
+		a {
+			color: var(--fgcolor);
+		}
+
+		/* width */
+		::-webkit-scrollbar {
+			width: 8px;
+		}
+
+		/* Track */
+		::-webkit-scrollbar-track {
+			background: var(--fgcolor);
+		}
+
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+			background: var(--bgcolor);
+		}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background: var(--bgcolor);
+		}
+	</style>
+	<div align="middle">
+		<a href="../proj1/index.html"><button>P1</button></a>
+		<a href="../proj2/index.html"><button>P2</button></a>
+		<a href="../proj3-1/index.html"><button>P3-1</button></a>
+		<a href="../proj3-2/index.html"><button>P3-2</button></a>
+		<a href="../proj4/index.html"><button>P4</button></a>
+	</div>
+	<br>
+	<title>CS 184 Cloth Sim: Clare Lin, Faywer Liu</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+
+	<!-- mathjax -->
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+
+<body>
+
+	<h1 align="middle">CS 184: Computer Graphics and Imaging [SP22]</h1>
+	<h1 align="middle">Project 4: Cloth Sim</h1>
+	<h2 align="middle">Clare Lin, Faywer Liu</h2>
+	<div align="middle">
+		<br><br><img src="images/sphere_collide_banner.png" width="800px" class="center">
+	</div>
+	<div>
+
+		<br><br>
+		<h2 align="middle">Overview</h2>
+		<p> Sim the cloth
+		</p>
+	</div>
+
+	<div>
+		<br><br>
+		<h3 align="middle">Masses and Springs</h3>
+
+		<p>
+			In this project, we extended our ray tracer by adding support for reflection and refraction. This allows us
+			to
+			render material such as glass.
+			We also implemented depth of field by simulating a thin lens.</p>
+
+		<img src="images/task1-noshear.png" align="middle" width="800px">
+		<figcaption align="middle">cloth wireframe without any shearing constraints</figcaption>
+		<br>
+		<img src="images/task1-onlyshear.png" align="middle" width="800px">
+		<figcaption align="middle">cloth wireframe with only shearing constraints</figcaption>
+		<br>
+		<img src="images/task1-allconstraint.png" align="middle" width="800px">
+		<figcaption align="middle">cloth wireframe with all constraints</figcaption>
+		<br>
+	</div>
+
+	<div align>
+		<br><br>
+		<h3 align="middle">Simulation via numerical integration</h3>
+
+		<p>
+			In this project, we extended our ray tracer by adding support for reflection and refraction. This allows us
+			to
+			render material such as glass.
+			We also implemented depth of field by simulating a thin lens.</p>
+
+		<br>
+	</div>
+
+	<div>
+		<br><br>
+		<h3 align="middle">Handling collisions with other objects</h3>
+
+		<p>
+			In this project, we extended our ray tracer by adding support for reflection and refraction. This allows us
+			to
+			render material such as glass.
+			We also implemented depth of field by simulating a thin lens.</p>
+	</div>
+
+	<div>
+		<br><br>
+		<h3 align="middle">Handling self-collisions</h3>
+
+		<p>
+			In this project, we extended our ray tracer by adding support for reflection and refraction. This allows us
+			to
+			render material such as glass.
+			We also implemented depth of field by simulating a thin lens.</p>
+	</div>
+
+	<div>
+		<br><br>
+		<h3 align="middle">Shaders</h3>
+
+		<p>
+			In this project, we extended our ray tracer by adding support for reflection and refraction. This allows us
+			to
+			render material such as glass.
+			We also implemented depth of field by simulating a thin lens.</p>
+	</div>
+
+	<div>
+		<br><br>
+		<h3 align="middle">Extra Credit</h3>
+
+		<p>
+			In this project, we extended our ray tracer by adding support for reflection and refraction. This allows us
+			to
+			render material such as glass.
+			We also implemented depth of field by simulating a thin lens.</p>
+	</div>
+
+
+</body>
+
 </html>
