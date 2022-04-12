@@ -111,12 +111,29 @@
   <h3 align="middle">Alan Hernandez, Clare Lin, Faywer Liu, Medhaav</h2>
   <div>
 
+
     <h2 align="middle">Summary</h2>
     <p> 
       We aim to simulate fluids of various viscosity using Material Point Method by 
       extending the Cloth Simulator codebase. Materials are represented as a collection 
       of material points in which Newtonian Laws are applied upon.
     </p>
+
+    <br>
+
+    <div align="middle">
+      <img src="images/unknown.png" align="middle" width="400px">
+      <figcaption align="middle">
+        Figure 1: MPM workflow. 
+        <ol type="a">
+          <li>Interpolate mass and momentum on the grid.</li>
+          <li>Map the velocity back to particles and solve the constitutive
+            equation.</li>
+          <li>Map and compute force on the grid using particles.</li>
+          <li>Map velocity and acceleration back to particles.</li>
+        </ol> 
+      </figcaption>
+    </div>
 
     <br>
 
