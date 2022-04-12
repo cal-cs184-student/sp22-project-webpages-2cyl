@@ -145,16 +145,44 @@
     </p>
     <h2 align="middle">Resources</h3>
     <p>
+      Our main research paper for reference is titled 
+      <a href="https://doi.org/10.1111/cgf.13523"> “MPM simulation of interacting fluids and solids.”</a>
+      We plan to use our Cloth Sim project as a base to build on top of, so the project will be in C++ and GLSL. 
+      If we have time, we can try speeding up our implementation with OpenMP and we could even try using a GPU by 
+      incorporating CUDA. If this doesn’t work out we can try Unity.
+    </p>
+      Another reference we have found has an MPM simulation done in 2D using 
+      <a href="https://github.com/nialltl/incremental_mpm">Unity</a>, so we have also brainstormed 
+      extending the simulation to 3D as a possibility. Upsides of this include ease
+       of importing and arranging assets, and lots of built in physics in the engine. 
+       A downside is that members of our team would have a steeper learning curve compared 
+       to starting out with a familiar language.
+    <p>
+      We hope to use GPU hardware (RTX 2070, 8GB GDDR6) to take advantage of GPU parallelization. 
     </p>
     <p>
+      As for other resources, the paper 
+      <a href="https://www.math.ucla.edu/~cffjiang/research/mpmcourse/mpmcourse.pdf">“The Material Point Method for Simulating Continuum Materials”</a>
+      is an in-depth overview of the technique which can help us gain background knowledge. However, the paper assumes basic knowledge of 
+      continuum mechanics, so here are 
+      <a href="https://csml.berkeley.edu/Notes/ME185.pdf"> “notes”</a>
+      from Berkeley’s continuum mechanics class, 
+      ME 185, for referencing if needed.
     </p>
     <p>
+      Below are more miscellaneous useful links and references.
     </p>
     <p>
+      <a href="https://nialltl.neocities.org/articles/mpm_guide.html">notes and examples for the material point method</a>
+    </p>
+   <p>
+    <a href="https://github.com/WindQAQ/MPM">Simulating on GPU using Material Point Method and rendering</a>
+   </p>
+    <p>
+      High-performance moving least squares material point method (MLS-MPM) solver. (ACM Transactions on Graphics, SIGGRAPH 2018)
     </p>
     <p>
-    </p>
-    <p>
+      <a href="https://github.com/yuanming-hu/taichi_mpm">This</a> is written in Taichi, which is a python-like language used for high performance graphics. It seems really cool but we think learning this new language might not be feasible for the project, or dig into our time too much and interfere with accomplishing a polished final product.
     </p>
 </body>
 
