@@ -108,7 +108,7 @@
 
   <h1 align="middle">CS 184: Computer Graphics and Imaging [SP22]</h1>
   <h1 align="middle">Fluid Simulation using Material Point Method</h1>
-  <h3 align="middle">Alan Hernandez, Clare Lin, Faywer Liu, Medhaav</h2>
+  <h3 align="middle">Alan Hernandez, Clare Lin, Faywer Liu, Medhaav Chandra Mahesh</h2>
   <div>
 
 
@@ -138,16 +138,33 @@
 
     <h2 align="middle">Problem Description</h2>
     <p>
-      When researching various types of fluid simulations, we learned 
-      that there are mainly two types - particle solvers and grid based solvers. 
-      Each one has its own strengths and weaknesses. Eventually we found a paper 
-      that took the strengths of both solvers and used a hybrid particle and grid based solver, which gave inspiration for our project. 
+      When researching various types of fluid simulations, we learned that there are mainly two types - particle solvers 
+      and grid based solvers. Each one has its own strengths and weaknesses. Particle based techniques tend to be faster 
+      than grid based simulations, while grid based techniques are better at generating smooth water surfaces. Eventually we 
+      found a paper that took the strengths of both solvers and combined the hybrid particle and grid based solver into the technique 
+      of Material Point Method (MPM), which gave inspiration for our project. In particular, we plan to implement the strength of the grid 
+      based solver, which is using a background mesh for calculating spatial derivatives, in order to yield more accurate and stable results 
+      compared to the particle solver. MPM would also maintain mass conservation through momentum equations, which tend to be a downfall of typical
+       grid based fluid simulations. Our main reference research paper also includes considerations and equations for addressing interactions between multiple fluids and solids, which we hope to accomplish implementing if feasible.
     </p>
     <br>
 
     <h2 align="middle">Goals and Deliverables</h2>
     <p>
-      hi
+      As a baseline, we plan to accomplish getting single phase fluid simulation working, including a demo with adjustable GUI for changing parameters 
+      such as viscosity of the fluid, and simulation speed. The demonstration would allow changing the amount of fluid, and shape of the box that holds 
+      the fluid. Shaders will be implemented to allow the option to visualize the fluid as water, such as in low viscosity fluid, or as thick lava, such 
+      as in high viscosity fluid.
+    </p>
+    <p>
+      As a stretch goal, we hope to include fluid solid coupling behavior, multiple fluid simulation, and smoke simulation as well. 
+    </p>
+    <p>
+      If we have time, we also plan on trying to utilize multithreading with OpenMP and the GPU using Cuda. We could then compare a naive solution with multiprocessing and GPU and observe the speedups. 
+      This could help us answer in which scenarios the CPU or the GPU performs better than the other.
+    </p>
+    <p>
+      Furthermore, the quality of our system can also be measured by its visual realism and similarity to actual fluids
     </p>
     <br>
 
