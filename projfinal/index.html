@@ -111,39 +111,54 @@
   <h3 align="middle">Alan Hernandez, Clare Lin, Faywer Liu, Medhaav</h2>
   <div>
 
-
     <h2 align="middle">Summary</h2>
     <p> 
-      We aim to simulate fluids of various viscosity using Material Point Method by extending the Cloth Simulator codebase. Materials are represented as a collection of material points in which Newtonian Laws are applied upon.
+      We aim to simulate fluids of various viscosity using Material Point Method by 
+      extending the Cloth Simulator codebase. Materials are represented as a collection 
+      of material points in which Newtonian Laws are applied upon.
     </p>
 
-   
-
     <br>
-    <h2 align="middle">Problem Description</h3>
+
+    <h2 align="middle">Problem Description</h2>
     <p>
-      Problem is some fluid sims are not good looking. We hope to stylize fluid sim and have it look natural and realistic to physics.
+      When researching various types of fluid simulations, we learned 
+      that there are mainly two types - particle solvers and grid based solvers. 
+      Each one has its own strengths and weaknesses. Eventually we found a paper 
+      that took the strengths of both solvers and used a hybrid particle and grid based solver, which gave inspiration for our project. 
     </p>
     <br>
-    <h2 align="middle">Goals and Deliverables</h3>
+
+    <h2 align="middle">Goals and Deliverables</h2>
     <p>
       hi
     </p>
     <br>
-    <h2 align="middle">Schedule</h3>
-    <h4>Week 1</h3>
-    <p>
-    </p>
-    <h4>Week 2</h3>
-    <p>
-    </p>
-    <h4>Week 3</h3>
-    <p>
-    </p>
-    <h4>Week 4</h3>
-    <p>
-    </p>
-    <h2 align="middle">Resources</h3>
+
+    <h2 align="middle">Schedule</h2>
+    <h4>Week 1</h4>
+      <ul>
+        <li>Familiarize ourselves with MPM through reading papers and reading source code for similar existing projects</li>
+        <li>Brainstorm and set up the new files we need to add to Cloth Sim for the project, and have an idea of what new functions we will implement, and how they will interact with each other</li>
+        <li>Divide roles for who is working on which sub-part, and have some skeleton code done</li>
+      </ul> 
+    <h4>Week 2</h4>
+      <ul>
+        <li>Start coding for each member’s assigned portions more extensively</li>
+        <li>Have basic MVP showing, able to display moving particles within a box</li>
+        <li>Can have inefficient but easier to implement algorithms</li>
+      </ul> 
+    <h4>Week 3</h4>
+      <ul>
+        <li>Basic single phase fluid simulation working, able to generate dam break example (block of resting water suddenly dropping on to platform below, and shows splashing)</li>
+      </ul> 
+    <h4>Week 4</h4>
+      <ul>
+        <li>Fluid solid coupling behavior, multiple fluid simulation, smoke simulation thorough adjusting input parameters and number of distinct solid/ fluid type</li>
+        <li>Optimization of algorithms - if time, then can also compare simulation times of different methods</li>
+      </ul> 
+      <br>
+    <h2 align="middle">Resources</h2>
     <p>
       Our main research paper for reference is titled 
       <a href="https://doi.org/10.1111/cgf.13523"> “MPM simulation of interacting fluids and solids.”</a>
