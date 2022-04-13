@@ -136,13 +136,13 @@
 			render material such as glass.
 			We also implemented depth of field by simulating a thin lens.</p>
 
-		<img src="images/task1-noshear.png" align="middle" width="800px">
+		<img src="images/task1-noshear.png" align="middle" width="600px">
 		<figcaption align="middle">cloth wireframe without any shearing constraints</figcaption>
 		<br>
-		<img src="images/task1-onlyshear.png" align="middle" width="800px">
+		<img src="images/task1-onlyshear.png" align="middle" width="600px">
 		<figcaption align="middle">cloth wireframe with only shearing constraints</figcaption>
 		<br>
-		<img src="images/task1-allconstraint.png" align="middle" width="800px">
+		<img src="images/task1-allconstraint.png" align="middle" width="600px">
 		<figcaption align="middle">cloth wireframe with all constraints</figcaption>
 		<br>
 	</div>
@@ -152,10 +152,74 @@
 		<h3 align="middle">Simulation via numerical integration</h3>
 
 		<p>
-			In this project, we extended our ray tracer by adding support for reflection and refraction. This allows us
-			to
-			render material such as glass.
-			We also implemented depth of field by simulating a thin lens.</p>
+			Changing ks seems to change the elasticity of the cloth. The cloth with a low ks is very
+			stretchy. Compared to the default settings, the cloth center of the cloth is lower at a resting state.
+			With a high ks the cloth is much more stiff and compared to the default settings, the center of
+			the cloth is higher up. At it's resting state there are ripples like a sunchip.
+		</p>
+
+		<div align="middle">
+			<table style="width=100%">
+			  <tbody>
+				<tr>
+				  <td>
+					<img src="images/task4-tri.png" align="middle" width="400px">
+					<figcaption align="middle">ks = .1</figcaption>
+				  </td>
+				  <td>
+					<img src="images/task4-circle.png" align="middle" width="400px">
+					<figcaption align="middle">ks = 99999</figcaption>
+				  </td>
+				</tr>
+			  </tbody>
+			</table>
+		  </div>
+
+		<p>
+		</p>
+
+		<div align="middle">
+			<table style="width=100%">
+			  <tbody>
+				<tr>
+				  <td>
+					<img src="images/task4-tri.png" align="middle" width="400px">
+					<figcaption align="middle">Gradient triangle.</figcaption>
+				  </td>
+				  <td>
+					<img src="images/task4-circle.png" align="middle" width="400px">
+					<figcaption align="middle">Gradient circle.</figcaption>
+				  </td>
+				</tr>
+			  </tbody>
+			</table>
+		  </div>
+
+		<p>
+		</p>
+
+		<div align="middle">
+			<table style="width=100%">
+			  <tbody>
+				<tr>
+				  <td>
+					<img src="images/task4-tri.png" align="middle" width="400px">
+					<figcaption align="middle">Gradient triangle.</figcaption>
+				  </td>
+				  <td>
+					<img src="images/task4-circle.png" align="middle" width="400px">
+					<figcaption align="middle">Gradient circle.</figcaption>
+				  </td>
+				</tr>
+			  </tbody>
+			</table>
+		  </div>
+
+		<p>
+		</p>
+
+		<img src="images/task1-allconstraint.png" align="middle" width="800px">
+		<figcaption align="middle">cloth wireframe with all constraints</figcaption>
 
 		<br>
 	</div>
