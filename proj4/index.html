@@ -148,6 +148,23 @@
 				<tbody>
 					<tr>
 						<td>
+							<img src="images/pinned2_front.png" align="middle" width="400px">
+							<figcaption align="middle">front view of vertically pinned cloth</figcaption>
+						</td>
+						<td>
+							<img src="images/pinned2_side.png" align="middle" width="400px">
+							<figcaption align="middle">side view of vertically pinned cloth</figcaption>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<br>
+		<div align="middle">
+			<table style="width=100%">
+				<tbody>
+					<tr>
+						<td>
 							<img src="images/task1-noshear.png" align="middle" width="400px">
 							<figcaption align="middle">cloth wireframe without any shearing constraints</figcaption>
 						</td>
@@ -486,7 +503,7 @@
 		</p>
 
 		<div align="middle">
-			<img src="images/texture-custom.png" align="middle" width="400px">
+			<img src="images/texture-custom.png" align="middle" width="600px">
 			<figcaption align="middle">draping fabric with custom texture</figcaption>
 		</div>
 		<br>
@@ -585,7 +602,7 @@
 						</td>
 						<td>
 							<img src="images/mirror-sphere-beach.png" align="middle" width="400px">
-							<figcaption align="middle">mirror shader on cloth</figcaption>
+							<figcaption align="middle">mirror shader on sphere</figcaption>
 						</td>
 					</tr>
 					<tr>
@@ -605,7 +622,9 @@
 
 		<p>
 			In our custom shader, we implemented a toon shader or cel shader to
-			give off a stylized cartoon effect.
+			give off a stylized cartoon effect. Our output color is determined through the input color multiplied by
+			intensity from from a select set. After we find the real intensity, we group a range of intensities into one
+			intensity, to give off the illusion of simplifed geometry of a cartoon.
 		</p>
 		<div align="middle">
 			<img src="images/custom_shader.png" align="middle" width="400px">
