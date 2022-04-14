@@ -59,7 +59,7 @@
 		code {
 			font-size: medium;
 			display: inline-block;
-			background: #2e2a3a;
+			background: #152733;
 		}
 
 		a {
@@ -137,155 +137,340 @@
 			We also implemented depth of field by simulating a thin lens.</p>
 
 
-	<div align="middle">
-		<table style="width=100%">
-		  <tbody>
-			<tr>
-			  <td>
-				<img src="images/task1-noshear.png" align="middle" width="400px">
-				<figcaption align="middle">cloth wireframe without any shearing constraints</figcaption>
-			  </td>
-			  <td>
-				<img src="images/task1-onlyshear.png" align="middle" width="400px">
-				<figcaption align="middle">cloth wireframe with only shearing constraints</figcaption>
-			  </td>
-			</tr>
-		  </tbody>
-		</table>
-	  </div>
-
-	  <div align="middle">
-		<img src="images/task1-allconstraint.png" align="middle" width="400px">
-		<figcaption align="middle">cloth wireframe with all constraints</figcaption>
-	</div>
-
-	<div align>
-		<br><br>
-		<h3 align="middle">Simulation via numerical integration</h3>
-
-		<p>
-			Changing ks seems to change the elasticity of the cloth. The cloth with a low ks is very
-			stretchy. Compared to the default settings, the cloth is droopy and the center of the cloth is lower at a resting state.
-			With a high ks the cloth is much more stiff and compared to the default settings, the cloth is a lot tighter and the center of
-			the cloth is higher up. At it's resting state it is wrinkly and has ripples like a sunchip.
-		</p>
-
 		<div align="middle">
 			<table style="width=100%">
-			  <tbody>
-				<tr>
-				  <td>
-					<img src="images/task2-low-ks.png" align="middle" width="400px">
-					<figcaption align="middle">ks = .1</figcaption>
-				  </td>
-				  <td>
-					<img src="images/task2-high-ks.png" align="middle" width="400px">
-					<figcaption align="middle">ks = 99999</figcaption>
-				  </td>
-				</tr>
-			  </tbody>
+				<tbody>
+					<tr>
+						<td>
+							<img src="images/task1-noshear.png" align="middle" width="400px">
+							<figcaption align="middle">cloth wireframe without any shearing constraints</figcaption>
+						</td>
+						<td>
+							<img src="images/task1-onlyshear.png" align="middle" width="400px">
+							<figcaption align="middle">cloth wireframe with only shearing constraints</figcaption>
+						</td>
+					</tr>
+				</tbody>
 			</table>
-		  </div>
-
-		<p>
-			Changing density seems to affect how strong the gravitional forces on the cloth are. With a low density, the cloth is very smooth
-			and doesn't sink as much as it does using the default settings. It is also less stretchy. With a high density, the cloth has some wrinkles and is 
-			a lot stretchier than default. It also sinks much lower than default.
-		</p>
+		</div>
 
 		<div align="middle">
-			<table style="width=100%">
-			  <tbody>
-				<tr>
-				  <td>
-					<img src="images/task2-low-density.png" align="middle" width="400px">
-					<figcaption align="middle">Density = 1</figcaption>
-				  </td>
-				  <td>
-					<img src="images/task2-high-density.png" align="middle" width="400px">
-					<figcaption align="middle">Density = 99999</figcaption>
-				  </td>
-				</tr>
-			  </tbody>
-			</table>
-		  </div>
+			<img src="images/task1-allconstraint.png" align="middle" width="400px">
+			<figcaption align="middle">cloth wireframe with all constraints</figcaption>
+		</div>
 
-		<p>
-			Changing dampening seems to affect the amount of flucatation and how long it takes for the cloth to come to a resting state. With a low dampening,
-			the cloth is very animated and takes longer to come to rest compared to default. With a high dampening, it takes a very short amount of time to come to rest. Changing dampening
-			seems to have no effect on how resting states look but has an effect on how long it takes to come to rest.
-		</p>
+		<div align>
+			<br><br>
+			<h3 align="middle">Simulation via numerical integration</h3>
 
-		<div align="middle">
-			<table style="width=100%">
-			  <tbody>
-				<tr>
-				  <td>
-					<img src="images/task2-low-damp.png" align="middle" width="400px">
-					<figcaption align="middle">Dampening about 10%</figcaption>
-				  </td>
-				  <td>
-					<img src="images/task2-high-damp.png" align="middle" width="400px">
-					<figcaption align="middle">Dampening about 90%</figcaption>
-				  </td>
-				</tr>
-			  </tbody>
-			</table>
-		  </div>
+			<p>
+				Changing ks seems to change the elasticity of the cloth. The cloth with a low ks is very
+				stretchy. Compared to the default settings, the cloth is droopy and the center of the cloth is lower at
+				a resting state.
+				With a high ks the cloth is much more stiff and compared to the default settings, the cloth is a lot
+				tighter and the center of
+				the cloth is higher up. At it's resting state it is wrinkly and has ripples like a sunchip.
+			</p>
 
-		<p>
-		</p>
-	<div align="middle">
-		<img src="images/task2-default.png" align="middle" width="400px">
-		<figcaption align="middle">Default settings</figcaption>
-	</div>
+			<div align="middle">
+				<table style="width=100%">
+					<tbody>
+						<tr>
+							<td>
+								<img src="images/task2-low-ks.png" align="middle" width="400px">
+								<figcaption align="middle">ks = .1</figcaption>
+							</td>
+							<td>
+								<img src="images/task2-high-ks.png" align="middle" width="400px">
+								<figcaption align="middle">ks = 99999</figcaption>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 
-		<br>
-	</div>
+			<p>
+				Changing density seems to affect how strong the gravitional forces on the cloth are. With a low density,
+				the cloth is very smooth
+				and doesn't sink as much as it does using the default settings. It is also less stretchy. With a high
+				density, the cloth has some wrinkles and is
+				a lot stretchier than default. It also sinks much lower than default.
+			</p>
 
-	<div>
-		<br><br>
-		<h3 align="middle">Handling collisions with other objects</h3>
+			<div align="middle">
+				<table style="width=100%">
+					<tbody>
+						<tr>
+							<td>
+								<img src="images/task2-low-density.png" align="middle" width="400px">
+								<figcaption align="middle">Density = 1</figcaption>
+							</td>
+							<td>
+								<img src="images/task2-high-density.png" align="middle" width="400px">
+								<figcaption align="middle">Density = 99999</figcaption>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 
-		<p>
-			In this project, we extended our ray tracer by adding support for reflection and refraction. This allows us
-			to
-			render material such as glass.
-			We also implemented depth of field by simulating a thin lens.</p>
-	</div>
+			<p>
+				Changing dampening seems to affect the amount of flucatation and how long it takes for the cloth to come
+				to a resting state. With a low dampening,
+				the cloth is very animated and takes longer to come to rest compared to default. With a high dampening,
+				it takes a very short amount of time to come to rest. Changing dampening
+				seems to have no effect on how resting states look but has an effect on how long it takes to come to
+				rest.
+			</p>
 
-	<div>
-		<br><br>
-		<h3 align="middle">Handling self-collisions</h3>
+			<div align="middle">
+				<table style="width=100%">
+					<tbody>
+						<tr>
+							<td>
+								<img src="images/task2-low-damp.png" align="middle" width="400px">
+								<figcaption align="middle">Dampening about 10%</figcaption>
+							</td>
+							<td>
+								<img src="images/task2-high-damp.png" align="middle" width="400px">
+								<figcaption align="middle">Dampening about 90%</figcaption>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 
-		<p>
-			In this project, we extended our ray tracer by adding support for reflection and refraction. This allows us
-			to
-			render material such as glass.
-			We also implemented depth of field by simulating a thin lens.</p>
-	</div>
+			<p>
+			</p>
+			<div align="middle">
+				<img src="images/task2-default.png" align="middle" width="400px">
+				<figcaption align="middle">Default settings</figcaption>
+			</div>
 
-	<div>
-		<br><br>
-		<h3 align="middle">Shaders</h3>
+			<br>
+		</div>
 
-		<p>
-			In this project, we extended our ray tracer by adding support for reflection and refraction. This allows us
-			to
-			render material such as glass.
-			We also implemented depth of field by simulating a thin lens.</p>
-	</div>
+		<div>
+			<br><br>
+			<h3 align="middle">Handling collisions with other objects</h3>
 
-	<div>
-		<br><br>
-		<h3 align="middle">Extra Credit</h3>
+			<p>
+				In this project, we extended our ray tracer by adding support for reflection and refraction. This allows
+				us
+				to
+				render material such as glass.
+				We also implemented depth of field by simulating a thin lens.</p>
+		</div>
 
-		<p>
-			In this project, we extended our ray tracer by adding support for reflection and refraction. This allows us
-			to
-			render material such as glass.
-			We also implemented depth of field by simulating a thin lens.</p>
-	</div>
+		<div>
+			<br><br>
+			<h3 align="middle">Handling self-collisions</h3>
+
+			<p>
+				In this project, we extended our ray tracer by adding support for reflection and refraction. This allows
+				us
+				to
+				render material such as glass.
+				We also implemented depth of field by simulating a thin lens.</p>
+		</div>
+
+		<div>
+			<br><br>
+			<h3 align="middle">Shaders</h3>
+
+			<p>
+				Shader programs are used as a part of the rendering pipeline to create different lighting and material
+				effects. We are able to take advantage of GPU hardware using GLSL shader programs to render images more
+				quickly. There are mainly two shader types we work with in this project: vertex shaders and fragment
+				shaders. The vertex shader is used to manipulate the vertices of the object, such as adding height to
+				the vertex normal to create bumpy effects. The fragment shader is used to determine the color of the
+				pixel that will be rendered. For example, we can interpolate the colors between some vertices to give
+				the appearance of a gradient effect. The vertex shader also is executed earlier in the rendering
+				pipeline, so we pass off the output of the vertex shader to the fragment shader, before the final render
+				is outputted to the screen.
+			</p>
+
+			<p>
+				The <span style="color: var(--highlight)">Blinn-Phong shading</span> model was calculated by the sums of
+				the diffuse shading, the ambient lighting,
+				and finally the specular reflection. First, we calculate the diffuse shading through a function of the
+				source illumination, a diffuse coefficient, \(k_d\), and the dot product of the normal vector and the
+				distance of light. Next, we obtain the shiny specular lighting through a function of the specular
+				coefficient, \(k_s\), the source illumination, and the dot product of the normal vector and the camera +
+				light vector, raised to an exponent. The diffuse lighting is independent to the view angle, but the
+				specular reflection changes depending on how we view the render. Finally, we add the ambient lighting,
+				which is an arbitrary vector to brighten the result.
+
+				<span style="color: var(--highlight)">$$L=k_d (I/r^2) max (0, n \cdot l) + k_s (I/r^2) max(0, n \cdot
+					h)^p + k_a I_a$$</span>
+			</p>
+
+			<div align="middle">
+				<table style="width=100%">
+					<tbody>
+						<tr>
+							<td>
+								<img src="images/bp-diffuse.png" align="middle" width="400px">
+								<figcaption align="middle">cloth with diffuse shading</figcaption>
+							</td>
+							<td>
+								<img src="images/bp-specular.png" align="middle" width="400px">
+								<figcaption align="middle">cloth with specular shading</figcaption>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<img src="images/bp-ambient.png" align="middle" width="400px">
+								<figcaption align="middle">cloth with ambient shading</figcaption>
+							</td>
+							<td>
+								<img src="images/bp-all.png" align="middle" width="400px">
+								<figcaption align="middle">entire Blinn-Phong model</figcaption>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<br>
+			<p>
+				We are also able to feed any custom texture into the <span style="color: var(--highlight)"> texture
+					mapping shader</span>. This is done by mapping a uv coordiante to a texture sample, before writing
+				it to the ouput color of the fragment shader. GLSL has a handy
+				<code>texture(sampler2D tex, vec2 uv)</code> function to allow this to be easily implemented.
+			</p>
+
+			<div align="middle">
+				<img src="images/texture-custom.png" align="middle" width="400px">
+				<figcaption align="middle">draping fabric with custom texture</figcaption>
+			</div>
+			<br>
+			<p>
+				<span style="color: var(--highlight)">Bump mapping</span> was implemented by transforming the local
+				space normal to the displaced model space normal
+				with a TBN (tangent, binormal, normal) matrix. The local space normal was first found by finding small
+				step change in the uv map, to obtain a height value from the height map for each pixel. Similar to bump
+				mapping, we output the same fragment shader for <span style="color: var(--highlight)">displacement
+					mapping</span>, but this time we change the vertex shader to displace the height at the normal for
+				each vertex. This creates a bumpy effect on the planes of the object itself, and gives more realistic
+				sensation of the texture.
+			</p>
+			<div align="middle">
+				<table style="width=100%">
+					<tbody>
+						<tr>
+							<td>
+								<img src="images/bump-sphere.png" align="middle" width="400px">
+								<figcaption align="middle">sphere with bump mapping</figcaption>
+							</td>
+							<td>
+								<img src="images/bump-cloth.png" align="middle" width="400px">
+								<figcaption align="middle">cloth with bump mapping</figcaption>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<img src="images/disp-sphere.png" align="middle" width="400px">
+								<figcaption align="middle">sphere with displacement mapping</figcaption>
+							</td>
+							<td>
+								<img src="images/disp-cloth.png" align="middle" width="400px">
+								<figcaption align="middle">cloth with displacement mapping</figcaption>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<br>
+			<p>
+				As we increase the coarseness of our sphere's mesh, we can see that in the displacement mapping shader,
+				the height of the vertex offset increases, and the resulting mesh becomes more bumpy looking.
+			</p>
+			<div align="middle">
+				<table style="width=100%">
+					<tbody>
+						<tr>
+							<td>
+								<img src="images/bump-16.png" align="middle" width="400px">
+								<figcaption align="middle">bump mapping with 16 coarseness</figcaption>
+							</td>
+							<td>
+								<img src="images/bump-128.png" align="middle" width="400px">
+								<figcaption align="middle">bump mapping with 128 coarseness</figcaption>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<img src="images/disp-16.png" align="middle" width="400px">
+								<figcaption align="middle">displacement mapping with 16 coarseness</figcaption>
+							</td>
+							<td>
+								<img src="images/disp-128.png" align="middle" width="400px">
+								<figcaption align="middle">displacement mapping with 128 coarseness</figcaption>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<br>
+
+			<br>
+			<p>
+				We also have a mirror shader that reflects off an environment map. We achieve this by taking an incoming
+				eye ray, or the camera to vertex ray, and sampling its reflection across the normal direction with the
+				cubemap to get the output color of each pixel. Here are some examples of the mirror shader on the sphere
+				and on the cloth.
+			</p>
+			<div align="middle">
+				<table style="width=100%">
+					<tbody>
+						<tr>
+							<td>
+								<img src="images/mirror-sphere.png" align="middle" width="400px">
+								<figcaption align="middle">mirror shader on sphere</figcaption>
+							</td>
+							<td>
+								<img src="images/mirror-sphere-beach.png" align="middle" width="400px">
+								<figcaption align="middle">mirror shader on cloth</figcaption>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<img src="images/mirror-cloth.png" align="middle" width="400px">
+								<figcaption align="middle">mirror shader on cloth</figcaption>
+							</td>
+							<td>
+								<img src="images/mirror-cloth-springless.png" align="middle" width="400px">
+								<figcaption align="middle">mirror shader on cloth with no springs</figcaption>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<br>
+
+			<p>
+				In our custom shader, we implemented a toon shader or cel shader with an outline around the edges to
+				give off a stylized cartoon effect.
+			</p>
+			<div align="middle">
+				<img src="images/mirror-cloth.png" align="middle" width="400px">
+				<figcaption align="middle">custom toon shader</figcaption>
+			</div>
+
+		</div>
+
+		<div>
+			<br><br>
+			<h3 align="middle">Extra Credit</h3>
+
+			<p>
+				In this project, we extended our ray tracer by adding support for reflection and refraction. This allows
+				us
+				to
+				render material such as glass.
+				We also implemented depth of field by simulating a thin lens.</p>
+		</div>
 
 
 </body>
