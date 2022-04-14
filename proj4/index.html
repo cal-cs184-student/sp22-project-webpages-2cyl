@@ -135,7 +135,7 @@
 			to
 			render material such as glass.
 			We also implemented depth of field by simulating a thin lens.</p>
-
+			<div align="middle">
 		<img src="images/task1-noshear.png" align="middle" width="600px">
 		<figcaption align="middle">cloth wireframe without any shearing constraints</figcaption>
 		<br>
@@ -146,6 +146,7 @@
 		<figcaption align="middle">cloth wireframe with all constraints</figcaption>
 		<br>
 	</div>
+	</div>
 
 	<div align>
 		<br><br>
@@ -153,9 +154,9 @@
 
 		<p>
 			Changing ks seems to change the elasticity of the cloth. The cloth with a low ks is very
-			stretchy. Compared to the default settings, the cloth center of the cloth is lower at a resting state.
-			With a high ks the cloth is much more stiff and compared to the default settings, the center of
-			the cloth is higher up. At it's resting state there are ripples like a sunchip.
+			stretchy. Compared to the default settings, the cloth is droopy and the center of the cloth is lower at a resting state.
+			With a high ks the cloth is much more stiff and compared to the default settings, the cloth is a lot tighter and the center of
+			the cloth is higher up. At it's resting state it is wrinkly and has ripples like a sunchip.
 		</p>
 
 		<div align="middle">
@@ -163,11 +164,11 @@
 			  <tbody>
 				<tr>
 				  <td>
-					<img src="images/task4-tri.png" align="middle" width="400px">
+					<img src="images/task2-low-ks.png" align="middle" width="400px">
 					<figcaption align="middle">ks = .1</figcaption>
 				  </td>
 				  <td>
-					<img src="images/task4-circle.png" align="middle" width="400px">
+					<img src="images/task2-high-ks.png" align="middle" width="400px">
 					<figcaption align="middle">ks = 99999</figcaption>
 				  </td>
 				</tr>
@@ -176,6 +177,9 @@
 		  </div>
 
 		<p>
+			Changing density seems to affect how strong the gravitional forces on the cloth are. With a low density, the cloth is very smooth
+			and doesn't sink as much as it does using the default settings. It is also less stretchy. With a high density, the cloth has some wrinkles and is 
+			a lot stretchier than default. It also sinks much lower than default.
 		</p>
 
 		<div align="middle">
@@ -183,12 +187,35 @@
 			  <tbody>
 				<tr>
 				  <td>
-					<img src="images/task4-tri.png" align="middle" width="400px">
-					<figcaption align="middle">Gradient triangle.</figcaption>
+					<img src="images/task2-low-density.png" align="middle" width="400px">
+					<figcaption align="middle">Density = 1</figcaption>
 				  </td>
 				  <td>
-					<img src="images/task4-circle.png" align="middle" width="400px">
-					<figcaption align="middle">Gradient circle.</figcaption>
+					<img src="images/task2-high-density.png" align="middle" width="400px">
+					<figcaption align="middle">Density = 99999</figcaption>
+				  </td>
+				</tr>
+			  </tbody>
+			</table>
+		  </div>
+
+		<p>
+			Changing dampening seems to affect the amount of flucatation and how long it takes for the cloth to come to a resting state. With a low dampening,
+			the cloth is very animated and takes longer to come to rest compared to default. With a high dampening, it takes a very short amount of time to come to rest. Changing dampening
+			seems to have no effect on how resting states look but has an effect on how long it takes to come to rest.
+		</p>
+
+		<div align="middle">
+			<table style="width=100%">
+			  <tbody>
+				<tr>
+				  <td>
+					<img src="images/task2-low-damp.png" align="middle" width="400px">
+					<figcaption align="middle">Dampening about 10%</figcaption>
+				  </td>
+				  <td>
+					<img src="images/task2-high-damp.png" align="middle" width="400px">
+					<figcaption align="middle">Dampening about 90%</figcaption>
 				  </td>
 				</tr>
 			  </tbody>
@@ -197,29 +224,10 @@
 
 		<p>
 		</p>
-
-		<div align="middle">
-			<table style="width=100%">
-			  <tbody>
-				<tr>
-				  <td>
-					<img src="images/task4-tri.png" align="middle" width="400px">
-					<figcaption align="middle">Gradient triangle.</figcaption>
-				  </td>
-				  <td>
-					<img src="images/task4-circle.png" align="middle" width="400px">
-					<figcaption align="middle">Gradient circle.</figcaption>
-				  </td>
-				</tr>
-			  </tbody>
-			</table>
-		  </div>
-
-		<p>
-		</p>
-
-		<img src="images/task1-allconstraint.png" align="middle" width="800px">
-		<figcaption align="middle">cloth wireframe with all constraints</figcaption>
+	<div align="middle">
+		<img src="images/task2-default.png" align="middle" width="400px">
+		<figcaption align="middle">Default settings</figcaption>
+	</div>
 
 		<br>
 	</div>
