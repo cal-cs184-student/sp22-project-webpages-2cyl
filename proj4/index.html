@@ -115,6 +115,8 @@
 	<h1 align="middle">CS 184: Computer Graphics and Imaging [SP22]</h1>
 	<h1 align="middle">Project 4: Cloth Sim</h1>
 	<h2 align="middle">Clare Lin, Faywer Liu</h2>
+	<!-- <h2 align="middle"><a href="https://cal-cs184-student.github.io/sp22-project-webpages-2cyl/proj4/index.html">
+			website link</a></h2> -->
 	<div align="middle">
 		<br><br><img src="images/sphere_collide_banner.png" width="800px" class="center">
 	</div>
@@ -584,7 +586,8 @@
 
 		<br>
 		<p>
-			We also have a mirror shader that reflects off an environment map. We achieve this by taking an
+			We also have a <span style="color: var(--highlight)"> mirror shader</span> that reflects off an environment
+			map. We achieve this by taking an
 			incoming
 			eye ray, or the camera to vertex ray, and sampling its reflection across the normal direction with
 			the
@@ -621,7 +624,8 @@
 		<br>
 
 		<p>
-			In our custom shader, we implemented a toon shader or cel shader to
+			In our <span style="color: var(--highlight)">custom shader</span>, we implemented a toon shader or cel
+			shader to
 			give off a stylized cartoon effect. Our output color is determined through the input color multiplied by
 			intensity from from a select set. After we find the real intensity, we group a range of intensities into one
 			intensity, to give off the illusion of simplifed geometry of a cartoon.
@@ -646,7 +650,12 @@
 			and apply it to all point masses. We played around with the range of the random force and we show them
 			below.
 		</p>
-		<br>
+
+		<!-- <b> To see the gif movement, please visit our website at <a
+				href="https://cal-cs184-student.github.io/sp22-project-webpages-2cyl/proj4/index.html"> this link</a>
+			instead of the pdf.
+		</b> -->
+		<br><br>
 
 		<div align="middle">
 			<img src="images/no_wind.gif" align="middle" width="800px">
