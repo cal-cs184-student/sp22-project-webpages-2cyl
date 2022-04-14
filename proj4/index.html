@@ -162,6 +162,11 @@
 	<div align>
 		<br><br>
 		<h3 align="middle">Simulation via numerical integration</h3>
+		<p>
+			In this part, we have to figure out how our cloth's point masses move from one time step to another. We first compute the total force acting upon 
+			each point mass (extern forces and spring correct forces). Then we can estimate the new point mass positions using Verlet integration. We also implement a
+			heuristic such that the spring length is at most 10% greater than it's rest_length.
+		</p>
 
 		<p>
 			Changing ks seems to change the elasticity of the cloth. The cloth with a low ks is very
@@ -169,7 +174,7 @@
 			With a high ks the cloth is much more stiff and compared to the default settings, the cloth is a lot tighter and the center of
 			the cloth is higher up. At it's resting state it is wrinkly and has ripples like a sunchip.
 		</p>
-
+ 
 		<div align="middle">
 			<table style="width=100%">
 			  <tbody>
@@ -248,11 +253,36 @@
 		<h3 align="middle">Handling collisions with other objects</h3>
 
 		<p>
-			In this project, we extended our ray tracer by adding support for reflection and refraction. This allows us
-			to
-			render material such as glass.
-			We also implemented depth of field by simulating a thin lens.</p>
-	</div>
+			In this part, we handle collisions with spheres and planes. If any point mass is inside the object, we adjust the point mass
+			to be outside of the object.
+		</p>
+
+		<p>
+			To check for sphere collision, we check to see if a point is within the radius of the sphere. If so, we adjust it so it lies outside the sphere.
+			To check for plane collision, we check to see if a point mass crosses from one side of the plane to the other in a time step. If so, adjust it so it lies
+			on the side it came from.
+		</p>
+
+		<p>
+			By increasing ks, we increase the "stiffness" of the cloth. We can see that at ks = 500, the cloth is more elastic
+			and clings to the sphere. With greater stiffness, the cloth holds its shape better as seen in ks = 5000 and even better in when ks = 50000.
+		</p>
+
+		<div align="middle">
+			<img src="images/task3-500.png" align="middle" width="500px">
+			<figcaption align="middle">ks = 500</figcaption>
+		</div>
+
+		<div align="middle">
+			<img src="images/task3-5000.png" align="middle" width="500px">
+					<figcaption align="middle">ks = 5000</figcaption>
+		</div>
+
+		<div align="middle">
+			<img src="images/task3-50000.png" align="middle" width="500px">
+			<figcaption align="middle">ks = 50000</figcaption>
+		</div>
+
 
 	<div>
 		<br><br>
