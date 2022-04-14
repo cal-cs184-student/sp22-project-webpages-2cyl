@@ -122,7 +122,11 @@
 
 		<br><br>
 		<h2 align="middle">Overview</h2>
-		<p> Sim the cloth
+		<p>
+			In this project, we simulate a cloth using a mass and spring system. First, we build a grid of point masses
+			and springs (structural, shearing, and bending). Then in order for movement, we implement physics equations by first
+			calculating the total force on each point. Then we estimate the positions using Verlet Integration. We then implement
+			collisions with objects and self collisions. Finally, we use GLSL to make some cool shaders.
 		</p>
 	</div>
 
@@ -195,7 +199,7 @@
 		<p>
 			Changing density seems to affect how strong the gravitional forces on the cloth are. With a low density, the cloth is very smooth
 			and doesn't sink as much as it does using the default settings. It is also less stretchy. With a high density, the cloth has some wrinkles and is 
-			a lot stretchier than default. It also sinks much lower than default.
+			a lot stretchier than default. It also sinks much lower than default. The higher the density, the faster the cloth falls.
 		</p>
 
 		<div align="middle">
@@ -283,17 +287,96 @@
 			<figcaption align="middle">ks = 50000</figcaption>
 		</div>
 
+		<p>
+			Below is the default settings for a planar collision.
+		</p>
+
+		<div align="middle">
+			<img src="images/sleepy.png" align="middle" width="500px">
+			<figcaption align="middle">Default settings</figcaption>
+		</div>
+
 
 	<div>
 		<br><br>
 		<h3 align="middle">Handling self-collisions</h3>
 
 		<p>
-			In this project, we extended our ray tracer by adding support for reflection and refraction. This allows us
-			to
-			render material such as glass.
-			We also implemented depth of field by simulating a thin lens.</p>
+			While we have implemented collisions with spheres and planes, we have not done so with the cloth itself! This is done by iterating over every point
+			and if a point is within 2 * thickness of another one, we create an adjustment vector so that it is not. We average these adjustment vector and scale it down.
+			To make this process more efficient, we use implement a Hash function and use a Hash Map.
+		</p>
+
+		<div align="middle">
+			<img src="images/early.png" align="middle" width="400px">
+			<figcaption align="middle">Early, no self collisions yet</figcaption>
+		</div>
+
+		<div align="middle">
+			<img src="images/initial.png" align="middle" width="400px">
+			<figcaption align="middle">First self collisions</figcaption>
+		</div>
+
+		<div align="middle">
+			<img src="images/rest.png" align="middle" width="400px">
+			<figcaption align="middle">Resting State</figcaption>
+		</div>
+
+		<br>
+
+		<p>
+			By lowing ks, we increase the elasticity of the cloth. This means that the cloth folds more and creates more wrinkles.
+			By increasing ks, we increase the stiffness of the cloth. This means that the cloth folds less and is more smooth.
+			
+		</p>
+
+		<div align="middle">
+			<table style="width=100%">
+			  <tbody>
+				<tr>
+				  <td>
+					<img src="images/low-ks.png" align="middle" width="400px">
+					<figcaption align="middle">ks = .1</figcaption>
+				  </td>
+				  <td>
+					<img src="images/high-ks.png" align="middle" width="400px">
+					<figcaption align="middle">ks = 99999</figcaption>
+				  </td>
+				</tr>
+			  </tbody>
+			</table>
+		  </div>
+<br>
+		<p>
+			By decreasing density, the cloth falls slower allowing for less but more elegant folds. By increasing denity,
+			the cloth falls quickly and creates more folds resulting in wrinkles.
+		</p>
+
+		<div align="middle">
+			<table style="width=100%">
+			  <tbody>
+				<tr>
+				  <td>
+					<img src="images/low-desnity.png" align="middle" width="400px">
+					<figcaption align="middle">Density = 1</figcaption>
+				  </td>
+				  <td>
+					<img src="images/hugh-desnity.png" align="middle" width="400px">
+					<figcaption align="middle">Density = 99999</figcaption>
+				  </td>
+				</tr>
+			  </tbody>
+			</table>
+		  </div>
+
 	</div>
+
+	<p>
+		Also shown in Verlet Integration, adjusting ks and density inversely seems to have a similar result. 
+		Low ks ≈ High Density
+		and
+		High ks ≈ Low Density.
+	</p>
 
 	<div>
 		<br><br>
