@@ -129,6 +129,44 @@
 
     <h2 align="middle">Technical Approach</h2>
     <p>
+      $$N_{I}(x_{j}) = S_{I}(\frac{x_{j,x}-x_{I,x}}{h})S_{I}(\frac{x_{j,y}-x_{I,y}}{h})S_{I}(\frac{x_{j,z}-x_{I,z}}{h})$$
+
+      $$S_I(x)=
+      \begin{cases} 
+          \frac{7-16x^{2}}{16} & x\leq .25 \\
+          1-x & .25 < x\leq .75 \\
+          \frac{(5-4x)^{2}}{16} & .75 < x\leq 1.25 \\
+          0 & otherwise 
+      \end{cases}$$
+
+      $$m_{I} = \sum_{j \in H_I}m_{j}N_{I}(x_j)$$
+
+      $$p_{I} = \sum_{j \in H_I}v_{j}m_{j}N_{I}(x_j)$$
+
+      $$u_{I} = \frac{p_{I}}{m_{I}}$$
+
+      $$u_{i} = \sum_{J \in H_I}\frac{p_{J}N_{J}(x_i)}{m_{J}}$$
+
+      $$a_{i} = \sum_{J \in H_I}\frac{f_{J}N_{J}(x_i)}{m_{J}}$$
+
+      $$\bar{u_{i}}=a_{i}dt+u_{i}^{old}$$
+
+     $$ u_{i}^{new}=\alpha u_{i}+(1 - \alpha)\bar{u}_{i}$$
+
+     $$ x^{t + \Delta t}=x^{t}+\Delta tu^{new}$$
+
+      $$\rho(x)=\sum_{j \in H}\frac{m_{j}N_{I}(x_{j})}{V_{j}}$$
+
+     $$ p_{i}=k_{s}((\frac{\rho_i}{\bar{\rho}})^7 - 1)$$
+
+     $$ f_{I, pressure}=\sum_{j \in H_{i}}\frac{m_j}{\rho_j}p_j\Delta N_{I}(x_j)$$
+
+     $$ \frac{D\rho}{Dt} = 0 $$
+
+     $$ \rho\frac{Du}{Dt}=-\Delta p + \rho g$$
+
+
+
       
     </p>
     <br>
