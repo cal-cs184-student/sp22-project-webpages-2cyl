@@ -54,16 +54,22 @@
     h4,
     figcaption {
       font-size: small;
+      color: var(--highlight);
     }
 
     code {
       font-size: medium;
       display: inline-block;
-      background: #2d423f;
+      padding: 8px 8px;
+      background: var(--fgcolor);
     }
 
     a {
       color: var(--fgcolor);
+    }
+
+    dl {
+      color: var(--bgcolor);
     }
 
     /* width */
@@ -97,8 +103,7 @@
     <a href="../proj3-1/index.html"><button>P3-1</button></a>
     <a href="../proj3-2/index.html"><button>P3-2</button></a>
     <a href="../proj4/index.html"><button>P4</button></a>
-    <a href="../projfinal/index.html"><button>PF</button></a>
-    <a href="../projfinal-milestone/"><button>PF</button></a>
+    <a href="../projfinal-report/index.html"><button>PF</button></a>
   </div>
   <br>
   <title>CS 184 Final Project Report: Fluid Simulation using Material Point Method</title>
@@ -115,218 +120,223 @@
 
   <h1 align="middle">CS 184: Computer Graphics and Imaging [SP22]</h1>
   <h1 align="middle">Fluid Simulation using Material Point Method</h1>
-  <h3 align="middle">Alan Hernandez, Clare Lin, Faywer Liu, Medhaav Chandra Mahesh</h2>
+  <h2 align="middle">Alan Hernandez, Clare Lin, Faywer Liu, Medhaav Chandra Mahesh</h2>
 
-    <br>
-    <h2 align="middle">Abstract</h2>
-    <p>
-      
-    </p>
+  <br>
+  <h2 align="middle">Abstract</h2>
+  <p>
+    In our final project, we aim to create a fluid simulation using the Material Point Method. This method is considered a hybrid method that combine influences from both particle and grid based approaches. The MPM method features the calculation of spatial derivatives like grid based solvers for stability, and particle masses to discretize the simulation system and representing unknown variables, similar to particle based solvers.
+  </p>
 
-    <br>
+  <br>
 
+  <h2 align="middle">Technical Approach</h2>
+  <p>
+    Many common simulations methods use either a Langrangian approach (particle based) or a
+    Eulerian approach (grid based). MPM uses both as it first maps particles to the grid, does grid calculations, then maps the grid back to the particles and finally particle calculations are done. We mainly referenced
+    <a href="https://cg.cs.tsinghua.edu.cn/papers/CGF-2018-mpm-fluid-solid.pdf"> this</a> paper for our technical approach.
 
+  </p>
+  <p>
+    To interpolate from particle to cell or from cell to particle, we use the unifiorm GIMP as our shape function N
+    defined below.
+    $$N_{I}(x_{j}) =
+    S_{I}(\frac{|x_{j,x}-x_{I,x}|}{h})S_{I}(\frac{|x_{j,y}-x_{I,y}|}{h})S_{I}(\frac{|x_{j,z}-x_{I,z}|}{h})$$
 
-    <h2 align="middle">Technical Approach</h2>
-    <p>
-      Many common simulations methods use either a Langrangian approach (particle based) or a 
-      Eulerian approach (grid based). MPM uses both as it first maps particles to the grid, does grid calculations,
-      then maps the grid back to the particles and finally particle calculations are done.
-    </p>
-    <p>
-      To interpolate from particle to cell or from cell to particle, we use the unifiorm GIMP as our shape function N defined below.
-      $$N_{I}(x_{j}) = S_{I}(\frac{|x_{j,x}-x_{I,x}|}{h})S_{I}(\frac{|x_{j,y}-x_{I,y}|}{h})S_{I}(\frac{|x_{j,z}-x_{I,z}|}{h})$$
+    $$S_I(x)=
+    \begin{cases}
+    \frac{7-16x^{2}}{16} & x\leq .25 \\
+    1-x & .25 < x\leq .75 \\ \frac{(5-4x)^{2}}{16} & .75 < x\leq 1.25 \\ 0 & otherwise \end{cases}$$ <p>
+      where \(x_{j}\) is the position of the partcle, \(x_{j,d}\) is the position in a dimension where \(d\) is \(x\), \(y\), or \(z\), \(x_{I}\) is the
+      position of the cell, and h is the grid size.
+  </p>
+  <p>
+    We now decribe our algorithm pipeline for implementing MPM fluid simulation. In each simulation step, we first began by clearing the cell. Cell mass and momentum are set to zero.
+  </p>
+  <h4 align="middle">Particle to Grid</h4>
+  <p>
+    Next loop through all particles
+    and calculate the mass and momentum for the corresponding cell using the equations below.
+  </p>
+  <p>
+    $$m_{I} = \sum_{j \in H_I}m_{j}N_{I}(x_j)$$
+    m_I is the mass of the cell, j is a particle in the vicinity of the cell, m_j is the particle mass,
+    and N_I is the shape function defined above. In our code, we define collecting the neighboring particles in the
+    vicinity of one particle as a smoothing kernel with diameter of 2, which yields collecting 8 nearby particles.
+  </p>
+  <p>
+    $$p_{I} = \sum_{j \in H_I}v_{j}m_{j}N_{I}(x_j)$$
+    p_I is the momentum of the cell. This equation is similar except we include the velocity of the particles ss well.
+  </p>
+  <h4 align="middle">Fluid and Grid Calculations</h4>
+  <p>
+    Once we have mapped our particles to cells, we want to do our grid calculations. Liquids are considered
+    incompressible so we solve the following differential equations that govern non-viscous fluids.
+  </p>
+  <p>
+    $$ \frac{D\rho}{Dt} = 0 $$
 
-      $$S_I(x)=
-      \begin{cases} 
-          \frac{7-16x^{2}}{16} & x\leq .25 \\
-          1-x & .25 < x\leq .75 \\
-          \frac{(5-4x)^{2}}{16} & .75 < x\leq 1.25 \\
-          0 & otherwise 
-      \end{cases}$$
-    <p>
-      where x_j is the position of the partcle, x_j,d is the position in a dimension where d is x, y, or z, x_I is the position of the cell,
-      and h is the grid size.
-    </p>
-    <p>
-      In each simulation step, we first began by clearing the cell.
-    </p>
-    <h4 align="middle">Particle to Grid</h4>
-    <p>
-      Next loop through all particles
-      and calculate the mass and momentum for the corresponding cell using the equations below.
-    </p>
-    <p>
-      $$m_{I} = \sum_{j \in H_I}m_{j}N_{I}(x_j)$$
-      m_I is the mass of the cell, j is a particle in the vicinity of the cell, m_j is the particle mass,
-      and N_I is the shape function defined above.
-    </p>
-    <p>
-      $$p_{I} = \sum_{j \in H_I}v_{j}m_{j}N_{I}(x_j)$$
-      p_I is the momentum of the cell. This equation is similar except we include the velocity of the particles ss well.
-    </p>
-    <h4 align="middle">Fluid and Grid Calculations</h4>
-      <p>
-        Once we have mapped our particles to cells, we want to do our grid calculations. Liquids are considered
-        incompressible so we solve the following differential equations that govern non-viscous fluids.
-      </p>
-      <p>
-        $$ \frac{D\rho}{Dt} = 0 $$
+    $$ \rho\frac{Du}{Dt}=-\Delta p + \rho g$$
 
-        $$ \rho\frac{Du}{Dt}=-\Delta p + \rho g$$
+    where \(\rho\) is the density, u is the velocity, and p is the pressure, and g is external body forces.
+  </p>
+  <p>
+    A solution to the differential equations above is given below.
+  </p>
+  <p>
+    We first want to calculate the fluid density of each cell. This is done by looping through every particle
+    within the vicinity of the cell.
+  </p>
+  <p>
+    $$\rho(x)=\sum_{j \in H}\frac{m_{j}N_{I}(x_{j})}{V_{j}}$$
+    \(\rho\) is the fluid density, x is the position of the cell, j is a particle within the vicinity of the cell,
+    \(m_{j}\) is the mass of the particle, and \(V_{j}\) is the volume of the particle.
+  </p>
+  <p>
+    Using the fluid density allows us to calculate the fluid pressure of each particle using the weakly compressible
+    eqaution.
+  </p>
+  <p>
+    $$ p_{i}=k_{s}((\frac{\rho_i}{\bar{\rho}})^7 - 1)$$
+    where \(p_{i}\) is the fluid pressure of a particle, \(k_{s}\) is the stiffness coefficient, \(\rho_{i}\) is the
+    fluid
+    density, and \(\bar{\rho}\) is the rest density.
+  </p>
+  Finally we can calculate the pressure forces that act upon the cells.
+  <p>
+    $$ f_{I, pressure}=\sum_{j \in H_{i}}\frac{m_j}{\rho_j}p_j\Delta N_{I}(x_j)$$
+    where \(f_{I}\), pressure is the pressure force, \(m_{j}\) is the particle mass, \(\rho_{j}\) is the fluid
+    density, \(p_{j}\) is the fluid pressure, and \(\Delta N_{I}\) is the gradient of the shape function.
+  </p>
+  <p>
+    We can also apply external forces now such as gravity to each node.
+  </p>
+  <h4 align="middle">Grid to Particles</h4>
+  <p>
+    We now map the cell values to particles. The velocity and acceleration of particles are given below.
+    This is calculated by looping through the particles and summing up values of cells in its vicinity.
+  </p>
+  <p>
+    $$a_{i} = \sum_{J \in H_I}\frac{f_{J}N_{J}(x_i)}{m_{J}}$$
+    where \(F_{J}\) is the sum of the forces that act upon cell J and \(m_{J}\) is the mass of the cell
+  </p>
+  <p>
+    $$u_{i} = \sum_{J \in H_I}\frac{p_{J}N_{J}(x_i)}{m_{J}}$$
+  </p>
+  <h4 align="middle">Particle Calculations</h4>
+  <p>
+    We can now do our particle calculations to determine the position of the particle.
+  </p>
+  <p>
+    To calculate the new velocity, we use the following equations.
+  </p>
+  <p>
+    $$\bar{u_{i}}=a_{i}dt+u_{i}^{old}$$
+    $$ u_{i}^{new}=\alpha u_{i}+(1 - \alpha)\bar{u}_{i}$$
+    where \(\alpha\) is .05 to give more weight towards the updated velocity for a more realistic fluid.
+  </p>
+  <p>
+    Finally, the position is updated using
+  </p>
+  <p>$$ x^{t + \Delta t}=x^{t}+\Delta tu^{new}$$</p>
+  </p>
 
-        where ρ is the density, u is the velocity, and p is the pressure, and g is external body forces.
-      </p>
-      <p>
-        A solution to the differential equations above is given below.
-      </p>
-      <p>
-        We first want to calculate the fluid density of each cell. This is done by looping through every particle
-        within the victinity of the cell.
-      </p>
-      <p>
-        $$\rho(x)=\sum_{j \in H}\frac{m_{j}N_{I}(x_{j})}{V_{j}}$$
-        rho is the fluid density, x is the position of the cell, j is a particle within the vicinity of the cell, m_j is the
-        mass of the particle and V_j is the volume of the particle.
-      </p>
-      <p>
-        Using the fluid density allows us to calculate the fluid pressure of each particle using the weakly compressible eqaution.
-      </p>
-      <p>
-        $$ p_{i}=k_{s}((\frac{\rho_i}{\bar{\rho}})^7 - 1)$$
-        where p_i is the fluid pressure of a particle, k_s is the stiffness coefficient, ρ_i is the fluid density, and ρ^- is the rest density.
-      </p>
-      Finally we can calculate the pressure forces that act upon the cells.
-      <p>
-        $$ f_{I, pressure}=\sum_{j \in H_{i}}\frac{m_j}{\rho_j}p_j\Delta N_{I}(x_j)$$
-        where f_I, pressure is the pressure force, m_j is the particle mass, ρ_j is the fluid density, p_j is the fluid pressure,
-        and ∇N_i is the gradient of the shape function.
-      </p>
-      <p>
-        We can also apply external forces now such as gravity to each node.
-      </p>
-      <h4 align="middle">Grid to Particles</h4>
-      <p>
-        We now map the cell values to particles. The velocity and acceleration of particles are given below.
-        This is calculated by looping through the particles and summing up values of cells in its vicinity.
-      </p>
-      <p>
-        $$a_{i} = \sum_{J \in H_I}\frac{f_{J}N_{J}(x_i)}{m_{J}}$$
-        where F_J is the sum of the forces that act upon cell J and m_J is the mass of the cell
-      </p>
-      <p>
-        $$u_{i} = \sum_{J \in H_I}\frac{p_{J}N_{J}(x_i)}{m_{J}}$$
-      </p>
-      <h4 align="middle">Particle Calculations</h4>
-      <p>
-        We can now do our particle calculations to determine the position of the particle.
-      </p>
-      <p>
-        To calculate the new velocity, we use the following equations.
-      </p>
-      <p>
-        $$\bar{u_{i}}=a_{i}dt+u_{i}^{old}$$
-        $$ u_{i}^{new}=\alpha u_{i}+(1 - \alpha)\bar{u}_{i}$$
-        where α is .05 to give more weight towards the updated velocity.
-      </p>
-      <p>
-        Finally, the position is updated using
-      </p>
-     <p>$$ x^{t + \Delta t}=x^{t}+\Delta tu^{new}$$</p>
-      </p>
-
-    <h4 align="middle">Algorithm Summary / Work Flow</h4>
-    <dl>
-      <dt>build grid by initializing all particles in a random position within a cube</li>
-      <dt>while simulation</dt>
-      <dt>&nbsp reset the grid</dt>
-      <dt>&nbsp for every particle</dt>
+  <h4 align="middle">Summary of Work Flow</h4>
+  <div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;"><code><dl>
+      <dt><b>build grid</b> by initializing all particles in a random position within a cube</li>
+      <dt><b>while</b> simulation</dt>
+      <dt>&nbsp <b>reset</b> the grid</dt>
+      <dt>&nbsp <b>for</b> every particle</dt>
       <dt>&nbsp &nbsp map mass and momentum to a cell of the grid</dt>
-      <dt>&nbsp for every cell</dt>
+      <dt>&nbsp <b>for</b> every cell</dt>
       <dt>&nbsp &nbsp calculate fluid density for every particle in cell</dt>
       <dt>&nbsp &nbsp calculate cell's pressure force (pressure gradient)</dt>
-      <dt>&nbsp for every cell</dt>
+      <dt>&nbsp <b>for</b> every cell</dt>
       <dt>&nbsp &nbsp apply gravity to cell</dt>
       <dt>&nbsp &nbsp for every particle inside cell</dt>
       <dt>&nbsp &nbsp &nbsp apply cell accerlation and cell velocity to partcle inside cell</dt>
-      <dt>&nbsp for every particle</dt>
+      <dt>&nbsp <b>for</b> every particle</dt>
       <dt>&nbsp &nbsp calculate velocity and position using equation</dt>
-    </dl>
-
-    <h2 align="middle">Difficulties and Lessons learned</h2>
-    <p>
-      
-    </p>
-
-    <h2 align="middle">Results</h2>
-    <h4 align="middle">Compressibility</h2>
-    <p>
-      While we unfortately could not figure out how to keep the fluid incompressible by not allowing particle clumping, 
-      we do have some interesting compressible fluids. By changing some constants such as the grid size, or KS we have some differing results.
-    </p>
-
-    <table style="width:100%">
-      <tbody>
-        <tr>
-          <td>
-            <img src="images/weird.gif" align="middle" width="400px">
-            <figcaption align="middle">Small KS</figcaption>
-          </td>
-          <td>
-            <img src="images/weird3.gif" align="middle" width="400px">
-            <figcaption align="middle">Medium KS</figcaption>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <table style="width:100%">
-      <tbody>
-        <tr>
-          <td>
-            <img src="images/weird1.gif" align="middle" width="400px">
-            <figcaption align="middle">Large KS</figcaption>
-          </td>
-          <td>
-            <img src="images/weird2.gif" align="middle" width="400px">
-            <figcaption align="middle">Grid Size = 32</figcaption>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h4 align="middle">Parallization</h4>
-    <p>
-      Parts of our algorithm are embarassingly parallelizable as particles and cells don't rely on other particles
-      and cells. We can simply use OpenMP on our for loops.
-    </p>
-
-    <h4 align="middle">Frame saver</h4>
-    <p>
-
-    </p>
-
-    <h4 align="middle">Video</h2>
-      <div align="middle">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/9nK1LsOMfpM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    
-    <h2 align="middle">References</h2>
-    <p>
-      <a href="https://cg.cs.tsinghua.edu.cn/papers/CGF-2018-mpm-fluid-solid.pdf"> “MPM simulation of interacting fluids and solids”</a>
-      </p>
-      
-
-    <h2 align="middle">Contributions</h2>
-    <ul>
-      <li>Alan worked on </li>
-      <li>Clare worked on</li>
-      <li>Faywer worked on</li>
-      <li>Medhaav worked on </li>
-    </ul>
-    <br>
+    </dl></code></div>
+  </div>
 
 
-    
+  <h2 align="middle">Difficulties and Lessons learned</h2>
+  <p>
+
+  </p>
+
+  <h2 align="middle">Results</h2>
+  <h4 align="middle">Compressibility</h4>
+  <p>
+    While we unfortately could not figure out how to keep the fluid incompressible by not allowing particle
+    clumping,
+    we do have some interesting compressible fluids. By changing some constants such as the grid size, or KS we have
+    some differing results.
+  </p>
+
+  <table style="width:100%">
+    <tbody>
+      <tr>
+        <td>
+          <img src="images/weird.gif" align="middle" width="400px">
+          <figcaption align="middle">Small KS</figcaption>
+        </td>
+        <td>
+          <img src="images/weird3.gif" align="middle" width="400px">
+          <figcaption align="middle">Medium KS</figcaption>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table style="width:100%">
+    <tbody>
+      <tr>
+        <td>
+          <img src="images/weird1.gif" align="middle" width="400px">
+          <figcaption align="middle">Large KS</figcaption>
+        </td>
+        <td>
+          <img src="images/weird2.gif" align="middle" width="400px">
+          <figcaption align="middle">Grid Size = 32</figcaption>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4 align="middle">Parallization</h4>
+  <p>
+    Parts of our algorithm are embarassingly parallelizable as particles and cells don't rely on other particles
+    and cells. We can simply use OpenMP on our for loops.
+  </p>
+
+  <h4 align="middle">Frame saver</h4>
+  <p>
+
+  </p>
+
+  <h4 align="middle">Video</h4>
+  <div align="middle">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/9nK1LsOMfpM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <h2 align="middle">References</h2>
+  <p>
+    <a href="https://cg.cs.tsinghua.edu.cn/papers/CGF-2018-mpm-fluid-solid.pdf"> “MPM simulation of interacting
+      fluids and solids”</a>
+  </p>
+
+
+  <h2 align="middle">Contributions</h2>
+  <ul>
+    <li>Alan worked on the video renderer which, when activated via command line with the ‘-v’ flag, would run the simulation headless and output the frame buffer into a .png file every frame. These files could then be stitched together into a GIF or video. </li>
+    <li>Clare worked on</li>
+    <li>Faywer worked on</li>
+    <li>Medhaav worked on </li>
+  </ul>
+
 </body>
 
 </html>
