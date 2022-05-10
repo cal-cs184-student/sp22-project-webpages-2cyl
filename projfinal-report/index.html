@@ -253,10 +253,70 @@
       <dt>&nbsp &nbsp calculate velocity and position using equation</dt>
     </dl>
 
-    <h2 align="middle">Difficulties and Lessons learned</h2>
+    <h2 align="middle">Difficulties and Lessons Learned</h2>
     <p>
-      
+      Our biggest difficulties is that our fluids are not incompressible as shown below. 
     </p>
+
+    <table style="width:100%">
+      <tbody>
+        <tr>
+          <td>
+            <img src="images/gravity.gif" align="middle" width="400px">
+            <figcaption align="middle">Just Gravity</figcaption>
+          </td>
+          <td>
+            <img src="images/pressure.gif" align="middle" width="400px">
+            <figcaption align="middle">Just Pressure Forces</figcaption>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div align="middle">
+      <img src="images/both.gif" align="middle" width="400px">
+      <figcaption align="middle">Both Gravity and Pressure Forces</figcaption>
+    </div>
+
+    <p>
+      As we can see, gravity seems to be working as intended while the pressure forces do not. This pressure force seems to be
+      stronger than gravity and pulls everything in a (-, -, -) direction. An explanation of this can be from the f_I, pressure equation
+      where we take the gradient of the shape function. Notice that the shape function returns either 0 or a positive value but the derivatives
+      of it returns either 0 or a negative value. This could explain why this force seems to pull in the (-, -, -) direction.
+    </p>
+
+    <p>
+      The fluid section of the paper is a bit handwavy so it's possible that we misunderstand it. This paper requires a lot of physics
+      knowledge which we don't have a background in. 
+    </p>
+
+    <p>
+      Unlike ClothSim where we just had to implement the physics and shaders, we had to directly interact with OpenGL; however, we had issues with NanoGui's OpenGL. Our first issue was that with a large number of particles,
+      drawing spheres would be extremely demanding and the program would crash with about 5000 spheres. 
+    </p>
+
+    <div align="middle">
+      <img src="images/bad.png" align="middle" width="400px">
+      <figcaption align="middle">The collision plane seems to follow and scale with our spheres???</figcaption>
+    </div>
+
+    <p>
+      To remedy this, we decided to draw a simple triangle for each particle. This allowed us to draw 
+      about 30,000 particles without any issue. This also fixed the problem where the plane would follow the first particle.
+    </p>
+
+    <p>
+      The OpenGL that NanoGui uses is missing a lot of functionality. For instance fundamental OpenGL constants like GL_MODELVIEW_MATRIX 
+      were not defined. This also made many online OpenGL tutorials useless since they would not build. We couldn't find any solutions to this
+      and moved on to more important things.
+    </p>
+
+    <p>
+      Learning how to use the many libraries such as CGL and Eigen proved to be difficult. The skeleton code uses them both which is a bit confusing.
+      Some of these issues could have been fixed if we used something such as the Taichi where the GUI and matrix data structures are built in so 
+      we could directly focus on the physics.
+    </p>
+
 
     <h2 align="middle">Results</h2>
     <h4 align="middle">Compressibility</h2>
@@ -295,11 +355,7 @@
       </tbody>
     </table>
 
-    <h4 align="middle">Parallization</h4>
-    <p>
-      Parts of our algorithm are embarassingly parallelizable as particles and cells don't rely on other particles
-      and cells. We can simply use OpenMP on our for loops.
-    </p>
+
 
     <h4 align="middle">Frame saver</h4>
     <p>
@@ -321,7 +377,7 @@
       <li>Alan worked on </li>
       <li>Clare worked on</li>
       <li>Faywer worked on</li>
-      <li>Medhaav worked on </li>
+      <li>Medhaav worked on</li>
     </ul>
     <br>
 
