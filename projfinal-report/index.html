@@ -160,13 +160,12 @@
   </p>
   <p>
     $$m_{I} = \sum_{j \in H_I}m_{j}N_{I}(x_j)$$
-    m_I is the mass of the cell, j is a particle in the vicinity of the cell, m_j is the particle mass,
-    and N_I is the shape function defined above. In our code, we define collecting the neighboring particles in the
+    \(m_{I}\) is the mass of the cell, j is a particle in the vicinity of the cell, \(m_j\) is the particle mass, and \(N_I\) is the shape function defined above. In our code, we define collecting the neighboring particles in the
     vicinity of one particle as a smoothing kernel with diameter of 2, which yields collecting 8 nearby particles.
   </p>
   <p>
     $$p_{I} = \sum_{j \in H_I}v_{j}m_{j}N_{I}(x_j)$$
-    p_I is the momentum of the cell. This equation is similar except we include the velocity of the particles ss well.
+    \(p_{I}\) is the momentum of the cell. This equation is similar except we include the velocity of the particles ss well.
   </p>
   <h4 align="middle">Fluid and Grid Calculations</h4>
   <p>
