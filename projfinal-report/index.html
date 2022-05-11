@@ -121,6 +121,7 @@
   <h1 align="middle">CS 184: Computer Graphics and Imaging [SP22]</h1>
   <h1 align="middle">Fluid Simulation using Material Point Method</h1>
   <h2 align="middle">Alan Hernandez, Clare Lin, Faywer Liu, Medhaav Chandra Mahesh</h2>
+  <h2 align="middle">Github: https://github.com/CS184FluidSim/MPMFluidSim</h2>
 
   <br>
   <h2 align="middle">Abstract</h2>
@@ -134,7 +135,7 @@
   <p>
     Many common simulations methods use either a Langrangian approach (particle based) or a
     Eulerian approach (grid based). MPM uses both as it first maps particles to the grid, does grid calculations, then maps the grid back to the particles and finally particle calculations are done. We mainly referenced
-    <a href="https://cg.cs.tsinghua.edu.cn/papers/CGF-2018-mpm-fluid-solid.pdf"> this</a> paper for our technical approach.
+    <a href="https://cg.cs.tsinghua.edu.cn/papers/CGF-2018-mpm-fluid-solid.pdf"> Yan, X., et. al. [1]</a> for our technical approach where we aimed to implement just fluid simulation.
 
   </p>
   <p>
@@ -254,11 +255,18 @@
       <dt>&nbsp <b>for</b> every cell</dt>
       <dt>&nbsp &nbsp apply gravity to cell</dt>
       <dt>&nbsp &nbsp for every particle inside cell</dt>
-      <dt>&nbsp &nbsp &nbsp apply cell accerlation and cell velocity to partcle inside cell</dt>
+      <dt>&nbsp &nbsp &nbsp apply cell acceleration and cell velocity to partcle inside cell</dt>
       <dt>&nbsp <b>for</b> every particle</dt>
-      <dt>&nbsp &nbsp calculate velocity and position using equation</dt>
+      <dt>&nbsp &nbsp calculate velocity and position</dt>
     </dl></code></div>
   </div>
+
+  <h4 align="middle">Frame saver</h4>
+  <p>
+    One of the things we implemented was a renderer built right into the ClothSim project we had used as our boilerplate code. This renderer is activated by passing in the ‘-v’ flag into the program arguments on startup and works by skipping the rendering of the GUI, widgets,
+    and buttons to the user (effectively causing the simulator to run headless) and simply copying the contents of the GL framebuffer after every call to drawContents() to an
+    image and writing that image to disk. After running the simulator this way, there will be several images locally that store each frame of the simulation. These images are then processed and stitched into a .MP4 video using a python script.
+  </p>
 
 
   <h2 align="middle">Difficulties and Lessons learned</h2>
@@ -295,7 +303,12 @@
 
   <p>
     The fluid section of the paper is a bit handwavy so it's possible that we misunderstand it. This paper requires a lot of physics
-    knowledge which we don't have a background in. We may have had a better time if we chose a less physics demanding project.
+    knowledge which we don't have a background in. We may have had a better time if we chose a less physics demanding project. The paper also makes assumptions that were not stated explicitly,
+    such as the uniform GIMP requires initially 2 particles per cell.
+  </p>
+
+  <p>
+    In order to debug our fluid not behaving correctly, we first tried different shape functions, such as cubic b-spline and quadratic b-spline instead of uniform GIMP. The results were not fruitful, which led us to believe the main paper we were following might have not been robust in all its explained steps. We later put significant effort to rewrite our project to be based off an <a href="https://github.com/yuanming-hu/taichi_mpm">MPM fluid simulation</a> done in Taichi, a efficient graphics language written in Python. We tried to follow the Python implementation and rewrite it in C++ with similar logic and to match our existing architecture. The physics done there are slightly different in execution than the paper we followed, but we unfortunately did not have enough time to fully debug our project for the revised pipeline to work due to basically writing the project almost twice.
   </p>
 
   <p>
@@ -321,7 +334,7 @@
 
   <p>
     Learning how to use the many libraries such as CGL and Eigen proved to be difficult. The skeleton code uses them both which is a bit confusing.
-    Some of these issues could have been fixed if we used something such as the Taichi where the GUI and matrix data structures are built in so
+    Some of these issues could have been fixed if we used something such as the Taichi library where the GUI and matrix data structures are built in so
     we could directly focus on the physics implementation.
   </p>
 
@@ -364,37 +377,34 @@
     </tbody>
   </table>
 
-  <h4 align="middle">Parallization</h4>
   <p>
-    Parts of our algorithm are embarassingly parallelizable as particles and cells don't rely on other particles
-    and cells. We can simply use OpenMP on our for loops.
+    Note that there is a 2x2x2 bounding box where the particles stay in. If we had more time we could have
+    made it visible. The plane is located on the bottom of the bounding box it is smaller so particles look like they float.
   </p>
 
-  <h4 align="middle">Frame saver</h4>
-  <p>
 
-  </p>
 
   <h4 align="middle">Video</h4>
   <div align="middle">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/9nK1LsOMfpM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/aMVsydn3OwI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </div>
 
   <h2 align="middle">References</h2>
   <ul>
-    <li><a href="https://cg.cs.tsinghua.edu.cn/papers/CGF-2018-mpm-fluid-solid.pdf"> “MPM simulation of interacting fluids and solids”</a></li>
-    <li><i>"The Material Point Method: A Continuum-Based Particle Method for Extreme Loading Cases"</i> by Xiong Zhang, Zhen Chen, Yan Liu</li>
-
-
+    <li><a href="https://cg.cs.tsinghua.edu.cn/papers/CGF-2018-mpm-fluid-solid.pdf">[1] Yan, X., Li, C.-F., Chen, X.-S. and Hu, S.-M. (2018), MPM simulation of interacting fluids and solids. Computer Graphics Forum, 37: 183-193. https://doi.org/10.1111/cgf.13523</a></li>
+    <li><a href="https://github.com/yuanming-hu/taichi_mpm">[2] High-performance moving least squares material point method (MLS-MPM) solver. (ACM Transactions on Graphics, SIGGRAPH 2018)</a></li>
+    <li><a href="https://nialltl.neocities.org/articles/mpm_guide.html">[3] Notes on MPM by Niall</a></li>
+    <li><a href="https://www.math.ucla.edu/~cffjiang/research/mpmcourse/mpmcourse.pdf">[4] Jiang, C. et al. (2016), The Material Point Method for Simulating
+        Continuum Materials</a></li>
   </ul>
 
 
   <h2 align="middle">Contributions</h2>
   <ul>
-    <li>Alan worked on the video renderer which, when activated via command line with the ‘-v’ flag, would run the simulation headless and output the frame buffer into a .png file every frame. These files could then be stitched together into a GIF or video. </li>
-    <li>Clare worked on</li>
-    <li>Faywer worked on</li>
-    <li>Medhaav worked on </li>
+    <li>Alan worked on the video renderer and creating the final video.</li>
+    <li>Clare worked on the MPM physics simulation and making the website.</li>
+    <li>Faywer worked on rendering triangles, transforming the architecture for Fluid Sim and worked on the MPM physics simulation as well as making the website.</li>
+    <li>Medhaav worked on debugging the project and creating the final video.</li>
   </ul>
 
 </body>
